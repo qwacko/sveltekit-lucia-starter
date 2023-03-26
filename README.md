@@ -12,22 +12,21 @@ To get started with SvelteKit-Lucia-Starter, follow these steps:
    ```
 2. Install the dependencies:
 
-```bash
-cd sveltekit-lucia-starter
-pnpm install
-```
+   ```bash
+   cd sveltekit-lucia-starter
+   pnpm install
+   ```
 
 3. Create a new Prisma migration:
 
-```bash
-npx prisma migrate dev --name init
-```
+   ```bash
+   npx prisma migrate dev --name init
+   ```
 
 4. Start the development server:
-
-```bash
-pnpm dev
-```
+   ```bash
+   pnpm dev
+   ```
 
 ## Features
 
