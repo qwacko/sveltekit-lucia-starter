@@ -1,6 +1,6 @@
 # SvelteKit-Lucia-Starter
 
-SvelteKit-Lucia-Starter is a SvelteKit starter project that includes [Lucia](https://lucia.js.org/) for authentication and [SvelteKit-Superforms](https://github.com/hamatti/sveltekit-superforms) for form validation using [Zod](https://github.com/vriad/zod).
+SvelteKit-Lucia-Starter is a SvelteKit starter project that includes [Lucia](https://lucia-auth.com/) for authentication and [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for form validation using [Zod](https://github.com/colinhacks/zod).
 
 ## Getting started
 
@@ -30,14 +30,14 @@ To get started with SvelteKit-Lucia-Starter, follow these steps:
 
 ## Features
 
-- [Lucia](https://lucia.js.org/) for authentication
-- [SvelteKit-Superforms](https://github.com/hamatti/sveltekit-superforms) for form validation using [Zod](https://github.com/vriad/zod)
+- [Lucia](https://lucia-auth.com/) for authentication
+- [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for form validation using [Zod](https://github.com/colinhacks/zod)
 
 ## Scripts
 
 - `dev`: Start the development server
 - `build`: Build the project for production
 - `preview`: Preview the production build locally
-- `test:unit`: Run unit tests using [Vitest](https://github.com/egoist/vitest)
+- `test:unit`: Run unit tests using [Vitest](https://vitest.dev/)
 - `lint`: Run Prettier and ESLint
 - `format`: Run Prettier to format the code
