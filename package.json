@@ -13,9 +13,8 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@lucia-auth/adapter-prisma": "^0.6.1",
-		"@lucia-auth/sveltekit": "^0.6.11",
 		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-node": "^1.2.3",
 		"@sveltejs/kit": "^1.14.0",
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
@@ -25,25 +24,28 @@
 		"eslint": "^8.36.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-svelte3": "^4.0.0",
-		"lucia-auth": "^0.10.0",
 		"postcss": "^8.4.21",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.7",
 		"prettier-plugin-svelte": "^2.10.0",
-		"prisma": "^4.11.0",
 		"svelte": "^3.57.0",
 		"svelte-check": "^3.1.4",
 		"svelte-preprocess": "^5.0.3",
-		"sveltekit-superforms": "^0.6.3",
 		"tailwindcss": "^3.2.7",
 		"tslib": "^2.5.0",
 		"typescript": "^5.0.2",
 		"vite": "^4.2.1",
-		"vitest": "^0.29.7",
-		"zod": "^3.21.4"
+		"vitest": "^0.29.7"
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^4.11.0"
+		"@lucia-auth/adapter-prisma": "^0.6.1",
+		"@lucia-auth/sveltekit": "^0.6.11",
+		"@prisma/client": "^4.11.0",
+		"dotenv": "^16.0.3",
+		"lucia-auth": "^0.10.0",
+		"prisma": "^4.11.0",
+		"sveltekit-superforms": "^0.6.4",
+		"zod": "^3.21.4"
 	}
 }

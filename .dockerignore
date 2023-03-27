@@ -1,8 +1,9 @@
 .DS_Store
 node_modules
 /build
-/.svelte-kit
+
 /package
+/db
 .env
 .env.*
 !.env.example
@@ -10,5 +11,13 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 prisma/dev.db
 
-docker-compose.yml
-/db
+.vscode 
+node_modules 
+.git
+.gitattributes 
+.eslintignore
+.eslintrc.cjs 
+.prettierrc
+.pretieriignore 
+README.md 
+Dockerfile
