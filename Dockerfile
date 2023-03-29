@@ -5,10 +5,22 @@ FROM node:19-alpine AS deps
 WORKDIR /app
 COPY prisma ./
 
-COPY package.json pnpm-lock.yaml\* ./
+COPY package.json  pnpm-lock.yaml pnpm-lock.yaml\* ./
 
 RUN yarn global add pnpm
-RUN pnpm i --frozen-lockfile;
+RUN pnpm i;
+
+##### BUILDER
+FROM node:19-alpine AS proddeps
+
+WORKDIR /app
+COPY prisma ./
+
+COPY package.json pnpm-lock.yaml pnpm-lock.yaml\* ./
+
+RUN yarn global add pnpm
+RUN pnpm i -P;
+
 
 
 
@@ -45,10 +57,11 @@ WORKDIR /app
 
 ENV DATABASE_URL file:./dev.db
 ENV NODE_ENV production
+ENV HTTPS true
 
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=proddeps /app/node_modules ./node_modules
 COPY package.json pnpm-lock.yaml\* ./
 COPY --from=builder /app/build ./build
 COPY --from=prisma /app ./prisma

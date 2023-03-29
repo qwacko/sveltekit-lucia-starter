@@ -10,6 +10,7 @@ services:
       - DATABASE_URL=file:/app/db/dev.db
       - ORIGIN=http://10.1.1.1:3000
       - PORT=3000
+      - HTTPS=true
     volumes:
       - ./db/:/app/db
     ports:
