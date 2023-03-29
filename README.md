@@ -42,6 +42,12 @@ To get started with SvelteKit-Lucia-Starter, follow these steps:
    pnpm dev
    ```
 
+## Production
+
+This template is tested to work with Docker using the provided Dockerfile. It possibly may work with a service such as Vercel or Netlify, however there may be significant changes (Prisma, Sveltekit Adapter, Auth Library Crypto etc..) and I haven't tested it.
+
+Recommendation is to stick with Docker (or possibly node) unless you are knowledgable in the environment you are planning on deploying to.
+
 ## Envinroment Variables
 
 The following environemnt variables are included
