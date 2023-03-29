@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageData } from './$types';
+	import ErrorText from '$lib/components/ErrorText.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { signupSchemaType } from './signupSchema';
 
-	export let data: PageData;
-	const { form, errors, constraints } = superForm<signupSchemaType>(data.form);
+	export let data;
+	const { form, errors, constraints, message } = superForm<signupSchemaType>(data.form);
 </script>
 
 <div class="flex justify-center items-center h-screen">
@@ -23,7 +23,7 @@
 					{...$constraints.username}
 					class="border border-gray-300 p-2 w-full rounded-lg"
 				/>
-				{#if $errors.username}<span class="text-red-500 text-sm">{$errors.username}</span>{/if}
+				<ErrorText message={$errors.username} />
 			</div>
 			<div class="mb-4">
 				<label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
@@ -36,7 +36,7 @@
 					{...$constraints.password}
 					class="border border-gray-300 p-2 w-full rounded-lg"
 				/>
-				{#if $errors.password}<span class="text-red-500 text-sm">{$errors.password}</span>{/if}
+				<ErrorText message={$errors.password} />
 			</div>
 			<div class="mb-4">
 				<label for="checkPassword" class="block text-gray-700 font-semibold mb-2"
@@ -51,10 +51,9 @@
 					{...$constraints.confirmPassword}
 					class="border border-gray-300 p-2 w-full rounded-lg"
 				/>
-				{#if $errors.confirmPassword}<span class="text-red-500 text-sm"
-						>{$errors.confirmPassword}</span
-					>{/if}
+				<ErrorText message={$errors.confirmPassword} />
 			</div>
+			<ErrorText message={$message} />
 			<div class="mt-6 flex justify-between items-center">
 				<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
 					>Create Account</button

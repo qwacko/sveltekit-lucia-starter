@@ -10,34 +10,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String    @id @unique
-  session  Session[]
-  Key      Key[]
-  username String    @unique
+model AuthUser {
+  id       String        @id @unique
+  session  AuthSession[]
+  Key      AuthKey[]
+  username String?       @unique
+  // here you can add custom fields for your user
+  // e.g. name, email, username, roles, etc.
 
-  @@map("user")
+  @@map("auth_user")
 }
 
-model Session {
-  id             String @id @unique
+model AuthSession {
+  id             String   @id @unique
   user_id        String
   active_expires BigInt
   idle_expires   BigInt
-  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user           AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
-  @@map("session")
+  @@map("auth_session")
 }
 
-model Key {
-  id              String  @id @unique
+model AuthKey {
+  id              String   @id @unique
   hashed_password String?
   user_id         String
-  primary         Boolean
+  primary_key     Boolean
   expires         BigInt?
-  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user            AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
-  @@map("key")
+  @@map("auth_key")
 }

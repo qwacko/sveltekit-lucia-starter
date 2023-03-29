@@ -1,17 +1,14 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { auth } from '$lib/server/lucia';
-import type { PageServerLoad, Actions } from './$types';
 import { superValidate, setError } from 'sveltekit-superforms/server';
 import { signupSchema } from './signupSchema';
 
 // If the user exists, redirect authenticated users to the profile page.
-export const load = (async (event) => {
+export const load = async (event) => {
 	const form = await superValidate(event, signupSchema);
-	const session = await event.locals.validate();
-	if (session) throw redirect(302, '/');
 
 	return { form };
-}) satisfies PageServerLoad;
+};
 
 export const actions = {
 	default: async (event) => {
@@ -39,11 +36,12 @@ export const actions = {
 				}
 			});
 			const session = await auth.createSession(user.userId);
-			event.locals.setSession(session);
+			event.locals.auth.setSession(session);
 			return { form };
-		} catch {
+		} catch (error) {
+			console.log('Error:', error);
 			// username already in use
 			return setError(form, 'username', 'Username already in use');
 		}
 	}
-} satisfies Actions;
+};
