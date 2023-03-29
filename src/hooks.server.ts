@@ -1,13 +1,13 @@
 import { auth } from '$lib/server/lucia';
+import { createContext } from '$lib/server/trpc/context';
+import { router } from '$lib/server/trpc/router';
 import type { Handle } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
+import { createTRPCHandle } from 'trpc-sveltekit';
 
 const authHandler: Handle = async ({ event, resolve }) => {
 	event.locals.auth = auth.handleRequest(event);
 	const user = await event.locals.auth.validate();
-
-	const authCookie = event.cookies.get('auth_session');
-	console.log('User:', user);
-	console.log('Auth Cookie:', authCookie);
 
 	if (event.route.id?.startsWith('/(loggedIn)') && !user) {
 		console.log('User Not Logged In - Redirecting to Login');
@@ -22,4 +22,4 @@ const authHandler: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-export const handle = authHandler;
+export const handle = sequence(authHandler, createTRPCHandle({ router, createContext }));

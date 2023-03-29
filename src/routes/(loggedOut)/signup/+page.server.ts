@@ -2,13 +2,14 @@ import { fail } from '@sveltejs/kit';
 import { auth } from '$lib/server/lucia';
 import { superValidate, setError } from 'sveltekit-superforms/server';
 import { signupSchema } from './signupSchema';
+import type { PageServerLoad } from './$types';
 
 // If the user exists, redirect authenticated users to the profile page.
-export const load = async (event) => {
+export const load = (async (event) => {
 	const form = await superValidate(event, signupSchema);
 
 	return { form };
-};
+}) satisfies PageServerLoad;
 
 export const actions = {
 	default: async (event) => {
