@@ -5,7 +5,6 @@ SvelteKit-Lucia-Starter is a SvelteKit starter project that includes all the fun
 Includes the following features:
 
 - Sveltekit installed and configured
-- [Tailwind](https://tailwindcss.com/) for styling / layout.
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
 - Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page.
 - Protected routes
