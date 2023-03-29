@@ -1,5 +1,5 @@
 <div class="col">
-	<div class="header bg-blue-200">Title</div>
+	<div class="header">Title</div>
 	<slot />
 </div>
 

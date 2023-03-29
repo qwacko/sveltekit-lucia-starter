@@ -14,6 +14,7 @@ Includes the following features:
 - [TRPC](https://trpc.io/) with [TRPC-Sveltekit](https://icflorescu.github.io/trpc-sveltekit) to provide a centralised set of functions for use through the application. The TRPC router is setup to allow for protected functions (with incuded demonstrations)
 - A working staged DockerFile and docker-compose file are provided.
 - Vitest is included, however there are no tests setup and functioning
+- TailwindCSS is _NOT_ included, however the tempalte has been tested to work with svelte-add to add tailwind.
 
 ## Getting started
 
@@ -64,6 +65,14 @@ Auth is handled by the `lucia-auth` library with the following information to gu
 - TRPC has a auth guard middleware as well (`lib/server/trpc/middleware/auth.ts`) that can be added to any TRPC endpoint that needs an authorised user to access. It will throw an unauthorised error if a user trys to access the endpoint.
 - If you want the user information to be displayed on the page, then look at how the load function in `routes/(loggedIn)/user/+page.server.ts` are used to provide this information to the frontend.
 
+## Tailwind
+
+To keep the template as clean and widely useable as possible, Tailwind (or any other styling library) is not included.
+
+In order to add tailwind, simple run the following command after cloning this repository:
+
+`npx svelte-add@latest tailwindcss`
+
 ## Prisma
 
 The prisma schema in `prisma/schema.prisma` is setup to only have enough configuration to allow for the user and session storage.
@@ -94,3 +103,7 @@ TRPC has been setup in a way that can be used as part of teh frontend, backend, 
 - `test:unit`: Run unit tests using [Vitest](https://vitest.dev/)
 - `lint`: Run Prettier and ESLint
 - `format`: Run Prettier to format the code
+
+```
+
+```
