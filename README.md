@@ -85,6 +85,7 @@ TRPC has been setup in a way that can be used as part of teh frontend, backend, 
 - Most of the TRPC server is prevented from being called from teh frontend by being located in a `server` directory. The exception to this is the frontend client (for use on `+page.svelte` and `+page.ts`) which is outside of this folder to allow for calling from the frontend.
 - As per the Auth section, there is an auth middleware to check the user has been provided. This is useful as a backstop to make sure that only authorised users can access specific TRPC endpoints regardless of where tehy are called from (Frontend or Server).
 - Examples of how to use the TRPC router are provided in the `routes/(loggedIn)/user` page. With `+page.svelte` indicating a trpc query from the page, `+page.ts` indicating a load function, `+page.server.ts` showing how to call is on the server. With these different calling methods all application should be achievable.
+- It is possible that an app could be configured to route all queries and mutations through TRPC for consistency regardless of where the call is coming from. Alternatiely TRPC could be removed entirely from the applicaiton, and rely on actions / load functions. It is up to the dev.
 
 ## Scripts
 
