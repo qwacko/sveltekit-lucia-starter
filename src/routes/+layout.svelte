@@ -4,9 +4,9 @@
 
 	export let data;
 
-	$: homePage = $page.route.id === '/(open)';
-	$: user = $page.route.id === '/(loggedIn)/user';
-	$: login = $page.route.id === '/(loggedOut)/login' || $page.route.id === '/(loggedOut)/signup';
+	$: homePage = $page.route.id?.startsWith('/(open)');
+	$: user = $page.route.id?.startsWith('/(loggedIn)/user');
+	$: login = $page.route.id?.startsWith('/(loggedOut)');
 </script>
 
 <div class="col">
