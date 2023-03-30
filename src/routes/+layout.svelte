@@ -45,6 +45,7 @@
 		font-size: 1rem;
 		text-decoration: none;
 		padding: 0.75rem;
+		border-radius: 0.375rem;
 
 		transition: background-color 0.3s ease-in-out;
 	}
@@ -52,7 +53,6 @@
 	.nav a:hover,
 	button:hover {
 		background-color: #9dc0fd;
-		border-radius: 0.375rem;
 	}
 
 	.col {
