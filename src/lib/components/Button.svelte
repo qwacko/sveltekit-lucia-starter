@@ -6,6 +6,7 @@
 	class:primary={style === 'primary'}
 	class:secondary={style === 'secondary'}
 	{...$$restProps}
+	on:click
 >
 	<slot />
 </button>
