@@ -14,6 +14,7 @@ declare global {
 		// interface Platform {}
 		interface Locals {
 			auth: import('lucia-auth').AuthRequest;
+			trpc: import('$lib/server/trpc/router').CalledRouter;
 		}
 	}
 }

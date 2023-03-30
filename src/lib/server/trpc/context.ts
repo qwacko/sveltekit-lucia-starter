@@ -9,7 +9,9 @@ export async function createContext(event: RequestEvent) {
 	const user = event.locals.auth.validate();
 	return {
 		user,
-		prisma
+		prisma,
+		auth: event.locals.auth,
+		event
 	};
 }
 
