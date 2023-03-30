@@ -5,7 +5,8 @@
 	export let data;
 
 	$: homePage = $page.route.id?.startsWith('/(open)');
-	$: user = $page.route.id?.startsWith('/(loggedIn)/user');
+	$: users = $page.route.id?.startsWith('/(loggedIn)/users');
+	$: user = $page.route.id?.startsWith('/(loggedIn)/user') && !users;
 	$: login = $page.route.id?.startsWith('/(loggedOut)');
 </script>
 
@@ -14,6 +15,7 @@
 		<a href="/" class:bold={homePage}>Home</a>
 		{#if data.user.user}
 			<a href="/user" class:bold={user}>User</a>
+			<a href="/users" class:bold={users}>Users</a>
 			<form action="/?/logout" method="post">
 				<button type="submit" class:bold={login}>Logout</button>
 			</form>

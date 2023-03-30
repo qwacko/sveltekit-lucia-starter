@@ -15,7 +15,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100vh;
+		margin: 5rem;
 	}
 
 	.card {

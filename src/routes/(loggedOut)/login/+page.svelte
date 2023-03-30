@@ -34,7 +34,6 @@
 			data-invalid={$errors.password}
 			bind:value={$form.password}
 			{...$constraints.password}
-			class="border border-gray-300 p-2 w-full rounded-lg"
 		/>
 		<ErrorText message={$message} />
 		<SpreadButtons>

@@ -16,7 +16,12 @@ export const router = t.router({
 			await delay(input); // 👈 simulate an expensive operation
 			const random = Math.random();
 			return `User Auth : ${user?.userId} - ${random}`;
-		})
+		}),
+	users: t.procedure.use(auth).query(async ({ ctx }) => {
+		const users = await ctx.prisma.authUser.findMany();
+
+		return users;
+	})
 });
 
 export type Router = typeof router;
