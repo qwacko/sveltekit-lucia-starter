@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconAccountBox from '~icons/mdi/pencil';
 
-	export let message: string | null | undefined;
+	export let message: string | null | undefined = undefined;
 </script>
 
 <button on:click on:keydown on:keypress class="wrapper">

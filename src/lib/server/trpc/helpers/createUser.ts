@@ -1,4 +1,4 @@
-import { AuthRequest } from 'lucia-auth';
+import type { AuthRequest } from 'lucia-auth';
 import { auth } from '$lib/server/lucia';
 
 export const createUser = async ({
@@ -11,7 +11,7 @@ export const createUser = async ({
 	username: string;
 	password: string;
 	confirmPassword: string;
-	localAuth: AuthRequest<any, any>;
+	localAuth: AuthRequest;
 	autoLogin: boolean;
 }) => {
 	if (password !== confirmPassword) {
