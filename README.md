@@ -1,6 +1,6 @@
 # SvelteKit-Lucia-Starter
 
-SvelteKit-Lucia-Starter is a SvelteKit starter project that includes all the functionality that I like. It is kind of like the [T3 Stack](https://create.t3.gg/) in some ways as it includes a similar feature set.
+The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pre-configured with a comprehensive set of features to kickstart your next application. Inspired by the [T3 Stack](https://create.t3.gg/), this starter kit provides a similar feature set with added functionality.
 
 Includes the following features:
 
@@ -90,7 +90,7 @@ A DockerFile has been created, that is a staged build (to reduce the final file 
 
 ## TRPC
 
-TRPC has been setup in a way that can be used as part of teh frontend, backend, actions, load functions etc.. by using `trpc-sveltekit` library. Check out the documentatino on that library to understand how the configuration works.
+TRPC has been setup in a way that can be used as part of the frontend, backend, actions, load functions etc.. by using `trpc-sveltekit` library. Check out the documentatino on that library to understand how the configuration works.
 
 - Most of the TRPC server is prevented from being called from teh frontend by being located in a `server` directory. The exception to this is the frontend client (for use on `+page.svelte` and `+page.ts`) which is outside of this folder to allow for calling from the frontend.
 - As per the Auth section, there is an auth middleware to check the user has been provided. This is useful as a backstop to make sure that only authorised users can access specific TRPC endpoints regardless of where tehy are called from (Frontend or Server).
