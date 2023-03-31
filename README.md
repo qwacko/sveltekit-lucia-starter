@@ -6,13 +6,14 @@ Includes the following features:
 
 - Sveltekit installed and configured
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
-- Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page.
+- Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page. ALso a basic logged in user manageement (add / remove users, and update passwords, everyone is admin)
 - Protected routes
 - [Prisma](https://www.prisma.io/) to provide database (includes a SQLite schema for authentication / session management)
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
 - [Zod](https://github.com/colinhacks/zod), which is used for form and trpc validation.
 - [TRPC](https://trpc.io/) with [TRPC-Sveltekit](https://icflorescu.github.io/trpc-sveltekit) to provide a centralised set of functions for use through the application. The TRPC router is setup to allow for protected functions (with incuded demonstrations)
 - A working staged DockerFile and docker-compose file are provided.
+- unplugin-icons (https://github.com/antfu/unplugin-icons) is included, allowing access to over 10,000 icons.
 - Vitest is included, however there are no tests setup and functioning
 - TailwindCSS is _NOT_ included, however the tempalte has been tested to work with svelte-add to add tailwind.
 
@@ -56,6 +57,7 @@ The following environemnt variables are included
 |ORIGIN| Used In Production Only. Indicates the origin for all node routing to work correctly|
 |DATABASE_URL|Set the database URL. Used in both dev and production.|
 |HTTPS|Sets whether the authentication cookie in production will be secure (require HTTPS) or not. A value of anything other than "TRUE" (or blank) will result in insecure cookies. No effect in dev|
+|ALLOW_SIGNUP|Indicates whether to enable public signup following the first user creation. Set to "true" to enable this|
 
 ## Auth
 

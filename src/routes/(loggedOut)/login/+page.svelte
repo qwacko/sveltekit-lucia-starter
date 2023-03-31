@@ -7,7 +7,7 @@
 	import SpreadButtons from '$lib/components/SpreadButtons.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
-	import type { loginSchemaType } from './loginSchema';
+	import type { loginSchemaType } from '$lib/schema/loginSchema';
 
 	export let data;
 	const { form, errors, constraints, message } = superForm<loginSchemaType>(data.form);
@@ -38,7 +38,9 @@
 		<ErrorText message={$message} />
 		<SpreadButtons>
 			<Button type="submit" style="primary">Sign In</Button>
-			<LinkButton style="secondary" href="/signup">Create Account</LinkButton>
+			{#if data.firstUser.allowSignup}
+				<LinkButton href="/signup" style="secondary">Sign Up</LinkButton>
+			{/if}
 		</SpreadButtons>
 	</form>
 </CenterCard>

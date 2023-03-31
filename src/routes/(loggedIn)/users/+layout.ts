@@ -4,6 +4,6 @@ import { trpc } from '$lib/clientTRPC';
 export const load = async (event) => {
 	return {
 		...(event.data ? event.data : {}),
-		users: trpc(event).users.query()
+		users: trpc(event).users.users.query()
 	};
 };

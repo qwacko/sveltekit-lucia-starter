@@ -1,28 +1,28 @@
-import { fail } from '@sveltejs/kit';
-import { auth } from '$lib/server/lucia';
+import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
-import { loginSchema } from './loginSchema';
+import { loginSchema } from '$lib/schema/loginSchema';
 
 // If the user exists, redirect authenticated users to the profile page.
 export const load = async (event) => {
 	const form = await superValidate(event, loginSchema);
-	return { form };
+	const firstUser = await event.locals.trpc.users.firstUser();
+	if (firstUser.userCountZero) {
+		throw redirect(302, '/signup');
+	}
+
+	return { form, firstUser };
 };
 
 export const actions = {
 	default: async (event) => {
 		const form = await superValidate(event, loginSchema);
-
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		try {
-			const key = await auth.useKey('username', form.data.username, form.data.password);
-			const session = await auth.createSession(key.userId);
-			event.locals.auth.setSession(session);
-			return { form };
-		} catch {
-			return fail(400, { form: { ...form, message: 'Login Error' } });
+		const result = await event.locals.trpc.users.login(form.data);
+		if (result.error) {
+			return fail(400, { form: { ...form, message: result.error.message } });
 		}
+		return { form };
 	}
 };

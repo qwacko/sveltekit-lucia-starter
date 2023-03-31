@@ -8,24 +8,24 @@ import { prisma } from '$lib/server/db';
 export const load = (async (event) => {
 	const form = await superValidate(event, signupSchema);
 
-	const firstUser = await event.locals.trpc.users.firstUser();
-	if (!firstUser.userCountZero && !firstUser.allowSignup) {
-		throw redirect(302, '/login');
-	}
-
-	return { form, firstUser };
+	return { form };
 }) satisfies PageServerLoad;
 
 export const actions = {
 	default: async (event) => {
 		const form = await superValidate(event, signupSchema);
 
-		const result = await event.locals.trpc.users.createFirstUser(form.data);
+		if (!form.valid) {
+			// Again, always return { form } and things will just work.
+			return fail(400, { form });
+		}
+
+		const result = await event.locals.trpc.users.createUser(form.data);
 
 		if (result.error) {
 			return setError(form, result.error.location, result.error.message);
 		}
 
-		return { form };
+		throw redirect(302, '/users');
 	}
 };

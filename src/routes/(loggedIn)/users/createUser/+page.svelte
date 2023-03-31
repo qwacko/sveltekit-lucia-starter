@@ -13,7 +13,7 @@
 	const { form, errors, constraints, message } = superForm<signupSchemaType>(data.form);
 </script>
 
-<CenterCard title="Signup" maxWidthRem={30}>
+<CenterCard title="Create User Account" maxWidthRem={30}>
 	<form method="POST" use:enhance>
 		<TextInput
 			title="Username"
@@ -47,10 +47,8 @@
 		/>
 		<ErrorText message={$message} />
 		<SpreadButtons>
-			<Button type="submit" style="primary">Sign Up</Button>
-			{#if !Boolean(data.firstUser.userCountZero)}
-				<LinkButton href="/login" style="secondary">Login</LinkButton>
-			{/if}
+			<Button type="submit" style="primary">Add User</Button>
+			<LinkButton href="/users" style="secondary">Finished</LinkButton>
 		</SpreadButtons>
 	</form>
 </CenterCard>
