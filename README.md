@@ -136,4 +136,4 @@ logging.info('Server Environment:', serverEnv);
 - `test:unit`: Run unit tests using [Vitest](https://vitest.dev/)
 - `lint`: Run Prettier and ESLint
 - `format`: Run Prettier to format the code
-- `check`: Run typescript check of the code.
+- `check`: Run typescript check, and svelte-check of the code.
