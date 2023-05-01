@@ -11,7 +11,7 @@ Includes the following features:
 - [Prisma](https://www.prisma.io/) to provide database (includes a SQLite schema for authentication / session management)
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
 - [Zod](https://github.com/colinhacks/zod), which is used for form and trpc validation.
-- [TRPC](https://trpc.io/) with [TRPC-Sveltekit](https://icflorescu.github.io/trpc-sveltekit) to provide a centralised set of functions for use through the application. The TRPC router is setup to allow for protected functions (with incuded demonstrations)
+- [TRPC](https://trpc.io/) with [TRPC-Sveltekit](https://icflorescu.github.io/trpc-sveltekit) to provide a centralised set of functions for use through the application. The TRPC router is setup to allow for protected functions (with included demonstrations)
 - A working staged DockerFile and docker-compose file are provided.
 - unplugin-icons (https://github.com/antfu/unplugin-icons) is included, allowing access to over 10,000 icons.
 - Vitest is included, however there are no tests setup and functioning
