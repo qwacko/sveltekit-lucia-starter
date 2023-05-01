@@ -24,9 +24,11 @@ Includes the following features:
 To get started with SvelteKit-Lucia-Starter, follow these steps:
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/qwacko/sveltekit-lucia-starter.git
    ```
+
 2. Install the dependencies:
 
    ```bash
@@ -47,6 +49,7 @@ To get started with SvelteKit-Lucia-Starter, follow these steps:
    ```
 
 5. Start the development server:
+
    ```bash
    pnpm dev
    ```
@@ -75,9 +78,9 @@ The following environemnt variables are included
 
 Auth is handled by the `lucia-auth` library with the following information to guide the user of this template:
 
-- Route guards have been implemented in the `hooks.server.ts` file rather than elsewhere. With the folder structure (seperate sections for `loggedIn`, `loggedOut`, and `open`) this makes it relativelt easy to guard specific sections of the app. These route guards are used to redirect on login and logout.
-- TRPC has a auth guard middleware as well (`lib/server/trpc/middleware/auth.ts`) that can be added to any TRPC endpoint that needs an authorised user to access. It will throw an unauthorised error if a user trys to access the endpoint.
-- If you want the user information to be displayed on the page, then look at how the load function in `routes/(loggedIn)/user/+page.server.ts` are used to provide this information to the frontend.
+- Route guards have been implemented in the `hooks.server.ts` file rather than elsewhere. With the folder structure (seperate sections for `loggedIn`, `loggedOut`, and `open`) this makes it relatively easy to guard specific sections of the app. These route guards are used to redirect on login and logout.
+- TRPC has a auth guard middleware as well (`lib/server/trpc/middleware/auth.ts`) that can be added to any TRPC endpoint that needs an authorised user to access. It will throw an unauthorised error if a user tries to access the endpoint.
+- If you want the user information to be displayed on the page, then look at how the load function in `routes/(loggedIn)/user/+page.server.ts` is used to provide this information to the frontend.
 
 ## Tailwind
 
@@ -102,7 +105,7 @@ A DockerFile has been created, that is a staged build (to reduce the final file 
 
 ## TRPC
 
-TRPC has been setup in a way that can be used as part of the frontend, backend, actions, load functions etc.. by using `trpc-sveltekit` library. Check out the documentatino on that library to understand how the configuration works.
+TRPC has been setup in a way that can be used as part of the frontend, backend, actions, load functions etc.. by using `trpc-sveltekit` library. Check out [the documentation on that library](https://github.com/icflorescu/trpc-sveltekit) to understand how the configuration works.
 
 - Most of the TRPC server is prevented from being called from the frontend by being located in a `server` directory. The exception to this is the frontend client (for use on `+page.svelte` and `+page.ts`) which is outside of this folder to allow for calling from the frontend.
 - As per the Auth section, there is an auth middleware to check the user has been provided. This is useful as a backstop to make sure that only authorised users can access specific TRPC endpoints regardless of where tehy are called from (Frontend or Server).
