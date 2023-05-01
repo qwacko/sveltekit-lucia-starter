@@ -15,7 +15,9 @@ Includes the following features:
 - A working staged DockerFile and docker-compose file are provided.
 - unplugin-icons (https://github.com/antfu/unplugin-icons) is included, allowing access to over 10,000 icons.
 - Vitest is included, however there are no tests setup and functioning
-- TailwindCSS is _NOT_ included, however the tempalte has been tested to work with svelte-add to add tailwind.
+- TailwindCSS is _NOT_ included, however the template has been tested to work with svelte-add to add tailwind.
+- Environment Variable Validation (using Zod)
+- Basic logging setup.
 
 ## Getting started
 
@@ -67,6 +69,10 @@ The following environemnt variables are included
 |DATABASE_URL|Set the database URL. Used in both dev and production.|
 |HTTPS|Sets whether the authentication cookie in production will be secure (require HTTPS) or not. A value of anything other than "TRUE" (or blank) will result in insecure cookies. No effect in dev|
 |ALLOW_SIGNUP|Indicates whether to enable public signup following the first user creation. Set to "true" to enable this|
+|DEV_OVERRIDE|Allows the authentication to be put into dev mode, which doesn't enforce secure cookies. This can be used if the service is to be accessed over a non-https route (i.e. IP Address)|
+|CSRF_CHECK_ORIGIN|Allows CSFR to be disabled if necessary. Only disable if you know what you are doing and why you are disabling.|
+|LOGGING|Allows logging to be turned on in production. Logging is always turned on in dev|
+|LOGGING_CLASSES| Allows the different classes of logging to be enabled. The options are `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE` (with a comma separated list allowing multiple to be enabled). Defaults to `ERROR,WARN,INFO`|
 
 ## Auth
 
@@ -106,6 +112,25 @@ TRPC has been setup in a way that can be used as part of the frontend, backend, 
 - Examples of how to use the TRPC router are provided in the `routes/(loggedIn)/user` page. With `+page.svelte` indicating a trpc query from the page, `+page.ts` indicating a load function, `+page.server.ts` showing how to call is on the server. With these different calling methods all application should be achievable.
 - It is possible that an app could be configured to route all queries and mutations through TRPC for consistency regardless of where the call is coming from. Alternatiely TRPC could be removed entirely from the applicaiton, and rely on actions / load functions. It is up to the dev.
 
+## Enviroment Variables
+
+Enviroment Variables (At least the server side dynamic ones) are able to be validated using a zod data structure. This can be found in the file `lib/server/serverEnv.ts`.
+For the CSRF protection, there is a line of code added to the file `svelte.config.js`
+
+## Logging
+
+To simplify logging a logging object is created, which allows for the same input context as a `console.log`, but also will prefix the server timestamp and log class (with the ability to enable / disable some or all logging using environment variables).
+
+To log data use the following code:
+
+```typescript
+import { logging} from './logging';
+
+...
+
+logging.info('Server Environment:', serverEnv);
+```
+
 ## Scripts
 
 - `dev`: Start the development server
@@ -114,3 +139,4 @@ TRPC has been setup in a way that can be used as part of the frontend, backend, 
 - `test:unit`: Run unit tests using [Vitest](https://vitest.dev/)
 - `lint`: Run Prettier and ESLint
 - `format`: Run Prettier to format the code
+- `check`: Run typescript check, and svelte-check of the code.

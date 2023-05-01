@@ -1,5 +1,8 @@
 import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import 'dotenv/config';
+
+const dontCheckOrigin = process.env.CSRF_CHECK_ORIGIN === 'false';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,7 +19,10 @@ const config = {
 			precompress: false,
 			envPrefix: '',
 			polyfill: false
-		})
+		}),
+		csrf: {
+			checkOrigin: !dontCheckOrigin
+		}
 	}
 };
 
