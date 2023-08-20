@@ -6,7 +6,7 @@ export const cronJobs: CronJob[] = [
 		schedule: '*/1 * * * *',
 		job: () => {
 			const currentTime = new Date();
-			console.log('test 1..2..3..', currentTime);
+			console.log('Test Cron Job', currentTime);
 		}
 	}
 ];
