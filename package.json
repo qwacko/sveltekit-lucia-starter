@@ -13,7 +13,6 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"db:push": "pnpm drizzle-kit push:sqlite",
 		"db:generate": "pnpm drizzle-kit generate:sqlite",
 		"db:studio": "pnpm drizzle-kit studio"
 	},
