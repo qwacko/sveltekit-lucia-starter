@@ -1,5 +1,6 @@
 import { initateCronJobs } from '$lib/server/cron/cron';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
+import { logging } from '$lib/server/logging';
 import { auth } from '$lib/server/lucia';
 import type { Handle } from '@sveltejs/kit';
 
@@ -16,12 +17,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const noAdmin = await dbNoAdmins();
 
 	if (noAdmin && !event.route.id?.startsWith('/(loggedOut)/firstUser')) {
-		console.log('No Admin Exists - Redirecting to First User Creation');
+		logging.info('No Admin Exists - Redirecting to First User Creation');
 		return Response.redirect(`${event.url.origin}/firstUser`, 302);
 	}
 
 	if (!noAdmin && event.route.id?.startsWith('/(loggedOut)/firstUser')) {
-		console.log('Admin Exists - Redirecting to Home');
+		logging.info('Admin Exists - Redirecting to Home');
 		if (user) {
 			return Response.redirect(`${event.url.origin}/user`, 302);
 		} else {
@@ -30,12 +31,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (event.route.id?.startsWith('/(loggedIn)') && !user) {
-		console.log('User Not Logged In - Redirecting to Login');
+		logging.info('User Not Logged In - Redirecting to Login');
 		return Response.redirect(`${event.url.origin}/login`, 302);
 	}
 
 	if (event.route.id?.startsWith('/(loggedOut)') && user) {
-		console.log('User Logged In - Redirecting to User');
+		logging.info('User Logged In - Redirecting to User');
 		return Response.redirect(`${event.url.origin}/user`, 302);
 	}
 

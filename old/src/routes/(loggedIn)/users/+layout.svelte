@@ -7,7 +7,6 @@
 
 	export let data;
 
-	$: console.log('layout data', data);
 </script>
 
 <CenterCard title="Users" maxWidthRem={30}>

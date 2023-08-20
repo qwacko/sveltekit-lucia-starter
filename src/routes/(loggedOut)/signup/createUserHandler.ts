@@ -2,6 +2,7 @@ import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { signupSchema } from '$lib/schema/signupSchema';
+import { logging } from '$lib/server/logging';
 
 export const createUserHandler = async ({
 	request,
@@ -36,7 +37,7 @@ export const createUserHandler = async ({
 		});
 		locals.auth.setSession(session); // set session cookie
 	} catch (e) {
-		console.log('Error creating user', e);
+		logging.info('Error creating user', e);
 		form.message = 'Error creating user. Username possibly already exists.';
 		return fail(500, { form });
 	}

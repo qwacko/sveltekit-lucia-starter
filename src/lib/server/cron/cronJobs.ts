@@ -1,3 +1,4 @@
+import { logging } from '../logging';
 import type { CronJob } from './cron';
 
 export const cronJobs: CronJob[] = [
@@ -6,7 +7,7 @@ export const cronJobs: CronJob[] = [
 		schedule: '*/1 * * * *',
 		job: () => {
 			const currentTime = new Date();
-			console.log('Test Cron Job', currentTime);
+			logging.info('Test Cron Job', currentTime);
 		}
 	}
 ];
