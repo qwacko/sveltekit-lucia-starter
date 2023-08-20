@@ -14,6 +14,6 @@ const serverEnvValidation = z.object({
 
 export const serverEnv = serverEnvValidation.parse({
 	DEV: dev,
-	LOGGING: env.DEBUG,
+	LOGGING: dev || env.LOGGING,
 	LOOGGING_CLASSES: env.DEBUG_CLASSES
 });
