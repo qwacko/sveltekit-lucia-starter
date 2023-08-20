@@ -6,15 +6,15 @@
 	import SpreadButtons from '$lib/components/SpreadButtons.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
-	import type { loginSchemaType } from '$lib/schema/loginSchema';
+	import type { signupSchemaType } from '$lib/schema/signupSchema.js';
 
 	export let data;
-	const { form, errors, constraints, message, enhance } = superForm<loginSchemaType>(data.form, {
+	const { form, errors, constraints, message, enhance } = superForm<signupSchemaType>(data.form, {
 		taintedMessage: null
 	});
 </script>
 
-<CenterCard title="Login" maxWidthRem={30}>
+<CenterCard title="Create First User" maxWidthRem={30}>
 	<form method="POST" use:enhance>
 		<TextInput
 			title="Username"
@@ -36,10 +36,19 @@
 			bind:value={$form.password}
 			{...$constraints.password}
 		/>
+		<TextInput
+			title="Confirm Password"
+			errorMessage={$errors.confirmPassword}
+			type="password"
+			id="confirmPassword"
+			name="confirmPassword"
+			data-invalid={$errors.confirmPassword}
+			bind:value={$form.confirmPassword}
+			{...$constraints.confirmPassword}
+		/>
 		<ErrorText message={$message} />
 		<SpreadButtons>
-			<Button type="submit" style="primary">Sign In</Button>
-			<LinkButton href="/signup" style="secondary">Sign Up</LinkButton>
+			<Button type="submit" style="primary">Create First Admin User</Button>
 		</SpreadButtons>
 	</form>
 </CenterCard>

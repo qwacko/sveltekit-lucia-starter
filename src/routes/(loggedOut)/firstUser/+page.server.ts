@@ -1,7 +1,8 @@
 import type { Actions } from './$types';
 import { superValidate } from 'sveltekit-superforms/server';
 import { signupSchema } from '$lib/schema/signupSchema';
-import { createUserHandler } from './createUserHandler';
+import { createUserHandler } from './../signup/createUserHandler';
+import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
 
 export const load = async () => {
 	const form = await superValidate(signupSchema);
@@ -10,6 +11,10 @@ export const load = async () => {
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
-		return createUserHandler({ request, locals, admin: false });
+		//Only allow creation of a first user as an admin if there is no existing admins.
+		const noAdmin = await dbNoAdmins();
+		if (noAdmin) {
+			return createUserHandler({ request, locals, admin: true });
+		}
 	}
 };

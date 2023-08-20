@@ -1,5 +1,8 @@
-export const load = async (event) => {
-	const user = await event.locals.auth.validateUser();
+import { dbUserCount } from '$lib/server/db/actions/firstUser';
+import type { LayoutServerLoad } from './$types';
 
-	return { user };
+export const load: LayoutServerLoad = async ({ locals }) => {
+	const session = await locals.auth.validate();
+	const userCountValue = await dbUserCount();
+	return { user: session ? session.user : undefined, userCount: userCountValue };
 };

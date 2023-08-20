@@ -9,7 +9,9 @@
 
 	const removeUser = async () => {
 		loading = true;
-		await trpc($page).users.removeUser.mutate({ id: userId });
+		//TODO : Remove This Line
+		userId = userId;
+		// await trpc($page).users.removeUser.mutate({ id: userId });
 		invalidateAll();
 		loading = false;
 	};

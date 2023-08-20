@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1692494019563,
+      "tag": "0000_flippant_kingpin",
+      "breakpoints": true
+    }
+  ]
+}

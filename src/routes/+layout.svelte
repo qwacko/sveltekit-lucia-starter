@@ -13,7 +13,7 @@
 <div class="col">
 	<div class="nav">
 		<a href="/" class:bold={homePage}>Home</a>
-		{#if data.user.user}
+		{#if data?.user?.username}
 			<a href="/user" class:bold={user}>User</a>
 			<a href="/users" class:bold={users}>Users</a>
 			<form action="/?/logout" method="post">
@@ -23,6 +23,8 @@
 			<a href="/login" class:bold={login}>Login</a>
 		{/if}
 	</div>
+
+	<div>User Count : {data.userCount}</div>
 
 	<slot />
 </div>
