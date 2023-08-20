@@ -1,6 +1,10 @@
+import { initateCronJobs } from '$lib/server/cron/cron';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
 import { auth } from '$lib/server/lucia';
 import type { Handle } from '@sveltejs/kit';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const runningJobs = initateCronJobs();
 
 export const handle: Handle = async ({ event, resolve }) => {
 	// we can pass `event` because we used the SvelteKit middleware
@@ -10,8 +14,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const user = await event.locals.auth.validate();
 
 	const noAdmin = await dbNoAdmins();
-
-	console.log('Route', event.route.id);
 
 	if (noAdmin && !event.route.id?.startsWith('/(loggedOut)/firstUser')) {
 		console.log('No Admin Exists - Redirecting to First User Creation');
