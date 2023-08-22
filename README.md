@@ -57,6 +57,8 @@ Recommendation is to stick with Docker (or possibly node) unless you are knowled
 
 ## Envinroment Variables
 
+#TODO : Make sure the environment variables are correct in this file.
+
 The following environemnt variables are included
 | Variable | Purpose |
 | ------------- | ------------- |
@@ -68,6 +70,8 @@ The following environemnt variables are included
 |CSRF_CHECK_ORIGIN|Allows CSFR to be disabled if necessary. Only disable if you know what you are doing and why you are disabling.|
 |LOGGING|Allows logging to be turned on in production. Logging is always turned on in dev|
 |LOGGING_CLASSES| Allows the different classes of logging to be enabled. The options are `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE` (with a comma separated list allowing multiple to be enabled). Defaults to `ERROR,WARN,INFO`|
+|BACKUP_DIR| Sets the location of the automated and manual backups. Defaults to ./backup|
+|BACKUP_SCHEDULE| Cron string to set the Backup schedule. Defaults to "0 0 \* \* \*" (Midnight daily)|
 
 ## Auth
 
