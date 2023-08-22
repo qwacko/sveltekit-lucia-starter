@@ -14,7 +14,7 @@
 	});
 </script>
 
-<CenterCard title="Login" maxWidthRem={30}>
+<CenterCard title="Create Account" maxWidthRem={30}>
 	<form method="POST" use:enhance>
 		<TextInput
 			title="Username"
@@ -48,7 +48,7 @@
 		/>
 		<ErrorText message={$message} />
 		<SpreadButtons>
-			<Button type="submit" style="primary">Sign Up</Button>
+			<Button type="submit" style="primary">Create</Button>
 			<LinkButton href="/login" style="secondary">Login</LinkButton>
 		</SpreadButtons>
 	</form>

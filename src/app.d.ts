@@ -1,3 +1,4 @@
+import 'unplugin-icons/types/svelte';
 // src/app.d.ts
 /// <reference types="lucia" />
 declare global {
@@ -9,12 +10,11 @@ declare global {
 
 	namespace Lucia {
 		type Auth = import('$lib/server/lucia').Auth;
-		//TODO Need to remove these tests. They are just here to make sure the types are working.
 		type DatabaseUserAttributes = {
 			username: string;
 			admin: number;
 		};
-		type DatabaseSessionAttributes = {};
+		type DatabaseSessionAttributes = Record<string, never>;
 	}
 }
 

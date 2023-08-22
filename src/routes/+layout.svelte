@@ -25,6 +25,7 @@
 	</div>
 
 	<div>User Count : {data.userCount}</div>
+	<div>Admin Count : {data.adminCount}</div>
 
 	<slot />
 </div>
