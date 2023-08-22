@@ -13,6 +13,7 @@ Includes the following features:
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
 - [Zod](https://github.com/colinhacks/zod), which is used for form and trpc validation.
 - A working staged DockerFile and docker-compose file are provided.
+- Automatic scheduled Backups of the database.
 - unplugin-icons (https://github.com/antfu/unplugin-icons) is included, allowing access to over 10,000 icons.
 - Vitest is included, however there are no tests setup and functioning
 - TailwindCSS is _NOT_ included, however the template has been tested to work with svelte-add to add tailwind.
@@ -113,6 +114,11 @@ import { logging} from './logging';
 
 logging.info('Server Environment:', serverEnv);
 ```
+
+## Backups
+
+There is a single function (`backupDB`) for backing up the database included in the file `src/lib/server/db/db.ts`, this will generate a db dump of the current state into a folder defined in environment variable `BACKUP_DIR`.
+There is a preconfigured cron job to execute this function every day, the schedule is configured by the Environment variable `BACKUP_SCHEDULE` whcih should be a cron schedule.
 
 ## Scripts
 
