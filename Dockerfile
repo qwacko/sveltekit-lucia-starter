@@ -3,7 +3,6 @@
 FROM node:19-alpine AS deps
 
 WORKDIR /app
-COPY prisma ./
 
 COPY package.json  pnpm-lock.yaml pnpm-lock.yaml\* ./
 
@@ -14,7 +13,6 @@ RUN pnpm i;
 FROM node:19-alpine AS proddeps
 
 WORKDIR /app
-COPY prisma ./
 
 COPY package.json pnpm-lock.yaml pnpm-lock.yaml\* ./
 
@@ -37,19 +35,6 @@ RUN yarn global add pnpm
 RUN pnpm build
 
 
-
-##### PRISMA
-FROM --platform=linux/amd64 node:19-alpine AS prisma
-WORKDIR /app
-
-ENV DATABASE_URL file:./dev.db
-
-COPY ./prisma ./prisma
-
-RUN npm init -y
-RUN npm install prisma --save-dev
-
-
 ##### RUNNER
 
 FROM --platform=linux/amd64 node:19-alpine AS runner
@@ -57,6 +42,8 @@ WORKDIR /app
 
 ENV DATABASE_URL file:./dev.db
 ENV NODE_ENV production
+
+#TODO : Make sure docker file has env vars.
 ENV HTTPS true
 ENV ALLOW_SIGNUP false
 
@@ -65,7 +52,6 @@ ENV ALLOW_SIGNUP false
 COPY --from=proddeps /app/node_modules ./node_modules
 COPY package.json pnpm-lock.yaml\* ./
 COPY --from=builder /app/build ./build
-COPY --from=prisma /app ./prisma
 COPY dockerEntrypoint.sh /app/dockerEntrypoint.sh
 
 EXPOSE 3000
