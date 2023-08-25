@@ -14,7 +14,8 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
 		"db:generate": "pnpm drizzle-kit generate:sqlite",
-		"db:studio": "pnpm drizzle-kit studio"
+		"db:studio": "pnpm drizzle-kit studio",
+		"generate-pwa-assets": "pwa-assets-generator"
 	},
 	"devDependencies": {
 		"@iconify/json": "^2.2.105",
@@ -25,6 +26,7 @@
 		"@types/node-schedule": "^2.1.0",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
 		"@typescript-eslint/parser": "^6.4.1",
+		"@vite-pwa/assets-generator": "^0.0.8",
 		"@vite-pwa/sveltekit": "^0.2.5",
 		"dotenv": "^16.3.1",
 		"drizzle-kit": "^0.19.13",

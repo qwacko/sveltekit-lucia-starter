@@ -1,4 +1,3 @@
-TODO: Check if PWA Functionality Works Correctly.
 TODO: Preliminary User Management (add, remove, update password)
 TODO: Check that docker works / update to function correctly.
 TODO: Set whether people can signup through environment variables.
