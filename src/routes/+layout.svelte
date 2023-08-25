@@ -6,7 +6,6 @@
 
 	export let data;
 
-
 	onMount(async () => {
 		if (pwaInfo) {
 			const { registerSW } = await import('virtual:pwa-register');

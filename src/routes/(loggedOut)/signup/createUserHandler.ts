@@ -7,11 +7,13 @@ import { logging } from '$lib/server/logging';
 export const createUserHandler = async ({
 	request,
 	locals,
-	admin
+	admin,
+	setSession = false
 }: {
 	request: Request;
 	locals: App.Locals;
 	admin: boolean;
+	setSession?: boolean;
 }) => {
 	const form = await superValidate(request, signupSchema);
 
@@ -31,11 +33,17 @@ export const createUserHandler = async ({
 				admin: admin ? 1 : 0
 			}
 		});
-		const session = await auth.createSession({
-			userId: user.userId,
-			attributes: {}
-		});
-		locals.auth.setSession(session); // set session cookie
+		if (setSession) {
+			const session = await auth.createSession({
+				userId: user.userId,
+				attributes: {}
+			});
+			locals.auth.setSession(session); // set session cookie}
+		} else {
+			//Returns a new form to reset the form
+			const newForm = await superValidate(signupSchema);
+			return { form: newForm };
+		}
 	} catch (e) {
 		logging.info('Error creating user', e);
 		form.message = 'Error creating user. Username possibly already exists.';
