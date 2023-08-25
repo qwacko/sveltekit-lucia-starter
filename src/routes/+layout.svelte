@@ -6,7 +6,6 @@
 
 	export let data;
 
-	console.log('PWA Info', pwaInfo);
 
 	onMount(async () => {
 		if (pwaInfo) {
