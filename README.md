@@ -122,7 +122,7 @@ logging.info('Server Environment:', serverEnv);
 ## Backups
 
 There is a single function (`backupDB`) for backing up the database included in the file `src/lib/server/db/db.ts`, this will generate a db dump of the current state into a folder defined in environment variable `BACKUP_DIR`.
-There is a preconfigured cron job to execute this function every day, the schedule is configured by the Environment variable `BACKUP_SCHEDULE` whcih should be a cron schedule.
+There is a preconfigured cron job to execute this function every day, the schedule is configured by the Environment variable `BACKUP_SCHEDULE` which should be a cron schedule (this isn't validated, the text is used directly).
 
 ## Scripts
 

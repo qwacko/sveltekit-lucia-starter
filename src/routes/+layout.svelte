@@ -1,14 +1,22 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/stores';
+	import { pwaInfo } from 'virtual:pwa-info';
 
 	export let data;
 
+	console.log('PWA Info', pwaInfo);
+
+	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 	$: homePage = $page.route.id?.startsWith('/(open)');
 	$: users = $page.route.id?.startsWith('/(loggedIn)/users');
 	$: user = $page.route.id?.startsWith('/(loggedIn)/user') && !users;
 	$: login = $page.route.id?.startsWith('/(loggedOut)');
 </script>
+
+<svelte:head>
+	{@html webManifestLink}
+</svelte:head>
 
 <div class="col">
 	<div class="nav">

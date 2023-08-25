@@ -7,7 +7,6 @@
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { loginSchemaType } from '$lib/schema/loginSchema';
-	import TestComponent from '$lib/components/TestComponent.svelte';
 
 	export let data;
 	const { form, errors, constraints, message, enhance } = superForm<loginSchemaType>(data.form, {
