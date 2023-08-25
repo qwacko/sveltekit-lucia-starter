@@ -1,37 +1,22 @@
 
-##### BUILDER
-FROM node:19-alpine AS deps
-
-WORKDIR /app
-
-COPY package.json  pnpm-lock.yaml pnpm-lock.yaml\* ./
-
-RUN yarn global add pnpm
-RUN pnpm i;
-
-##### BUILDER
-FROM node:19-alpine AS proddeps
-
-WORKDIR /app
-
-COPY package.json pnpm-lock.yaml pnpm-lock.yaml\* ./
-
-RUN yarn global add pnpm
-RUN pnpm i -P;
-
 
 
 
 ##### BUILDER
 FROM node:19-alpine AS builder
 
-ENV DATABASE_URL file:./dev.db
+
+RUN apk add --update --no-cache python3 make g++
+RUN ln -sf python3 /usr/bin/python
+
 
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+
 COPY . .
+ENV DATABASE_URL ./dev.db
 
 RUN yarn global add pnpm
+RUN pnpm i;
 RUN pnpm build
 
 
@@ -40,7 +25,11 @@ RUN pnpm build
 FROM --platform=linux/amd64 node:19-alpine AS runner
 WORKDIR /app
 
-ENV DATABASE_URL file:./dev.db
+RUN apk add --update --no-cache python3 make g++
+RUN ln -sf python3 /usr/bin/python
+
+
+ENV DATABASE_URL ./dev.db
 ENV NODE_ENV production
 
 #TODO : Make sure docker file has env vars.
@@ -49,9 +38,9 @@ ENV ALLOW_SIGNUP false
 
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=proddeps /app/node_modules ./node_modules
+COPY --from=builder /app/node_modules ./node_modules
 COPY package.json pnpm-lock.yaml\* ./
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/.svelte-kit ./build
 COPY dockerEntrypoint.sh /app/dockerEntrypoint.sh
 
 EXPOSE 3000

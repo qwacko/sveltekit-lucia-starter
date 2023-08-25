@@ -9,7 +9,7 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-prisma/dev.db
+
 
 .vscode 
 node_modules 
@@ -19,5 +19,8 @@ node_modules
 .eslintrc.cjs 
 .prettierrc
 .pretieriignore 
+.svelte-kit
 README.md 
 Dockerfile
+backup
+tests
