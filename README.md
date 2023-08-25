@@ -5,6 +5,7 @@ The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pr
 Includes the following features:
 
 - Sveltekit installed and configured
+- PWA Configured using [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
 - Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page. ALso a basic logged in user manageement (add / remove users, and update passwords, everyone is admin)
 - Protected routes
@@ -79,6 +80,13 @@ Auth is handled by the `lucia-auth` library with the following information to gu
 
 - Route guards have been implemented in the `hooks.server.ts` file rather than elsewhere. With the folder structure (seperate sections for `loggedIn`, `loggedOut`, and `open`) this makes it relatively easy to guard specific sections of the app. These route guards are used to redirect on login and logout.
 
+## Portable Web App
+
+The PWA is configured to function correctly, however to work for the specific app it wil need additional configuration:
+
+- Edit the app details (manifest) in `vite.config.ts` to reflect the name of the app.
+- Replace `static/logo.svg` with the app icon, and runn `pnpm generate-pwa-assets` to generate all the necessary icons from this file
+
 ## Tailwind
 
 To keep the template as clean and widely useable as possible, Tailwind (or any other styling library) is not included.
@@ -91,6 +99,11 @@ In order to add tailwind, simple run the following command after cloning this re
 
 The Drizzle ORM schema is configured in `src/lib/server/db/schema` and all files should be compiled into `index.ts` to allow for the application to use this correctly. Migration files are stored in `src/lib/server/db/migrations`.
 If you want different information related to the user (currently only `username` and `admin`) to be available through lucia-auth, you will need to modify the `app.d.ts` file and `src/lib/server/lucia.ts`, as these values are not related to the drizzle schema.
+
+The following scripts are available in relation to drizzle:
+
+- `pnpm db:generate` : Generates the necessary migrations from the current schema.
+- `pnpm db:studio` : Executes drizzle studio to allow for db exploration.
 
 ## Docker
 
