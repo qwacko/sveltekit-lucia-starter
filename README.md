@@ -1,5 +1,14 @@
 # SvelteKit-Lucia-Starter
 
+## 2023-08-26 - Update
+
+I have made a big decision and rethought this starter. The key changes I have made from the previous version:
+
+- Changed from Prisma to Drizzle for the ORM and Migrations
+- Removed tRPC. This was because I found that the actions and load functions of sveltekit are enough for most of my needs. Will consider re-adding in the future.
+
+## Overview
+
 The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pre-configured with a comprehensive set of features to kickstart your next application. Inspired by the [T3 Stack](https://create.t3.gg/), this starter kit provides a similar feature set with added functionality.
 
 Includes the following features:
