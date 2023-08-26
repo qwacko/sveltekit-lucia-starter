@@ -7,7 +7,8 @@ I have made a few changes to this starter. The key changes I have made from the 
 - Changed from Prisma to Drizzle for the ORM and Migrations. This makes the docker compose file much simpler as the Drizzle migration happens in the server on startup. Also I like the approach and performance of Drizzle.
 - Removed tRPC. This was because I found that the actions and load functions of sveltekit are enough for most of my needs and trying to force tRPC into the mix ends up making things more complex for the simple functionality this template is intended for. Will consider re-adding in the future.
 - Added Cron functionality (only work on long-running processes)
-- Added backups / restore (only works with SQLite, and automatic backups only work if Cron function is working)
+- Added backups / restore (only works with SQLite, and automatic backups only work if Cron function is working).
+- Configured PWA to work.U
 
 ## Overview
 
