@@ -28,8 +28,8 @@
 
 	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 	$: homePage = $page.route.id?.startsWith('/(open)');
-	$: users = $page.route.id?.startsWith('/(loggedIn)/users');
-	$: user = $page.route.id?.startsWith('/(loggedIn)/user') && !users;
+	$: user = $page.url.pathname.startsWith(`/users/${data?.user?.userId}`);
+	$: users = $page.route.id?.startsWith('/(loggedIn)/users') && !user;
 	$: login = $page.route.id?.startsWith('/(loggedOut)');
 </script>
 
@@ -40,8 +40,8 @@
 <div class="col">
 	<div class="nav">
 		<a href="/" class:bold={homePage}>Home</a>
-		{#if data?.user?.username}
-			<a href="/user" class:bold={user}>User</a>
+		{#if data.user}
+			<a href="/users/{data.user.userId}" class:bold={user}>User</a>
 			<a href="/users" class:bold={users}>Users</a>
 			<form action="/?/logout" method="post">
 				<button type="submit" class:bold={login}>Logout</button>
@@ -50,9 +50,6 @@
 			<a href="/login" class:bold={login}>Login</a>
 		{/if}
 	</div>
-
-	<div>User Count : {data.userCount}</div>
-	<div>Admin Count : {data.adminCount}</div>
 
 	<slot />
 </div>

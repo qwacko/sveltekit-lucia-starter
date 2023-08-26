@@ -56,6 +56,7 @@
 		<ErrorText message={$message} />
 		<SpreadButtons>
 			<Button type="submit" style="primary">Create</Button>
+			<LinkButton href="/users" style="secondary">Cancel</LinkButton>
 		</SpreadButtons>
 	</form>
 </CenterCard>
