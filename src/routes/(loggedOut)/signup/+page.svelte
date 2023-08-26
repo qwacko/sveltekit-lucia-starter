@@ -15,7 +15,7 @@
 </script>
 
 <CenterCard title="Create Account" maxWidthRem={30}>
-	<form method="POST" use:enhance>
+	<form method="POST" autocomplete="off" use:enhance>
 		<TextInput
 			title="Username"
 			errorMessage={$errors.username}

@@ -35,15 +35,24 @@
 	</div>
 
 	{#if data.user?.admin && data.user.userId !== data.currentUser.id}
-		<form action="?/deleteUser" method="POST" use:enhance>
-			<Button type="submit" style="secondary">Delete User</Button>
-		</form>
+		<div class="centerButton">
+			<LinkButton href="/users/{data.currentUser.id}/delete" style="secondary"
+				>Delete User</LinkButton
+			>
+		</div>
 	{/if}
 {:else}
 	<ErrorText message="User Not Found" />
 {/if}
 
 <style>
+	.centerButton {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+	}
+
 	.thisRow {
 		display: flex;
 		flex-direction: row;

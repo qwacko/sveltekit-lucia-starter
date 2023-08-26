@@ -3,7 +3,7 @@ import { LuciaError } from 'lucia';
 import { fail, redirect } from '@sveltejs/kit';
 
 import type { Actions } from './$types';
-import { superValidate } from 'sveltekit-superforms/server';
+import { setError, setMessage, superValidate } from 'sveltekit-superforms/server';
 import { loginSchema } from '$lib/schema/loginSchema';
 
 export const load = async () => {
@@ -38,12 +38,10 @@ export const actions: Actions = {
 				e instanceof LuciaError &&
 				(e.message === 'AUTH_INVALID_KEY_ID' || e.message === 'AUTH_INVALID_PASSWORD')
 			) {
-				form.message = 'Incorrect username or password';
-				return fail(400, { form });
+				return setMessage(form, 'Incorrect username or password', { status: 400 });
 			}
 
-			form.message = 'An unknown error occurred';
-			return fail(500, { form });
+			return setMessage(form, 'An unknown error occurred', { status: 500 });
 		}
 		// redirect to
 		// make sure you don't throw inside a try/catch block!

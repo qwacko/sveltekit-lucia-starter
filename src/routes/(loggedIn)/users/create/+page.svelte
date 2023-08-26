@@ -14,15 +14,19 @@
 	const { form, errors, constraints, message, enhance } = superForm<signupSchemaType>(data.form, {
 		taintedMessage: null,
 		onResult: async ({ result }) => {
-			if ((result.type = 'success')) {
+			if (result.type === 'success') {
+				console.log('Form Success', result);
 				await goto('/users');
 			}
 		}
 	});
+
+	$: console.log('Form Message', $message);
+	$: console.log('Error Messages', $errors);
 </script>
 
 <CenterCard title="New User">
-	<form method="POST" use:enhance>
+	<form method="POST" autocomplete="off" use:enhance>
 		<TextInput
 			title="Username"
 			errorMessage={$errors.username}

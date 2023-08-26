@@ -1,6 +1,6 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
+import { setError, setMessage, superValidate } from 'sveltekit-superforms/server';
 import { signupSchema } from '$lib/schema/signupSchema';
 import { logging } from '$lib/server/logging';
 
@@ -46,8 +46,7 @@ export const createUserHandler = async ({
 		}
 	} catch (e) {
 		logging.info('Error creating user', e);
-		form.message = 'Error creating user. Username possibly already exists.';
-		return fail(500, { form });
+		return setError(form, 'username', 'Error creating user. Username possibly already exists.');
 	}
 	// redirect to
 	// make sure you don't throw inside a try/catch block!
