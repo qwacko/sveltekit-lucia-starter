@@ -1,6 +1,6 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
-import { setError, setMessage, superValidate } from 'sveltekit-superforms/server';
+import { setError, superValidate } from 'sveltekit-superforms/server';
 import { signupSchema } from '$lib/schema/signupSchema';
 import { logging } from '$lib/server/logging';
 

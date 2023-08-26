@@ -3,7 +3,7 @@ import { LuciaError } from 'lucia';
 import { fail, redirect } from '@sveltejs/kit';
 
 import type { Actions } from './$types';
-import { setError, setMessage, superValidate } from 'sveltekit-superforms/server';
+import { setMessage, superValidate } from 'sveltekit-superforms/server';
 import { loginSchema } from '$lib/schema/loginSchema';
 
 export const load = async () => {
