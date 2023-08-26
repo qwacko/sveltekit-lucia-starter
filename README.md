@@ -70,8 +70,6 @@ Recommendation is to stick with Docker (or possibly node) unless you are knowled
 
 ## Envinroment Variables
 
-#TODO : Make sure the environment variables are correct in this file.
-
 The following environemnt variables are included
 | Variable | Purpose |
 | ------------- | ------------- |
