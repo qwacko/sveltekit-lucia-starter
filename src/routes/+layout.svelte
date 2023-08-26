@@ -29,8 +29,10 @@
 	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 	$: homePage = $page.url.pathname === '/';
 	$: user = $page.url.pathname.startsWith(`/users/${data?.user?.userId}`);
+	$: backup = $page.route.id?.startsWith('/(loggedIn)/backup');
 	$: users = $page.route.id?.startsWith('/(loggedIn)/users') && !user;
 	$: login = $page.route.id?.startsWith('/(loggedOut)');
+	$: paramsPage = $page.route.id?.startsWith('/(open)/params');
 </script>
 
 <svelte:head>
@@ -40,7 +42,9 @@
 <div class="col">
 	<div class="nav">
 		<a href="/" class:bold={homePage}>Home</a>
+		<a href="/params" class:bold={paramsPage}>Search Params</a>
 		{#if data.user}
+			<a href="/backup" class:bold={backup}>Backups</a>
 			<a href="/users/{data.user.userId}" class:bold={user}>User</a>
 			<a href="/users" class:bold={users}>Users</a>
 			<form action="/?/logout" method="post">

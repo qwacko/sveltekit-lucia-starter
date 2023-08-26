@@ -15,6 +15,7 @@ WORKDIR /app
 COPY . .
 ENV DATABASE_URL ./dev.db
 
+
 RUN yarn global add pnpm
 RUN pnpm i;
 RUN pnpm build
@@ -32,11 +33,6 @@ RUN ln -sf python3 /usr/bin/python
 ENV DATABASE_URL ./dev.db
 ENV NODE_ENV production
 
-#TODO : Make sure docker file has env vars.
-ENV HTTPS true
-ENV ALLOW_SIGNUP false
-
-# ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY package.json pnpm-lock.yaml\* ./
