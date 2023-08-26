@@ -64,8 +64,7 @@ The following environemnt variables are included
 | Variable | Purpose |
 | ------------- | ------------- |
 |ORIGIN| Used In Production Only. Indicates the origin for all node routing to work correctly|
-|DATABASE_URL|Set the database URL. Used in both dev and production.|
-|HTTPS|Sets whether the authentication cookie in production will be secure (require HTTPS) or not. A value of anything other than "TRUE" (or blank) will result in insecure cookies. No effect in dev|
+|DATABASE_FILE|Set the database file location. Used in both dev and production.|
 |ALLOW_SIGNUP|Indicates whether to enable public signup following the first user creation. Set to "true" to enable this|
 |DEV_OVERRIDE|Allows the authentication to be put into dev mode, which doesn't enforce secure cookies. This can be used if the service is to be accessed over a non-https route (i.e. IP Address)|
 |CSRF_CHECK_ORIGIN|Allows CSFR to be disabled if necessary. Only disable if you know what you are doing and why you are disabling.|

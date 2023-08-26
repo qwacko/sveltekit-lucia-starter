@@ -13,7 +13,7 @@ RUN ln -sf python3 /usr/bin/python
 WORKDIR /app
 
 COPY . .
-ENV DATABASE_URL ./dev.db
+ENV DATABASE_FILE ./dev.db
 
 
 RUN yarn global add pnpm
@@ -30,7 +30,7 @@ RUN apk add --update --no-cache python3 make g++
 RUN ln -sf python3 /usr/bin/python
 
 
-ENV DATABASE_URL ./dev.db
+ENV DATABASE_FILE ./dev.db
 ENV NODE_ENV production
 
 

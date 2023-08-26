@@ -5,6 +5,10 @@ import { dev } from '$app/environment';
 
 import { sqliteDatabase } from './db/db.js';
 import { betterSqlite3 } from '@lucia-auth/adapter-sqlite';
+import { serverEnv } from './serverEnv.js';
+
+const luciaEnvDev = dev || serverEnv.DEV_OVERRIDE;
+const luciaCSRF = !(luciaEnvDev || !serverEnv.CSRF_CHECK_ORIGIN);
 
 // expect error
 export const auth = lucia({
@@ -13,8 +17,8 @@ export const auth = lucia({
 		session: 'user_session',
 		user: 'user'
 	}),
-	env: dev ? 'DEV' : 'PROD',
-	csrfProtection: !dev,
+	env: luciaEnvDev ? 'DEV' : 'PROD',
+	csrfProtection: luciaCSRF,
 	middleware: sveltekit(),
 	getUserAttributes: (data) => {
 		return {

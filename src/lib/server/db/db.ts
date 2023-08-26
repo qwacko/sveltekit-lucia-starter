@@ -1,13 +1,13 @@
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import sqlite from 'better-sqlite3';
 import * as schema from './schema';
-import { DATABASE_URL } from '$env/static/private';
+import { DATABASE_FILE } from '$env/static/private';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { logging } from '../logging';
 import { serverEnv } from '../serverEnv';
 import fs from 'fs/promises';
 
-export const sqliteDatabase = sqlite(DATABASE_URL);
+export const sqliteDatabase = sqlite(DATABASE_FILE);
 
 sqliteDatabase.pragma('journal_mode = WAL');
 
@@ -45,9 +45,9 @@ export const restoreDB = async (backupName: string) => {
 	// 	sqliteDatabase.close();
 	// }
 
-	await fs.copyFile(`${targetDir}/${backupFile}`, DATABASE_URL);
+	await fs.copyFile(`${targetDir}/${backupFile}`, DATABASE_FILE);
 
-	// sqliteDatabase = sqlite(DATABASE_URL);
+	// sqliteDatabase = sqlite(DATABASE_FILE);
 	// console.log('DB Open', sqliteDatabase.open);
 	// sqliteDatabase.pragma('journal_mode = WAL');
 

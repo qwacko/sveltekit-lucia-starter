@@ -7,7 +7,7 @@ services:
     build: 
       context: ./
     environment:
-      - DATABASE_URL=file:/app/db/dev.db
+      - DATABASE_FILE=/app/db/dev.db
       - ORIGIN=http://10.1.1.1:3000
       - PORT=3000
       - HTTPS=true
