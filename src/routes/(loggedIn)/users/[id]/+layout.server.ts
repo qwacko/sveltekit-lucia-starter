@@ -8,7 +8,7 @@ export const load = async ({ params }) => {
 	const currentUser = db.select().from(user).where(eq(user.id, params.id)).get();
 
 	if (!currentUser) {
-		throw redirect(300, '/users');
+		throw redirect(302, '/users');
 	}
 
 	return { currentUser };

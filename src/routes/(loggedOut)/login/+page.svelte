@@ -39,7 +39,9 @@
 		<ErrorText message={$message} />
 		<SpreadButtons>
 			<Button type="submit" style="primary">Sign In</Button>
-			<LinkButton href="/signup" style="secondary">Sign Up</LinkButton>
+			{#if data.enableSignup}
+				<LinkButton href="/signup" style="secondary">Sign Up</LinkButton>
+			{/if}
 		</SpreadButtons>
 	</form>
 </CenterCard>

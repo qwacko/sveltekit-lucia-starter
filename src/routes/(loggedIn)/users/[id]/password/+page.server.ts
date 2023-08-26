@@ -53,6 +53,6 @@ export const actions = {
 			return message(form, 'Error Updating Password', { status: 400 });
 		}
 
-		throw redirect(300, `/users/${targetUserId}`);
+		throw redirect(302, `/users/${targetUserId}`);
 	}
 };

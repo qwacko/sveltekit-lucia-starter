@@ -5,10 +5,12 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { setMessage, superValidate } from 'sveltekit-superforms/server';
 import { loginSchema } from '$lib/schema/loginSchema';
+import { serverEnv } from '$lib/server/serverEnv';
 
 export const load = async () => {
 	const form = await superValidate(loginSchema);
-	return { form };
+
+	return { form, enableSignup: serverEnv.ALLOW_SIGNUP };
 };
 
 export const actions: Actions = {

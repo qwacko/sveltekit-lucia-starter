@@ -27,7 +27,7 @@
 	});
 
 	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
-	$: homePage = $page.route.id?.startsWith('/(open)');
+	$: homePage = $page.url.pathname === '/';
 	$: user = $page.url.pathname.startsWith(`/users/${data?.user?.userId}`);
 	$: users = $page.route.id?.startsWith('/(loggedIn)/users') && !user;
 	$: login = $page.route.id?.startsWith('/(loggedOut)');

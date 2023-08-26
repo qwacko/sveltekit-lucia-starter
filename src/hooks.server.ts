@@ -12,9 +12,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.auth = auth.handleRequest(event);
 
-	const user = await event.locals.auth.validate();
-
-	const noAdmin = await dbNoAdmins();
+	const [user, noAdmin] = await Promise.all([event.locals.auth.validate(), dbNoAdmins()]);
 
 	if (noAdmin && !event.route.id?.startsWith('/(loggedOut)/firstUser')) {
 		logging.info('No Admin Exists - Redirecting to First User Creation');
@@ -24,7 +22,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (!noAdmin && event.route.id?.startsWith('/(loggedOut)/firstUser')) {
 		logging.info('Admin Exists - Redirecting to Home');
 		if (user) {
-			return Response.redirect(`${event.url.origin}/user`, 302);
+			return Response.redirect(`${event.url.origin}/users/${user.user.userId}`, 302);
 		} else {
 			return Response.redirect(`${event.url.origin}/login`, 302);
 		}
@@ -37,7 +35,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (event.route.id?.startsWith('/(loggedOut)') && user) {
 		logging.info('User Logged In - Redirecting to User');
-		return Response.redirect(`${event.url.origin}/user`, 302);
+		return Response.redirect(`${event.url.origin}/users/${user.user.userId}`, 302);
 	}
 
 	return await resolve(event);

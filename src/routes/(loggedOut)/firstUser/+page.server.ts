@@ -1,7 +1,7 @@
 import type { Actions } from './$types';
 import { superValidate } from 'sveltekit-superforms/server';
 import { signupSchema } from '$lib/schema/signupSchema';
-import { createUserHandler } from './../signup/createUserHandler';
+import { createUserHandler } from '../../../lib/server/createUserHandler';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
 
 export const load = async () => {

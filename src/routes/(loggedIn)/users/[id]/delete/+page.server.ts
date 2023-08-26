@@ -13,6 +13,6 @@ export const actions = {
 
 		await auth.deleteUser(params.id);
 
-		throw redirect(300, '/users');
+		throw redirect(302, '/users');
 	}
 };
