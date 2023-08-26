@@ -15,14 +15,10 @@
 		taintedMessage: null,
 		onResult: async ({ result }) => {
 			if (result.type === 'success') {
-				console.log('Form Success', result);
 				await goto('/users');
 			}
 		}
 	});
-
-	$: console.log('Form Message', $message);
-	$: console.log('Error Messages', $errors);
 </script>
 
 <CenterCard title="New User">
