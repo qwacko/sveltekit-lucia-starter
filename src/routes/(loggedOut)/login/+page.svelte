@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import LinkButton from '$lib/components/LinkButton.svelte';
 	import CenterCard from '$lib/components/CenterCard.svelte';
@@ -10,7 +9,9 @@
 	import type { loginSchemaType } from '$lib/schema/loginSchema';
 
 	export let data;
-	const { form, errors, constraints, message } = superForm<loginSchemaType>(data.form);
+	const { form, errors, constraints, message, enhance } = superForm<loginSchemaType>(data.form, {
+		taintedMessage: null
+	});
 </script>
 
 <CenterCard title="Login" maxWidthRem={30}>
@@ -38,7 +39,7 @@
 		<ErrorText message={$message} />
 		<SpreadButtons>
 			<Button type="submit" style="primary">Sign In</Button>
-			{#if data.firstUser.allowSignup}
+			{#if data.enableSignup}
 				<LinkButton href="/signup" style="secondary">Sign Up</LinkButton>
 			{/if}
 		</SpreadButtons>

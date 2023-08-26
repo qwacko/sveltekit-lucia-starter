@@ -1,31 +1,21 @@
-import { fail, redirect } from '@sveltejs/kit';
-import { superValidate, setError } from 'sveltekit-superforms/server';
+import type { Actions } from './$types';
+import { superValidate } from 'sveltekit-superforms/server';
 import { signupSchema } from '$lib/schema/signupSchema';
-import type { PageServerLoad } from './$types';
-import { prisma } from '$lib/server/db';
+import { createUserHandler } from '$lib/server/createUserHandler';
+import { serverEnv } from '$lib/server/serverEnv';
+import { redirect } from '@sveltejs/kit';
 
-// If the user exists, redirect authenticated users to the profile page.
-export const load = (async (event) => {
-	const form = await superValidate(event, signupSchema);
-
-	const firstUser = await event.locals.trpc.users.firstUser();
-	if (!firstUser.userCountZero && !firstUser.allowSignup) {
+export const load = async () => {
+	const form = await superValidate(signupSchema);
+	if (!serverEnv.ALLOW_SIGNUP) {
 		throw redirect(302, '/login');
 	}
 
-	return { form, firstUser };
-}) satisfies PageServerLoad;
+	return { form };
+};
 
-export const actions = {
-	default: async (event) => {
-		const form = await superValidate(event, signupSchema);
-
-		const result = await event.locals.trpc.users.createFirstUser(form.data);
-
-		if (result.error) {
-			return setError(form, result.error.location, result.error.message);
-		}
-
-		return { form };
+export const actions: Actions = {
+	default: async ({ request, locals }) => {
+		return createUserHandler({ request, locals, admin: false, setSession: true });
 	}
 };

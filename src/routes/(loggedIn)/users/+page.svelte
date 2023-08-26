@@ -1,13 +1,37 @@
 <script lang="ts">
+	import Button from '$lib/components/Button.svelte';
 	import CenterCard from '$lib/components/CenterCard.svelte';
 	import LinkButton from '$lib/components/LinkButton.svelte';
+
+	export let data;
 </script>
 
-<div><LinkButton href="/users/createUser">Add User</LinkButton></div>
+<CenterCard title="Users">
+	{#each data.users as currentUser}
+		<div class="userRow">
+			<a href="/users/{currentUser.id}">{currentUser.username}</a>
+			{#if currentUser.admin}
+				(Admin)
+			{/if}
+		</div>
+	{/each}
+
+	<div class="gap" />
+
+	<LinkButton href="/users/create">Create User</LinkButton>
+</CenterCard>
 
 <style>
-	div {
+	.gap {
+		height: 20px;
+	}
+
+	.userRow {
 		display: flex;
-		justify-content: center;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+		border-bottom: 1px solid #ccc;
 	}
 </style>

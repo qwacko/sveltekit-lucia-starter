@@ -2,37 +2,44 @@ import { env } from '$env/dynamic/private';
 import { z } from 'zod';
 import { dev } from '$app/environment';
 
-const serverEnvValidation = z
-	.object({
-		ORIGIN: z.string().url().optional(),
-		HTTPS: z.coerce.boolean(),
-		DEV: z.coerce.boolean(),
-		DEV_OVERRIDE: z.coerce.boolean().optional().default(false),
-		CSRF_CHECK_ORIGIN: z.coerce.boolean(),
-		LOGGING: z.coerce.boolean().optional(),
-		LOGGING_CLASSES: z
-			.string()
-			.optional()
-			.default('ERROR,WARN,INFO')
-			.transform((data) => data.split(',').map((d) => d.trim().toUpperCase()))
-	})
-	.transform((data) => {
-		const isDev = data.DEV || data.DEV_OVERRIDE;
-		return {
-			...data,
-			LOGGING: data.DEV ? true : data.LOGGING,
-			DEV: isDev,
-			LUCIADEV: (isDev ? 'DEV' : 'PROD') as 'DEV' | 'PROD',
-			ORIGINS: data.ORIGIN ? data.ORIGIN.split(',') : undefined
-		};
+const parseEnvStringToBoolean = ({
+	defaultBoolean = true,
+	optional = true
+}: { defaultBoolean?: boolean; optional?: boolean } = {}) => {
+	const validation = z.string().transform((data) => {
+		return Boolean(JSON.parse(data));
 	});
+	const defaultString = defaultBoolean ? 'true' : 'false';
+
+	if (optional) {
+		return validation.optional().default(defaultString);
+	}
+
+	return validation.default(defaultString);
+};
+
+const serverEnvValidation = z.object({
+	DEV: z.boolean().optional().default(false),
+	LOGGING: parseEnvStringToBoolean({ defaultBoolean: true, optional: true }),
+	LOGGING_CLASSES: z
+		.string()
+		.optional()
+		.default('ERROR,WARN,INFO')
+		.transform((data) => data.split(',').map((d) => d.trim().toUpperCase())),
+	BACKUP_DIR: z.string().optional().default('./backup'),
+	BACKUP_SCHEDULE: z.string().optional().default('0 0 * * *'),
+	ALLOW_SIGNUP: parseEnvStringToBoolean({ defaultBoolean: true, optional: true }),
+	DEV_OVERRIDE: parseEnvStringToBoolean({ defaultBoolean: false, optional: true }),
+	CSRF_CHECK_ORIGIN: parseEnvStringToBoolean({ defaultBoolean: true, optional: true })
+});
 
 export const serverEnv = serverEnvValidation.parse({
-	ORIGIN: env.ORIGIN,
-	HTTPS: env.HTTPS,
 	DEV: dev,
-	DEV_OVERRIDE: env.DEV,
-	CSRF_CHECK_ORIGIN: env.CSRF_CHECK_ORIGIN,
-	DEBUG: env.DEBUG,
-	DEBUG_CLASSES: env.DEBUG_CLASSES
+	LOGGING: env.LOGGING,
+	LOOGGING_CLASSES: env.DEBUG_CLASSES,
+	BACKUP_DIR: env.BACKUP_DIR,
+	BACKUP_SCHEDULE: env.BACKUP_SCHEDULE,
+	ALLOW_SIGNUP: env.ALLOW_SIGNUP,
+	DEV_OVERRIDE: env.DEV_OVERRIDE,
+	CSRF_CHECK_ORIGIN: env.CSRF_CHECK_ORIGIN
 });

@@ -1,20 +1,51 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/stores';
+	import { pwaInfo } from 'virtual:pwa-info';
+	import { onMount } from 'svelte';
 
 	export let data;
 
-	$: homePage = $page.route.id?.startsWith('/(open)');
-	$: users = $page.route.id?.startsWith('/(loggedIn)/users');
-	$: user = $page.route.id?.startsWith('/(loggedIn)/user') && !users;
+	onMount(async () => {
+		if (pwaInfo) {
+			const { registerSW } = await import('virtual:pwa-register');
+			registerSW({
+				immediate: true,
+				onRegistered(r) {
+					// uncomment following code if you want check for updates
+					// r && setInterval(() => {
+					//    console.log('Checking for sw update')
+					//    r.update()
+					// }, 20000 /* 20s for testing purposes */)
+					console.log(`SW Registered: ${r}`);
+				},
+				onRegisterError(error) {
+					console.log('SW registration error', error);
+				}
+			});
+		}
+	});
+
+	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
+	$: homePage = $page.url.pathname === '/';
+	$: user = $page.url.pathname.startsWith(`/users/${data?.user?.userId}`);
+	$: backup = $page.route.id?.startsWith('/(loggedIn)/backup');
+	$: users = $page.route.id?.startsWith('/(loggedIn)/users') && !user;
 	$: login = $page.route.id?.startsWith('/(loggedOut)');
+	$: paramsPage = $page.route.id?.startsWith('/(open)/params');
 </script>
+
+<svelte:head>
+	{@html webManifestLink}
+</svelte:head>
 
 <div class="col">
 	<div class="nav">
 		<a href="/" class:bold={homePage}>Home</a>
-		{#if data.user.user}
-			<a href="/user" class:bold={user}>User</a>
+		<a href="/params" class:bold={paramsPage}>Search Params</a>
+		{#if data.user}
+			<a href="/backup" class:bold={backup}>Backups</a>
+			<a href="/users/{data.user.userId}" class:bold={user}>User</a>
 			<a href="/users" class:bold={users}>Users</a>
 			<form action="/?/logout" method="post">
 				<button type="submit" class:bold={login}>Logout</button>

@@ -1,25 +1,24 @@
-/// <reference types="@sveltejs/kit" />
-/// <reference types="unplugin-icons/types/svelte" />
+/// <reference types="vite-plugin-pwa/info" />
 
-/// <reference types="lucia-auth" />
-declare namespace Lucia {
-	type Auth = import('$lib/server/lucia').Auth;
-	type UserAttributes = import('@prisma/client').AuthUser;
-}
-
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
+import 'unplugin-icons/types/svelte';
+// src/app.d.ts
+/// <reference types="lucia" />
 declare global {
 	namespace App {
-		// interface Error {}
-		// interface Locals {}
-		// interface PageData {}
-		// interface Platform {}
 		interface Locals {
-			auth: import('lucia-auth').AuthRequest;
-			trpc: import('$lib/server/trpc/router').CalledRouter;
+			auth: import('lucia').AuthRequest;
 		}
+	}
+
+	namespace Lucia {
+		type Auth = import('$lib/server/lucia').Auth;
+		type DatabaseUserAttributes = {
+			username: string;
+			admin: boolean;
+		};
+		type DatabaseSessionAttributes = Record<string, never>;
 	}
 }
 
+// THIS IS IMPORTANT!!!
 export {};
