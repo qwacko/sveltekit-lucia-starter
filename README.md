@@ -6,9 +6,10 @@ I have made a few changes to this starter. The key changes I have made from the 
 
 - Changed from Prisma to Drizzle for the ORM and Migrations. This makes the docker compose file much simpler as the Drizzle migration happens in the server on startup. Also I like the approach and performance of Drizzle.
 - Removed tRPC. This was because I found that the actions and load functions of sveltekit are enough for most of my needs and trying to force tRPC into the mix ends up making things more complex for the simple functionality this template is intended for. Will consider re-adding in the future.
+- Added validation / type checking functionality for searchParams. COuld possibly spin this into a standalone library.
 - Added Cron functionality (only work on long-running processes)
 - Added backups / restore (only works with SQLite, and automatic backups only work if Cron function is working).
-- Configured PWA to work.U
+- Configured PWA to work.
 
 ## Overview
 
@@ -21,6 +22,7 @@ Includes the following features:
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
 - Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page. ALso a basic logged in user manageement (add / remove users, and update passwords, everyone is admin)
 - Protected routes
+- SearchParams validation (using Zod) using custom logic.
 - [Drizzle ORM](https://orm.drizzle.team) provides database integration. Including a SQLite schema for authentication / session management, and build in automatic migrations. Also includes package.json scripts for generating migrations, and running Drizzle Studio.
 - Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore won't work well in a serverless environment.
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
@@ -114,13 +116,18 @@ The following scripts are available in relation to drizzle:
 - `pnpm db:generate` : Generates the necessary migrations from the current schema.
 - `pnpm db:studio` : Executes drizzle studio to allow for db exploration.
 
+## Search Params Validation
+
+There is a custom build set of functions to use Zod to validate and transform search parameters, and actually make them useful. The core of the functionality is stored in the `src/lib/sveltekitSearchParams.ts` file.
+A demonstration of how the logic is supposed to work is included in thr `/params` page (with the logic in `src/routes/(open)/params`).
+
 ## Docker
 
 A DockerFile has been created, that is a staged build (to reduce the final file size). A couple of things to consider:
 
-- There is a `deps` stage and a `proddeps` stage, the "proddeps" will only install production dependencies to reduce final image size.
-- The `docker-compose-example.yml` can be used as a starting point for a docker-compose file that should work.
-- the `dockerEntrypoint.sh` script is used to perform prisma database migrations on startup prior to starting the image.
+The `docker-compose-example.yml` can be used as a starting point for a docker-compose file that should work.
+
+- the `dockerEntrypoint.sh` script is pre-prepared for if you needed to add any specific actions on server start.
 
 ## Enviroment Variables
 
