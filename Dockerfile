@@ -12,12 +12,15 @@ RUN ln -sf python3 /usr/bin/python
 
 WORKDIR /app
 
-COPY . .
-ENV DATABASE_FILE ./dev.db
-
+COPY package.json pnpm-lock.yaml\* ./
 
 RUN yarn global add pnpm
 RUN pnpm i;
+
+
+COPY . .
+ENV DATABASE_FILE ./dev.db
+
 RUN pnpm build
 
 
@@ -35,9 +38,11 @@ ENV NODE_ENV production
 
 
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/build ./build
+
 COPY package.json pnpm-lock.yaml\* ./
-COPY --from=builder /app/.svelte-kit ./build
-COPY dockerEntrypoint.sh /app/dockerEntrypoint.sh
+COPY dockerEntrypoint.sh ./dockerEntrypoint.sh
+COPY src/lib/server/db/migrations ./src/lib/server/db/migrations
 
 EXPOSE 3000
 ENV PORT 3000
