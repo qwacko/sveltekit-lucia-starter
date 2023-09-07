@@ -1,5 +1,10 @@
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
 import { auth } from '$lib/server/lucia.js';
 import { redirect } from '@sveltejs/kit';
+
+export const load = ({ locals, route }) => {
+	useCombinedAuthGuard({ locals, route });
+};
 
 export const actions = {
 	default: async ({ params, locals }) => {

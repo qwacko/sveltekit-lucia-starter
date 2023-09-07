@@ -1,6 +1,11 @@
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db';
 import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
+
+export const load = ({ locals, route }) => {
+	useCombinedAuthGuard({ locals, route });
+};
 
 export const actions = {
 	setAdmin: async ({ params, locals }) => {

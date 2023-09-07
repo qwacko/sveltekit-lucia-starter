@@ -1,4 +1,5 @@
-import { signupSchema } from '$lib/schema/signupSchema.js';
+import { updatePasswordSchema } from '$lib/schema/signupSchema.js';
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db.js';
 import { user } from '$lib/server/db/schema';
 import { auth } from '$lib/server/lucia.js';
@@ -6,11 +7,13 @@ import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms/server';
 
-const passwordSchema = signupSchema.pick({ confirmPassword: true, password: true });
+const passwordSchema = updatePasswordSchema;
 
 export type passwordSchemaType = typeof passwordSchema;
 
-export const load = async () => {
+export const load = async ({ locals, route }) => {
+	useCombinedAuthGuard({ locals, route });
+
 	const form = await superValidate(passwordSchema);
 
 	return { form };

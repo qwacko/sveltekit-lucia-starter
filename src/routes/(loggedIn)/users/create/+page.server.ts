@@ -3,8 +3,10 @@ import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { createUserHandler } from '$lib/server/createUserHandler';
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, route }) => {
+	useCombinedAuthGuard({ route, locals });
 	const user = await locals.auth.validate();
 
 	//User Must Be Admin To Access

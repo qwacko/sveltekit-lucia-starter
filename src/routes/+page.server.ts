@@ -1,6 +1,11 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
+
+export const load = ({ locals, route }) => {
+	useCombinedAuthGuard({ route, locals });
+};
 
 export const actions: Actions = {
 	logout: async ({ locals }) => {
