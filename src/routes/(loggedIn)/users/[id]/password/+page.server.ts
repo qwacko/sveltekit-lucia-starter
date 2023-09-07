@@ -22,7 +22,7 @@ export const load = async ({ locals, route }) => {
 export const actions = {
 	default: async ({ locals, params, request }) => {
 		const form = await superValidate(request, passwordSchema);
-		const currentUser = (await locals.auth.validate())?.user;
+		const currentUser = locals.user;
 		const targetUserId = params.id;
 
 		if (!form.valid) {
