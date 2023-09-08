@@ -21,7 +21,7 @@ Includes the following features:
 - PWA Configured using [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
 - Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page. ALso a basic logged in user manageement (add / remove users, and update passwords, everyone is admin)
-- Protected routes
+- Protected routes. Custom logic to validate users against routes. Allows validation of load functions, hooks, and server actions.
 - SearchParams validation (using Zod) using custom logic.
 - [Drizzle ORM](https://orm.drizzle.team) provides database integration. Including a SQLite schema for authentication / session management, and build in automatic migrations. Also includes package.json scripts for generating migrations, and running Drizzle Studio.
 - Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore won't work well in a serverless environment.
@@ -87,9 +87,19 @@ The following environemnt variables are included
 
 ## Auth
 
-Auth is handled by the `lucia-auth` library with the following information to guide the user of this template:
+Auth is handled by the `lucia-auth` library with username and password authentication. Includes each user able to be admin or not. Also includes automatic redirection to the first user creation dialog if the first user hasn't already been created.
 
-- Route guards have been implemented in the `hooks.server.ts` file rather than elsewhere. With the folder structure (seperate sections for `loggedIn`, `loggedOut`, and `open`) this makes it relatively easy to guard specific sections of the app. These route guards are used to redirect on login and logout.
+## Route Guards
+
+Custom logic has been developed (located in `/lib/server/authGuard/authGuard.ts`) which provides functionality to guard routes in the following locations
+
+- Hooks
+- Page Load Functions
+- Page server actions
+
+This is all centrally configured (demonstrated in `/lib/server/authGuard/authGuardConfig.ts`) to allow a common configuration to be used throughout, avoid repetition, and ease review of route access.
+
+There is custom functionality for specific use cases (i.e. redirection to first user) handled directly within the hooks.
 
 ## Portable Web App
 
