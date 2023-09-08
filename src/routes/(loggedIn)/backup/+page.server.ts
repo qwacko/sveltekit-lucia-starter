@@ -1,6 +1,8 @@
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
 import { backupDB, deleteBackup, getBackupList, restoreDB } from '$lib/server/db/db.js';
 
-export const load = async () => {
+export const load = async (data) => {
+	useCombinedAuthGuard(data);
 	const backupFiles = getBackupList();
 
 	return { backupFiles };

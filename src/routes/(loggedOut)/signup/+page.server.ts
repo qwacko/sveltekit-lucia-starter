@@ -4,8 +4,10 @@ import { signupSchema } from '$lib/schema/signupSchema';
 import { createUserHandler } from '$lib/server/createUserHandler';
 import { serverEnv } from '$lib/server/serverEnv';
 import { redirect } from '@sveltejs/kit';
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
 
-export const load = async () => {
+export const load = async (data) => {
+	useCombinedAuthGuard(data);
 	const form = await superValidate(signupSchema);
 	if (!serverEnv.ALLOW_SIGNUP) {
 		throw redirect(302, '/login');

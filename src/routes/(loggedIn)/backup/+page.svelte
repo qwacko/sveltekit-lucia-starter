@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import CenterCard from '$lib/components/CenterCard.svelte';
 
 	export let data;
@@ -14,11 +15,11 @@
 	<div class="column-div">
 		{#each displayFiles as backup}
 			<div class="row-div">
-				<form action="?/restore" method="post">
+				<form action="?/restore" method="post" use:enhance>
 					<input type="hidden" name="backupName" value={backup} />
 					<button type="submit">Restore</button>
 				</form>
-				<form action="?/delete" method="post">
+				<form action="?/delete" method="post" use:enhance>
 					<input type="hidden" name="backupName" value={backup} />
 					<button class="delete-button" type="submit">Delete</button>
 				</form>
@@ -46,7 +47,7 @@
 				</button>
 			{/if}
 			<div class="input-wrap">
-				<form action="?/backup" method="post">
+				<form action="?/backup" method="post" use:enhance>
 					<input type="text" name="backupName" placeholder="Backup Name" />
 					<button type="submit">Create New Backup</button>
 				</form>

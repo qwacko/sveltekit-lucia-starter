@@ -1,6 +1,11 @@
+import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db';
 import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
+
+export const load = (data) => {
+	useCombinedAuthGuard(data);
+};
 
 export const actions = {
 	setAdmin: async ({ params, locals }) => {
@@ -17,11 +22,11 @@ export const actions = {
 		return;
 	},
 	removeAdmin: async ({ params, locals }) => {
-		const authUser = await locals.auth.validate();
+		const authUser = locals.user;
 		if (!authUser) {
 			return;
 		}
-		if (!authUser.user.admin || authUser.user.userId === params.id) {
+		if (!authUser.admin || authUser.userId === params.id) {
 			return;
 		}
 
