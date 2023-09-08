@@ -27,7 +27,7 @@ export const useCombinedAuthGuard = combinedAuthGuard({
 			}
 		},
 
-		'/(open)/params': openConfig,
+		'/(open)/params': {...openConfig, POSTCheck: { testAction: postActionAuthOnly }},
 
 		'/(loggedIn)/backup': adminOnlyConfig,
 

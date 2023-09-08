@@ -10,3 +10,10 @@ export const load = async (requestData) => {
 
 	return { searchData: data };
 };
+
+export const actions = {
+	testAction: async (data) => {
+		useCombinedAuthGuard(data);
+		console.log('Test Action For Params Page');
+	}
+};

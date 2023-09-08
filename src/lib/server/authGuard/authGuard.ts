@@ -88,7 +88,12 @@ export const combinedAuthGuard = <
 					? currentRouteConfig.POSTCheck[requestData.url.search.replace('?/', '')]
 					: currentRouteConfig.POSTCheck['default']
 				: undefined;
-			if (!postCheck) {
+
+			const defaultPostCheck = currentRouteConfig.POSTCheck
+				? currentRouteConfig.POSTCheck['default']
+				: undefined;
+
+			if (!postCheck && !defaultPostCheck) {
 				if (defaultAllowPOST) {
 					return requestData;
 				} else {
@@ -96,7 +101,11 @@ export const combinedAuthGuard = <
 				}
 			}
 
-			const postCheckResult = postCheck(validationResult);
+			const postCheckResult = postCheck
+				? postCheck(validationResult)
+				: defaultPostCheck
+				? defaultPostCheck(validationResult)
+				: undefined;
 
 			if (postCheckResult) {
 				throw error(400, postCheckResult);

@@ -8,6 +8,7 @@
 	import IconBird from '~icons/ph/bird';
 	import IconMale from '~icons/ph/gender-male';
 	import IconFemale from '~icons/ph/gender-female';
+	import { enhance } from '$app/forms';
 
 	export let data;
 
@@ -101,9 +102,22 @@
 	<button class="button" on:click={() => goto($searchParams.updateSearch({ count: 0 }))}
 		>Zero Animals</button
 	>
+	<form use:enhance method="post" action="?/testAction">
+		<button class="submitButton" type="submit">Test Action</button>
+	</form>
 </div>
 
 <style>
+	.submitButton {
+		margin: 2rem 0.5rem;
+		width: 20rem;
+		text-align: center;
+		border-width: 1px;
+		border-color: black;
+		border-radius: 0.5rem;
+		background: rgb(115, 94, 234);
+	}
+
 	.button-row {
 		display: flex;
 		flex-direction: column;
