@@ -9,10 +9,11 @@
 	import IconMale from '~icons/ph/gender-male';
 	import IconFemale from '~icons/ph/gender-female';
 	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 
 	export let data;
 
-	const searchParams = validatedSearchParamsStore(searchSchema.passthrough().parse);
+	const searchParams = validatedSearchParamsStore(searchSchema.passthrough().parse, page);
 
 	$: displayData = Array($searchParams.value.count).fill($searchParams.value.animal);
 	$: displayDataFromData = Array(data.searchData.count).fill(data.searchData.animal);

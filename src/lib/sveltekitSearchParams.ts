@@ -1,5 +1,5 @@
-import { page } from '$app/stores';
-import { derived } from 'svelte/store';
+import type { Page } from '@sveltejs/kit';
+import { derived, type Readable } from 'svelte/store';
 
 type UpdateSearchFunction<ValidatedType extends Record<string, unknown>> = (
 	newParams: Partial<ValidatedType>
@@ -9,10 +9,14 @@ type ResetSearchFunction<ValidatedType extends Record<string, unknown>> = (
 	newParams: ValidatedType
 ) => string;
 
-export const validatedSearchParamsStore = <ValidatedType extends Record<string, unknown>>(
-	validation: (testObject: Record<string, unknown>) => ValidatedType
+export const validatedSearchParamsStore = <
+	ValidatedType extends Record<string, unknown>,
+	PageStoreType extends Readable<Page<Record<string, string>, string | null>>
+>(
+	validation: (testObject: Record<string, unknown>) => ValidatedType,
+	pageStore: PageStoreType
 ) => {
-	const derivedStores = page;
+	const derivedStores = pageStore;
 	const paramsReturn = derived<
 		typeof derivedStores,
 		{
@@ -20,7 +24,7 @@ export const validatedSearchParamsStore = <ValidatedType extends Record<string, 
 			updateSearch: UpdateSearchFunction<ValidatedType>;
 			resetSearch: ResetSearchFunction<ValidatedType>;
 		}
-	>(page, ($page) => {
+	>(pageStore, ($page) => {
 		const processedParams = validateSearchParams($page.url, validation);
 		const updateSearch: UpdateSearchFunction<ValidatedType> = (newParams) => {
 			const combinedParams = { ...processedParams, ...newParams };
@@ -72,14 +76,17 @@ export const buildURL = <ValidatedType extends Record<string, unknown>>(
 };
 
 const getUrlParams = (query: string): Record<string, unknown> =>
-	Array.from(new URLSearchParams(query)).reduce((p, [k, v]) => {
-		try {
-			const newValue: unknown = JSON.parse(v);
-			return { ...p, [k]: newValue };
-		} catch {
-			return { ...p, [k]: v };
-		}
-	}, {} as Record<string, unknown>);
+	Array.from(new URLSearchParams(query)).reduce(
+		(p, [k, v]) => {
+			try {
+				const newValue: unknown = JSON.parse(v);
+				return { ...p, [k]: newValue };
+			} catch {
+				return { ...p, [k]: v };
+			}
+		},
+		{} as Record<string, unknown>
+	);
 
 export const validateSearchParams = <ReturnType>(
 	url: URL,
