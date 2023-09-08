@@ -1,6 +1,8 @@
 # SvelteKit-Lucia-Starter
 
-## 2023-08-26 - Update
+## Updates
+
+### 2023-08-26 - Update
 
 I have made a few changes to this starter. The key changes I have made from the previous version:
 
@@ -11,7 +13,7 @@ I have made a few changes to this starter. The key changes I have made from the 
 - Added backups / restore (only works with SQLite, and automatic backups only work if Cron function is working).
 - Configured PWA to work.
 
-## 2023-09-08 - Improved Route Guard Functionality
+### 2023-09-08 - Improved Route Guard Functionality
 
 Update Route Guard functionality to be more generic and able to handle a wider range of conditions (excluded routes, post handling).
 
