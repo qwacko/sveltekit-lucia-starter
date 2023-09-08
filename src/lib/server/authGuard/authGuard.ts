@@ -1,11 +1,12 @@
-import { redirect, type RequestEvent } from '@sveltejs/kit';
+import { error, redirect, type RequestEvent } from '@sveltejs/kit';
 
 export type allowedFunction<UserValidationOutput extends Record<string, boolean | string>> = (
 	data: UserValidationOutput
 ) => string | undefined | null;
 
 export type RouteConfig<UserValidationOutput extends Record<string, boolean | string>> = {
-	checkFunction: allowedFunction<UserValidationOutput>;
+	check: allowedFunction<UserValidationOutput>;
+	POSTCheck?: Record<string, allowedFunction<UserValidationOutput>>;
 };
 
 export const combinedAuthGuard = <
@@ -15,29 +16,73 @@ export const combinedAuthGuard = <
 	VReturn extends ReturnType<VType>,
 	T extends { [key: string]: RouteConfig<VReturn> },
 	U extends keyof T & string
->(
-	config: T,
-	validation: VType
-) => {
+>({
+	routeConfig,
+	validation,
+	defaultAllow = false,
+	defaultBlockTarget,
+	routeNotFoundMessage = 'No route config found for this route.',
+	defaultAllowPOST = false,
+	postNotAllowedMessage = 'POST not allowed for this request.'
+}: {
+	routeConfig: T;
+	validation: VType;
+	defaultAllow?: boolean;
+	defaultBlockTarget?: string;
+	routeNotFoundMessage?: string;
+	defaultAllowPOST?: boolean;
+	postNotAllowedMessage?: string;
+}) => {
 	const R = <S extends RequestEvent<Partial<Record<string, string>>, U>>(
 		requestData: S,
-		customValidation?: VType
+		customValidation?: (data: VReturn) => string | undefined | null
 	) => {
-		const validationResult: VReturn =
-			customValidation === undefined
-				? (validation(requestData) as VReturn)
-				: (customValidation(requestData) as VReturn);
+		const currentRouteConfig = routeConfig[requestData.route.id];
 
-		const routeConfig = config[requestData.route.id];
-
-		if (!routeConfig) {
-			return requestData;
+		if (!currentRouteConfig) {
+			if (defaultAllow) {
+				return requestData;
+			} else if (!defaultBlockTarget) {
+				throw error(400, routeNotFoundMessage);
+			} else {
+				throw redirect(302, defaultBlockTarget);
+			}
 		}
 
-		const redirectTarget = config[requestData.route.id].checkFunction(validationResult);
+		const validationResult = validation(requestData) as VReturn;
+
+		const redirectTarget = currentRouteConfig.check(validationResult);
+		const customValidationResult = customValidation
+			? customValidation(validationResult)
+			: undefined;
 
 		if (redirectTarget) {
 			throw redirect(302, redirectTarget);
+		}
+
+		if (customValidationResult) {
+			throw redirect(302, customValidationResult);
+		}
+
+		if (requestData.request.method === 'POST') {
+			const postCheck = currentRouteConfig.POSTCheck
+				? requestData.url.search
+					? currentRouteConfig.POSTCheck[requestData.url.search.replace('?/', '')]
+					: currentRouteConfig.POSTCheck['default']
+				: undefined;
+			if (!postCheck) {
+				if (defaultAllowPOST) {
+					return requestData;
+				} else {
+					throw error(400, postNotAllowedMessage);
+				}
+			}
+
+			const postCheckResult = postCheck(validationResult);
+
+			if (postCheckResult) {
+				throw error(400, postCheckResult);
+			}
 		}
 
 		return requestData;

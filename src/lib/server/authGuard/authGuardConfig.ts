@@ -6,17 +6,26 @@ type UserValidationOutput = {
 };
 
 const adminOnlyConfig: RouteConfig<UserValidationOutput> = {
-	checkFunction: (data) => (data.admin ? null : data.user ? '/home' : '/login')
+	check: (data) => (data.admin ? null : data.user ? '/' : '/login')
 };
 // const userOnlyConfig: RouteConfig = { nonUserRedirect: '/login' };
-const openConfig: RouteConfig<UserValidationOutput> = { checkFunction: () => null };
+const openConfig: RouteConfig<UserValidationOutput> = { check: () => null };
 const loggedOutConfig: RouteConfig<UserValidationOutput> = {
-	checkFunction: (data) => (data.user ? '/home' : null)
+	check: (data) => (data.user ? '/' : null)
+};
+const postActionAuthOnly = (data: UserValidationOutput) => {
+	console.log('POSTCheckInner', data);
+	return data.admin ? null : 'Action Not Allowed';
 };
 
-export const useCombinedAuthGuard = combinedAuthGuard(
-	{
-		'/': openConfig,
+export const useCombinedAuthGuard = combinedAuthGuard({
+	routeConfig: {
+		'/': {
+			...openConfig,
+			POSTCheck: {
+				testFunction: postActionAuthOnly
+			}
+		},
 
 		'/(open)/params': openConfig,
 
@@ -30,14 +39,16 @@ export const useCombinedAuthGuard = combinedAuthGuard(
 
 		'/(loggedOut)/login': loggedOutConfig,
 		'/(loggedOut)/signup': loggedOutConfig,
-		'/(loggedOut)/firstUser': loggedOutConfig
+		'/(loggedOut)/firstUser': loggedOutConfig,
+
+		'/(loggedIn)/testFunctions': { ...adminOnlyConfig, POSTCheck: { default: postActionAuthOnly } }
 	},
-	(data) => {
+	validation: (data) => {
 		return {
 			admin: data.locals.user?.admin || false,
 			user: data.locals.user !== undefined
 		};
 	}
-);
+});
 
 export type AuthRouteOptions = Parameters<typeof useCombinedAuthGuard>[0]['route'];

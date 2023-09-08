@@ -15,7 +15,8 @@ export const actions: Actions = {
 		data.locals.auth.setSession(null); // remove cookie
 		throw redirect(302, '/login'); // redirect to login page
 	},
-	testFunction: async () => {
+	testFunction: async (requestData) => {
+		useCombinedAuthGuard(requestData);
 		console.log('Test Fuction Is Executed');
 	}
 };
