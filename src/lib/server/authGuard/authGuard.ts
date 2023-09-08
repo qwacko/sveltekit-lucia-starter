@@ -14,11 +14,15 @@ export const combinedAuthGuard = <
 		data: RequestEvent<Partial<Record<string, string>>, U>
 	) => Record<string, string | boolean>,
 	VReturn extends ReturnType<VType>,
+	AllowList extends string[],
+	BlockList extends string[],
 	T extends { [key: string]: RouteConfig<VReturn> },
-	U extends keyof T & string
+	U extends (keyof T & string) | AllowList[0] | BlockList[0]
 >({
 	routeConfig,
 	validation,
+	allowList,
+	blockList,
 	defaultAllow = false,
 	defaultBlockTarget,
 	routeNotFoundMessage = 'No route config found for this route.',
@@ -27,6 +31,8 @@ export const combinedAuthGuard = <
 }: {
 	routeConfig: T;
 	validation: VType;
+	allowList?: AllowList;
+	blockList?: BlockList;
 	defaultAllow?: boolean;
 	defaultBlockTarget?: string;
 	routeNotFoundMessage?: string;
@@ -37,6 +43,18 @@ export const combinedAuthGuard = <
 		requestData: S,
 		customValidation?: (data: VReturn) => string | undefined | null
 	) => {
+		if (allowList && allowList.includes(requestData.route.id)) {
+			return requestData;
+		}
+
+		if (blockList && blockList.includes(requestData.route.id)) {
+			if (defaultBlockTarget) {
+				throw redirect(302, defaultBlockTarget);
+			} else {
+				throw error(400, routeNotFoundMessage);
+			}
+		}
+
 		const currentRouteConfig = routeConfig[requestData.route.id];
 
 		if (!currentRouteConfig) {
