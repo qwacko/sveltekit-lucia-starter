@@ -1,4 +1,4 @@
-import { combinedAuthGuard, type RouteConfig } from './authGuard';
+import { skGuard, type RouteConfig } from 'skguard';
 
 type UserValidationOutput = {
 	admin: boolean;
@@ -18,7 +18,7 @@ const postActionAuthOnly = (data: UserValidationOutput) => {
 	return data.admin ? null : 'Action Not Allowed';
 };
 
-export const useCombinedAuthGuard = combinedAuthGuard({
+export const authGuard = skGuard({
 	routeConfig: {
 		'/': {
 			...openConfig,
@@ -27,7 +27,7 @@ export const useCombinedAuthGuard = combinedAuthGuard({
 			}
 		},
 
-		'/(open)/params': {...openConfig, POSTCheck: { testAction: postActionAuthOnly }},
+		'/(open)/params': { ...openConfig, POSTCheck: { testAction: postActionAuthOnly } },
 
 		'/(loggedIn)/backup': adminOnlyConfig,
 
@@ -51,4 +51,4 @@ export const useCombinedAuthGuard = combinedAuthGuard({
 	}
 });
 
-export type AuthRouteOptions = Parameters<typeof useCombinedAuthGuard>[0]['route'];
+export type AuthRouteOptions = Parameters<typeof authGuard>[0]['route'];

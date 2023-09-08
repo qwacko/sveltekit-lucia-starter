@@ -6,10 +6,10 @@ import type { Actions } from './$types';
 import { setMessage, superValidate } from 'sveltekit-superforms/server';
 import { loginSchema } from '$lib/schema/loginSchema';
 import { serverEnv } from '$lib/server/serverEnv';
-import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/server/authGuard/authGuardConfig';
 
 export const load = async (data) => {
-	useCombinedAuthGuard(data);
+	authGuard(data);
 	const form = await superValidate(loginSchema);
 
 	return { form, enableSignup: serverEnv.ALLOW_SIGNUP };

@@ -1,4 +1,4 @@
-import { useCombinedAuthGuard, type AuthRouteOptions } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/server/authGuard/authGuardConfig';
 import { initateCronJobs } from '$lib/server/cron/cron';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
 
@@ -25,7 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (event.route.id) {
-		useCombinedAuthGuard(event as Parameters<typeof useCombinedAuthGuard>[0]);
+		authGuard(event as Parameters<typeof authGuard>[0]);
 	}
 
 	return await resolve(event);

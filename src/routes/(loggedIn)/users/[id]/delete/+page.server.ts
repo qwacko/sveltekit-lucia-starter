@@ -1,9 +1,9 @@
-import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/server/authGuard/authGuardConfig';
 import { auth } from '$lib/server/lucia.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (requestData) => {
-	useCombinedAuthGuard(requestData);
+	authGuard(requestData);
 };
 
 export const actions = {

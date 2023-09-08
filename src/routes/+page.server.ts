@@ -1,10 +1,10 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/server/authGuard/authGuardConfig';
 
 export const load = (data) => {
-	useCombinedAuthGuard(data);
+	authGuard(data);
 };
 
 export const actions: Actions = {
@@ -16,7 +16,7 @@ export const actions: Actions = {
 		throw redirect(302, '/login'); // redirect to login page
 	},
 	testFunction: async (requestData) => {
-		useCombinedAuthGuard(requestData);
+		authGuard(requestData);
 		console.log('Test Fuction Is Executed');
 	}
 };

@@ -17,6 +17,10 @@ I have made a few changes to this starter. The key changes I have made from the 
 
 Update Route Guard functionality to be more generic and able to handle a wider range of conditions (excluded routes, post handling).
 
+### 2023-09-09 - Made route guard functionality into a new library - skGuard
+
+Created a new library so it is easy for me to update all my applications that use this functionality. Maybe this will be useful for others as well.
+
 ## Overview
 
 The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pre-configured with a comprehensive set of features to kickstart your next application. Inspired by the [T3 Stack](https://create.t3.gg/), this starter kit provides a similar feature set with added functionality.
@@ -27,7 +31,7 @@ Includes the following features:
 - PWA Configured using [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
 - Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page. ALso a basic logged in user manageement (add / remove users, and update passwords, everyone is admin)
-- Protected routes. Custom logic to validate users against routes. Allows validation of load functions, hooks, and server actions.
+- [skGuard](https://github.com/qwacko/skGuard) used to protect routes no matter how they are accessed.
 - SearchParams validation (using Zod) using custom logic.
 - [Drizzle ORM](https://orm.drizzle.team) provides database integration. Including a SQLite schema for authentication / session management, and build in automatic migrations. Also includes package.json scripts for generating migrations, and running Drizzle Studio.
 - Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore won't work well in a serverless environment.
@@ -97,13 +101,9 @@ Auth is handled by the `lucia-auth` library with username and password authentic
 
 ## Route Guards
 
-Custom logic has been developed (located in `/lib/server/authGuard/authGuard.ts`) which provides functionality to guard routes in the following locations
+Using a library that I have created [skGuard](https://github.com/qwacko/skGuard) to perform this functionality. The specific implementation of this can be found in `/lib/server/authGuard/authGuardConfig.ts`. The example implementation protects routes etc...
 
-- Hooks
-- Page Load Functions
-- Page server actions
-
-This is all centrally configured (demonstrated in `/lib/server/authGuard/authGuardConfig.ts`) to allow a common configuration to be used throughout, avoid repetition, and ease review of route access.
+The beauty of this approach is that it can be applied throughout the application easily and consistently.
 
 There is custom functionality for specific use cases (i.e. redirection to first user) handled directly within the hooks.
 

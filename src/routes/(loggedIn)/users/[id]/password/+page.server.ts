@@ -1,5 +1,5 @@
 import { updatePasswordSchema } from '$lib/schema/signupSchema.js';
-import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig.js';
+import { authGuard } from '$lib/server/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db.js';
 import { user } from '$lib/server/db/schema';
 import { auth } from '$lib/server/lucia.js';
@@ -12,7 +12,7 @@ const passwordSchema = updatePasswordSchema;
 export type passwordSchemaType = typeof passwordSchema;
 
 export const load = async (requestData) => {
-	useCombinedAuthGuard(requestData);
+	authGuard(requestData);
 
 	const form = await superValidate(passwordSchema);
 
