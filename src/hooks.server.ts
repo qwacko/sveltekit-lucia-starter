@@ -25,7 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (event.route.id) {
-		useCombinedAuthGuard({ locals: event.locals, route: event.route as AuthRouteOptions });
+		useCombinedAuthGuard(event as Parameters<typeof useCombinedAuthGuard>[0]);
 	}
 
 	return await resolve(event);

@@ -1,79 +1,46 @@
-import { redirect } from '@sveltejs/kit';
-import { defaultAdminRedirect, defaultNonAdminRedirect } from './authGuardConfig';
+import { redirect, type RequestEvent } from '@sveltejs/kit';
 
-export const authGuard = ({
-	locals,
-	requireAdmin = true,
-	redirectNonAdmin = defaultAdminRedirect,
-	redirectNonUser = defaultNonAdminRedirect
-}: {
-	locals: App.Locals;
-	requireAdmin?: boolean;
-	redirectNonAdmin?: string;
-	redirectNonUser?: string;
-}) => {
-	const user = locals.user;
-	if (!user) {
-		throw redirect(302, redirectNonUser);
-	}
-	if (requireAdmin && !user.admin) {
-		throw redirect(302, redirectNonAdmin);
-	}
+export type allowedFunction<UserValidationOutput extends Record<string, boolean | string>> = (
+	data: UserValidationOutput
+) => string | undefined | null;
 
-	return user;
+export type RouteConfig<UserValidationOutput extends Record<string, boolean | string>> = {
+	checkFunction: allowedFunction<UserValidationOutput>;
 };
 
-export type RouteConfig = {
-	nonUserRedirect?: string;
-	nonAdminRedirect?: string;
-	userRedirect?: string;
-	adminRedirect?: string;
-	hasCustomValidation?: boolean;
-};
-
-type UserValidationOutput = { admin?: boolean; user?: boolean };
-
-export const combinedAuthGuard = <T extends { [key: string]: RouteConfig }, U extends keyof T>(
+export const combinedAuthGuard = <
+	VType extends (
+		data: RequestEvent<Partial<Record<string, string>>, U>
+	) => Record<string, string | boolean>,
+	VReturn extends ReturnType<VType>,
+	T extends { [key: string]: RouteConfig<VReturn> },
+	U extends keyof T & string
+>(
 	config: T,
-	validation: (locals: App.Locals) => UserValidationOutput
+	validation: VType
 ) => {
-	return ({
-		route,
-		locals,
-		customValidation
-	}: {
-		route: { id: U };
-		locals: App.Locals;
-		customValidation?: (prev: UserValidationOutput) => UserValidationOutput;
-	}) => {
-		const { admin, user } =
-			customValidation === undefined ? validation(locals) : customValidation(validation(locals));
-		const routeConfig = config[route.id];
+	const R = <S extends RequestEvent<Partial<Record<string, string>>, U>>(
+		requestData: S,
+		customValidation?: VType
+	) => {
+		const validationResult: VReturn =
+			customValidation === undefined
+				? (validation(requestData) as VReturn)
+				: (customValidation(requestData) as VReturn);
+
+		const routeConfig = config[requestData.route.id];
 
 		if (!routeConfig) {
-			return;
+			return requestData;
 		}
 
-		if (routeConfig.hasCustomValidation && !customValidation) {
-			return;
+		const redirectTarget = config[requestData.route.id].checkFunction(validationResult);
+
+		if (redirectTarget) {
+			throw redirect(302, redirectTarget);
 		}
 
-		if (user !== undefined) {
-			if (routeConfig.nonUserRedirect && !user) {
-				throw redirect(302, routeConfig.nonUserRedirect);
-			}
-			if (routeConfig.userRedirect && user) {
-				throw redirect(302, routeConfig.userRedirect);
-			}
-		}
-
-		if (admin !== undefined) {
-			if (routeConfig.nonAdminRedirect && !admin) {
-				throw redirect(302, routeConfig.nonAdminRedirect);
-			}
-			if (routeConfig.adminRedirect && admin) {
-				throw redirect(302, routeConfig.adminRedirect);
-			}
-		}
+		return requestData;
 	};
+	return R;
 };

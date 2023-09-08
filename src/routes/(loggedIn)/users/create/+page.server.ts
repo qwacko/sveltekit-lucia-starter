@@ -4,8 +4,8 @@ import type { Actions } from './$types';
 import { createUserHandler } from '$lib/server/createUserHandler';
 import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
 
-export const load = async ({ locals, route }) => {
-	useCombinedAuthGuard({ route, locals });
+export const load = async (data) => {
+	useCombinedAuthGuard(data);
 
 	const form = await superValidate(signupSchema);
 

@@ -5,8 +5,8 @@ import { createUserHandler } from '../../../lib/server/createUserHandler';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
 import { useCombinedAuthGuard } from '$lib/server/authGuard/authGuardConfig';
 
-export const load = async ({ route, locals }) => {
-	useCombinedAuthGuard({ route, locals });
+export const load = async (data) => {
+	useCombinedAuthGuard(data);
 	const form = await superValidate(signupSchema);
 	return { form };
 };

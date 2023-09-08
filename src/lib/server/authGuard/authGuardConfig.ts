@@ -1,12 +1,18 @@
 import { combinedAuthGuard, type RouteConfig } from './authGuard';
 
-export const defaultAdminRedirect = '/home';
-export const defaultNonAdminRedirect = '/login';
+type UserValidationOutput = {
+	admin: boolean;
+	user: boolean;
+};
 
-const adminOnlyConfig: RouteConfig = { nonAdminRedirect: '/home', nonUserRedirect: '/login' };
+const adminOnlyConfig: RouteConfig<UserValidationOutput> = {
+	checkFunction: (data) => (data.admin ? null : data.user ? '/home' : '/login')
+};
 // const userOnlyConfig: RouteConfig = { nonUserRedirect: '/login' };
-const openConfig: RouteConfig = {};
-const loggedOutConfig: RouteConfig = { userRedirect: '/home' };
+const openConfig: RouteConfig<UserValidationOutput> = { checkFunction: () => null };
+const loggedOutConfig: RouteConfig<UserValidationOutput> = {
+	checkFunction: (data) => (data.user ? '/home' : null)
+};
 
 export const useCombinedAuthGuard = combinedAuthGuard(
 	{
@@ -18,18 +24,18 @@ export const useCombinedAuthGuard = combinedAuthGuard(
 
 		'/(loggedIn)/users': adminOnlyConfig,
 		'/(loggedIn)/users/create': adminOnlyConfig,
-		'/(loggedIn)/users/[id]': { ...adminOnlyConfig, hasCustomValidation: true },
+		'/(loggedIn)/users/[id]': adminOnlyConfig,
 		'/(loggedIn)/users/[id]/delete': adminOnlyConfig,
-		'/(loggedIn)/users/[id]/password': { ...adminOnlyConfig, hasCustomValidation: true },
+		'/(loggedIn)/users/[id]/password': adminOnlyConfig,
 
 		'/(loggedOut)/login': loggedOutConfig,
 		'/(loggedOut)/signup': loggedOutConfig,
 		'/(loggedOut)/firstUser': loggedOutConfig
 	},
-	(locals) => {
+	(data) => {
 		return {
-			admin: locals.user?.admin || false,
-			user: locals.user !== undefined
+			admin: data.locals.user?.admin || false,
+			user: data.locals.user !== undefined
 		};
 	}
 );

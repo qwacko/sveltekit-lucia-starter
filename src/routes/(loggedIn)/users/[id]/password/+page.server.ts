@@ -11,8 +11,8 @@ const passwordSchema = updatePasswordSchema;
 
 export type passwordSchemaType = typeof passwordSchema;
 
-export const load = async ({ locals, route }) => {
-	useCombinedAuthGuard({ locals, route });
+export const load = async (requestData) => {
+	useCombinedAuthGuard(requestData);
 
 	const form = await superValidate(passwordSchema);
 

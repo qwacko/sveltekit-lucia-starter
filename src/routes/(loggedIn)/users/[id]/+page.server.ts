@@ -3,8 +3,8 @@ import { db } from '$lib/server/db/db';
 import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
-export const load = ({ locals, route }) => {
-	useCombinedAuthGuard({ locals, route });
+export const load = (data) => {
+	useCombinedAuthGuard(data);
 };
 
 export const actions = {
