@@ -6,7 +6,7 @@ import type { Actions } from './$types';
 import { setMessage, superValidate } from 'sveltekit-superforms/server';
 import { loginSchema } from '$lib/schema/loginSchema';
 import { serverEnv } from '$lib/server/serverEnv';
-import { authGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/authGuard/authGuardConfig';
 
 export const load = async (data) => {
 	authGuard(data);

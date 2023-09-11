@@ -2,7 +2,7 @@ import { signupSchema } from '$lib/schema/signupSchema';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions } from './$types';
 import { createUserHandler } from '$lib/server/createUserHandler';
-import { authGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/authGuard/authGuardConfig';
 
 export const load = async (data) => {
 	authGuard(data);

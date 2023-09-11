@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import { skGuard, type RouteConfig } from 'skguard';
 
 type UserValidationOutput = {
@@ -13,12 +14,13 @@ const openConfig: RouteConfig<UserValidationOutput> = { check: () => null };
 const loggedOutConfig: RouteConfig<UserValidationOutput> = {
 	check: (data) => (data.user ? '/' : null)
 };
+
 const postActionAuthOnly = (data: UserValidationOutput) => {
 	console.log('POSTCheckInner', data);
 	return data.admin ? null : 'Action Not Allowed';
 };
 
-export const authGuard = skGuard({
+export const { backend: authGuard, frontend: authGuardFrontend } = skGuard({
 	routeConfig: {
 		'/': {
 			...openConfig,
@@ -43,11 +45,17 @@ export const authGuard = skGuard({
 
 		'/(loggedIn)/testFunctions': { ...adminOnlyConfig, POSTCheck: { default: postActionAuthOnly } }
 	},
-	validation: (data) => {
+	validationBackend: (data) => {
 		return {
 			admin: data.locals.user?.admin || false,
 			user: data.locals.user !== undefined
 		};
+	},
+	errorFuncFrontend: (status, body) => {
+		console.log('Routing Error : ', { status, body });
+	},
+	redirectFuncFrontend: (_, location) => {
+		goto(location);
 	}
 });
 

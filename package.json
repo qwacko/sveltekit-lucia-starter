@@ -18,7 +18,7 @@
 		"generate-pwa-assets": "pwa-assets-generator"
 	},
 	"devDependencies": {
-		"@iconify/json": "^2.2.113",
+		"@iconify/json": "^2.2.114",
 		"@playwright/test": "^1.37.1",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.24.1",
@@ -26,13 +26,13 @@
 		"@types/node-schedule": "^2.1.0",
 		"@typescript-eslint/eslint-plugin": "^6.6.0",
 		"@typescript-eslint/parser": "^6.6.0",
-		"@vite-pwa/assets-generator": "^0.0.9",
-		"@vite-pwa/sveltekit": "^0.2.5",
+		"@vite-pwa/assets-generator": "^0.0.10",
+		"@vite-pwa/sveltekit": "^0.2.7",
 		"dotenv": "^16.3.1",
 		"drizzle-kit": "^0.19.13",
 		"eslint": "^8.49.0",
 		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-svelte": "^2.33.0",
+		"eslint-plugin-svelte": "^2.33.1",
 		"prettier": "^3.0.3",
 		"prettier-plugin-svelte": "^3.0.3",
 		"svelte": "^4.2.0",
@@ -42,7 +42,7 @@
 		"typescript": "^5.2.2",
 		"unplugin-icons": "^0.17.0",
 		"vite": "^4.4.9",
-		"vite-plugin-pwa": "^0.16.4",
+		"vite-plugin-pwa": "^0.16.5",
 		"vitest": "^0.34.4",
 		"workbox-window": "^7.0.0"
 	},
@@ -54,7 +54,7 @@
 		"drizzle-orm": "^0.28.6",
 		"lucia": "^2.5.0",
 		"node-schedule": "^2.1.1",
-		"skguard": "^0.0.7",
+		"skguard": "^0.0.13",
 		"zod": "^3.22.2"
 	}
 }

@@ -3,8 +3,11 @@
 	import { page } from '$app/stores';
 	import { pwaInfo } from 'virtual:pwa-info';
 	import { onMount } from 'svelte';
+	import { authGuardFrontend } from '$lib/authGuard/authGuardConfig';
 
 	export let data;
+
+	$: authGuardFrontend($page, { admin: data.user?.admin || false, user: data.user ? true : false });
 
 	onMount(async () => {
 		if (pwaInfo) {

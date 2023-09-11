@@ -1,4 +1,4 @@
-import { authGuard } from '$lib/server/authGuard/authGuardConfig.js';
+import { authGuard } from '$lib/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db';
 import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';

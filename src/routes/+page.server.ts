@@ -1,7 +1,7 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { authGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/authGuard/authGuardConfig';
 
 export const load = (data) => {
 	authGuard(data);

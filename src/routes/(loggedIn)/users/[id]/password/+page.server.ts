@@ -1,5 +1,5 @@
 import { updatePasswordSchema } from '$lib/schema/signupSchema.js';
-import { authGuard } from '$lib/server/authGuard/authGuardConfig.js';
+import { authGuard } from '$lib/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db.js';
 import { user } from '$lib/server/db/schema';
 import { auth } from '$lib/server/lucia.js';

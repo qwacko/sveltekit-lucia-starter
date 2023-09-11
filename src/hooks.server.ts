@@ -1,4 +1,4 @@
-import { authGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/authGuard/authGuardConfig';
 import { initateCronJobs } from '$lib/server/cron/cron';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
 

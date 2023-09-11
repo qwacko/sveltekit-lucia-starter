@@ -1,4 +1,4 @@
-import { authGuard } from '$lib/server/authGuard/authGuardConfig';
+import { authGuard } from '$lib/authGuard/authGuardConfig';
 import { backupDB, deleteBackup, getBackupList, restoreDB } from '$lib/server/db/db.js';
 
 export const load = async (data) => {
