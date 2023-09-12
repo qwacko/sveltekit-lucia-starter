@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { searchSchema } from './searchSchema.js';
-	import { validatedSearchParamsStore } from '$lib/sveltekitSearchParams';
+	import { validatedSearchParamsStore } from 'sksearchparams';
 	import IconDog from '~icons/ph/dog';
 	import IconCat from '~icons/ph/cat';
 	import IconFish from '~icons/ph/fish';

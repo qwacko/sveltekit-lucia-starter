@@ -21,6 +21,10 @@ Update Route Guard functionality to be more generic and able to handle a wider r
 
 Created a new library so it is easy for me to update all my applications that use this functionality. Maybe this will be useful for others as well.
 
+### 2023-09-12 - Made Search Param Validation into a nwe library - skSearchParams
+
+Created a new library so it is easy for me to update all my applications that use this functionality. Maybe this will be useful to others independent of the template as well.
+
 ## Overview
 
 The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pre-configured with a comprehensive set of features to kickstart your next application. Inspired by the [T3 Stack](https://create.t3.gg/), this starter kit provides a similar feature set with added functionality.
@@ -32,7 +36,7 @@ Includes the following features:
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
 - Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page. ALso a basic logged in user manageement (add / remove users, and update passwords, everyone is admin)
 - [skGuard](https://github.com/qwacko/skGuard) used to protect routes no matter how they are accessed.
-- SearchParams validation (using Zod) using custom logic.
+- [skSearchParams](https://github.com/qwacko/skSearchParams) SearchParams validation (using Zod in this case).
 - [Drizzle ORM](https://orm.drizzle.team) provides database integration. Including a SQLite schema for authentication / session management, and build in automatic migrations. Also includes package.json scripts for generating migrations, and running Drizzle Studio.
 - Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore won't work well in a serverless environment.
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
@@ -134,8 +138,9 @@ The following scripts are available in relation to drizzle:
 
 ## Search Params Validation
 
-There is a custom build set of functions to use Zod to validate and transform search parameters, and actually make them useful. The core of the functionality is stored in the `src/lib/sveltekitSearchParams.ts` file.
-A demonstration of how the logic is supposed to work is included in thr `/params` page (with the logic in `src/routes/(open)/params`).
+Custom logic using another library (skSearchParams) that provides validation and easy update of search params to use them as a primary state storage location.
+
+A demonstration of how the logic is supposed to work is included in the `/params` page (with the logic in `src/routes/(open)/params`).
 
 ## Docker
 

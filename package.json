@@ -55,6 +55,7 @@
 		"lucia": "^2.5.0",
 		"node-schedule": "^2.1.1",
 		"skguard": "^0.0.13",
+		"sksearchparams": "^0.0.2",
 		"zod": "^3.22.2"
 	}
 }

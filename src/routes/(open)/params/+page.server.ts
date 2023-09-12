@@ -1,5 +1,5 @@
 import { authGuard } from '$lib/authGuard/authGuardConfig';
-import { validateSearchParams } from '$lib/sveltekitSearchParams';
+import { validateSearchParams } from 'sksearchparams';
 import { searchSchema } from './searchSchema';
 
 export const load = async (requestData) => {

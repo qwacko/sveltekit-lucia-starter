@@ -22,6 +22,9 @@ dependencies:
   skguard:
     specifier: ^0.0.13
     version: 0.0.13(svelte@4.2.0)
+  sksearchparams:
+    specifier: ^0.0.2
+    version: 0.0.2(svelte@4.2.0)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -4647,6 +4650,14 @@ packages:
 
   /skguard@0.0.13(svelte@4.2.0):
     resolution: {integrity: sha512-REBc3BgtTYyn8oxXzPmTzrC8/ZStYW5tD7K7ikbsUTT/xtk5cniELFyHTO1+M+zFF4gj3hVeALMNYUx+2Lu8Bg==}
+    peerDependencies:
+      svelte: ^4.0.0
+    dependencies:
+      svelte: 4.2.0
+    dev: false
+
+  /sksearchparams@0.0.2(svelte@4.2.0):
+    resolution: {integrity: sha512-JLdIMd0gAl44vpSyg5fseZ+4DOlVlgUnFOrTmh9bSfTCMg+i1GHA89op6uaYEN6rtqBv6nuqgnMX0qoERkLabQ==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
