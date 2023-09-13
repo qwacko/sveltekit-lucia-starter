@@ -39,9 +39,27 @@ export const { backend: authGuard, frontend: authGuardFrontend } = skGuard({
 		'/(loggedIn)/users/[id]/delete': adminOnlyConfig,
 		'/(loggedIn)/users/[id]/password': adminOnlyConfig,
 
-		'/(loggedOut)/login': loggedOutConfig,
-		'/(loggedOut)/signup': loggedOutConfig,
-		'/(loggedOut)/firstUser': loggedOutConfig,
+		'/(loggedOut)/login': {
+			...loggedOutConfig,
+			POSTCheck: {
+				default: (data: UserValidationOutput) =>
+					data.user ? 'Cannot Sign In If Already Signed In' : undefined
+			}
+		},
+		'/(loggedOut)/signup': {
+			...loggedOutConfig,
+			POSTCheck: {
+				default: (data: UserValidationOutput) =>
+					data.user ? 'Cannot Create User If Logged In' : undefined
+			}
+		},
+		'/(loggedOut)/firstUser': {
+			...loggedOutConfig,
+			POSTCheck: {
+				default: (data: UserValidationOutput) =>
+					data.user ? 'Cannot Create User If Logged In' : undefined
+			}
+		},
 
 		'/(loggedIn)/testFunctions': { ...adminOnlyConfig, POSTCheck: { default: postActionAuthOnly } }
 	},
