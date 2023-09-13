@@ -1,14 +1,11 @@
 import { authGuard } from '$lib/authGuard/authGuardConfig';
-import { validateSearchParams } from 'sksearchparams';
-import { searchSchema } from './searchSchema';
+import { serverPageInfo } from '$lib/routes';
 
 export const load = async (requestData) => {
-	const { url } = authGuard(requestData);
-	const processedParams = validateSearchParams(url, searchSchema.passthrough().parse);
+	authGuard(requestData);
+	const { searchParams: searchData } = serverPageInfo('/(open)/params', requestData);
 
-	const data = processedParams;
-
-	return { searchData: data };
+	return { searchData };
 };
 
 export const actions = {

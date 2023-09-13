@@ -21,11 +21,11 @@
 		"@iconify/json": "^2.2.114",
 		"@playwright/test": "^1.37.1",
 		"@sveltejs/adapter-auto": "^2.1.0",
-		"@sveltejs/kit": "^1.24.1",
+		"@sveltejs/kit": "^1.25.0",
 		"@types/better-sqlite3": "^7.6.4",
 		"@types/node-schedule": "^2.1.0",
-		"@typescript-eslint/eslint-plugin": "^6.6.0",
-		"@typescript-eslint/parser": "^6.6.0",
+		"@typescript-eslint/eslint-plugin": "^6.7.0",
+		"@typescript-eslint/parser": "^6.7.0",
 		"@vite-pwa/assets-generator": "^0.0.10",
 		"@vite-pwa/sveltekit": "^0.2.7",
 		"dotenv": "^16.3.1",
@@ -55,7 +55,7 @@
 		"lucia": "^2.5.0",
 		"node-schedule": "^2.1.1",
 		"skguard": "^0.0.13",
-		"sksearchparams": "^0.0.2",
+		"skroutes": "^0.0.5",
 		"zod": "^3.22.2"
 	}
 }
