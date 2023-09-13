@@ -48,6 +48,7 @@ Includes the following features:
 - TailwindCSS is _NOT_ included, however the template has been tested to work with svelte-add to add tailwind.
 - Environment Variable Validation (using Zod)
 - Basic logging setup.
+- View transition API configured (in `routes/+layout.svelte`). With fading between pages.
 
 ## Getting started
 

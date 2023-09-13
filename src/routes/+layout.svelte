@@ -4,6 +4,20 @@
 	import { pwaInfo } from 'virtual:pwa-info';
 	import { onMount } from 'svelte';
 	import { authGuardFrontend } from '$lib/authGuard/authGuardConfig';
+	import { onNavigate } from '$app/navigation';
+
+	onNavigate((navigation) => {
+		//@ts-expect-error startViewTransition is not defined on Document
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			//@ts-expect-error startViewTransition is not defined on Document
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	export let data;
 
