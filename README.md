@@ -38,17 +38,17 @@ Includes the following features:
 - [skGuard](https://github.com/qwacko/skGuard) used to protect routes no matter how they are accessed.
 - [skRoutess](https://github.com/qwacko/skRoutes) Route parameter and search parameter validation.
 - [Drizzle ORM](https://orm.drizzle.team) provides database integration. Including a SQLite schema for authentication / session management, and build in automatic migrations. Also includes package.json scripts for generating migrations, and running Drizzle Studio.
-- Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore won't work well in a serverless environment.
+- Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore this functionality won't work in a serverless environment.
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
-- [Zod](https://github.com/colinhacks/zod), which is used for form and trpc validation.
+- [Zod](https://github.com/colinhacks/zod), which is used for form, environment variable and route params validation.
 - A working staged DockerFile and docker-compose file are provided.
 - Automatic scheduled Backups of the database.
 - unplugin-icons (https://github.com/antfu/unplugin-icons) is included, allowing access to over 10,000 icons.
+- View transition API configured (in `routes/+layout.svelte`). With fading between pages.
 - Vitest is included, however there are no tests setup and functioning
 - TailwindCSS is _NOT_ included, however the template has been tested to work with svelte-add to add tailwind.
 - Environment Variable Validation (using Zod)
 - Basic logging setup.
-- View transition API configured (in `routes/+layout.svelte`). With fading between pages.
 
 ## Getting started
 
