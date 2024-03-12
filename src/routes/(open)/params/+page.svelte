@@ -14,14 +14,18 @@
 
 	$: params = pageInfo('/(open)/params', $page);
 
-	$: displayData = Array(params.searchParams?.count).fill(params.searchParams?.animal);
-	$: displayDataFromData = data.searchData ?  Array(data.searchData.count).fill(data.searchData.animal) : [];
+	$: displayData = Array(params.current.searchParams?.count).fill(
+		params.current.searchParams?.animal
+	);
+	$: displayDataFromData = data.searchData
+		? Array(data.searchData.count).fill(data.searchData.animal)
+		: [];
 </script>
 
-{#if params.searchParams && data.searchData}
+{#if params.current.searchParams && data.searchData}
 	<div class="button-row">
 		<div class="icon-row">
-			Data From URL : {params.searchParams?.owner.name} ({#if params.searchParams?.owner.gender === 'male'}
+			Data From URL : {params.current.searchParams?.owner.name} ({#if params.current.searchParams?.owner.gender === 'male'}
 				<IconMale />
 			{:else}
 				<IconFemale />
@@ -87,7 +91,7 @@
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
-					...params.searchParams,
+					...params.current.searchParams,
 					animal: 'fish'
 				}
 			}).url}
@@ -99,7 +103,7 @@
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
-					...params.searchParams,
+					...params.current.searchParams,
 					animal: 'bird'
 				}
 			}).url}
@@ -111,9 +115,9 @@
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
-					...params.searchParams,
+					...params.current.searchParams,
 					owner: {
-						...params.searchParams.owner,
+						...params.current.searchParams.owner,
 						gender: 'male'
 					}
 				}
@@ -126,9 +130,9 @@
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
-					...params.searchParams,
+					...params.current.searchParams,
 					owner: {
-						...params.searchParams.owner,
+						...params.current.searchParams.owner,
 						gender: 'female'
 					}
 				}
@@ -141,8 +145,8 @@
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
-					...params.searchParams,
-					count: params.searchParams.count + 1
+					...params.current.searchParams,
+					count: params.current.searchParams.count + 1
 				}
 			}).url}
 		>
@@ -153,8 +157,8 @@
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
-					...params.searchParams,
-					count: params.searchParams.count - 1
+					...params.current.searchParams,
+					count: params.current.searchParams.count - 1
 				}
 			}).url}
 		>
@@ -162,16 +166,18 @@
 		</a>
 		<button
 			class="button"
-			on:click={() => params.searchParams ? 
-				goto(
-					urlGenerator({
-						address: '/(open)/params',
-						searchParamsValue: {
-							...params.searchParams,
-							count: 0
-						}
-					}).url
-				) : undefined}>Zero Animals</button
+			on:click={() =>
+				params.current.searchParams
+					? goto(
+							urlGenerator({
+								address: '/(open)/params',
+								searchParamsValue: {
+									...params.current.searchParams,
+									count: 0
+								}
+							}).url
+					  )
+					: undefined}>Zero Animals</button
 		>
 		<form use:enhance method="post" action="?/testAction">
 			<button class="submitButton" type="submit">Test Action</button>

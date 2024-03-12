@@ -5,7 +5,7 @@ export const load = async (data) => {
 	authGuard(data);
 	const backupFiles = getBackupList();
 
-	return { backupFiles };
+	return { backupFiles: await backupFiles };
 };
 
 export const actions = {

@@ -3,7 +3,8 @@ import { serverPageInfo } from '$lib/routes';
 
 export const load = async (requestData) => {
 	authGuard(requestData);
-	const { searchParams: searchData } = serverPageInfo('/(open)/params', requestData);
+	const pageInfo = serverPageInfo('/(open)/params', requestData);
+	const searchData = pageInfo.current.searchParams;
 
 	return { searchData };
 };
