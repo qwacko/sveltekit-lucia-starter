@@ -5,11 +5,10 @@
 	import ErrorText from '$lib/components/ErrorText.svelte';
 	import SpreadButtons from '$lib/components/SpreadButtons.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
-	import { superForm } from 'sveltekit-superforms/client';
-	import type { loginSchemaType } from '$lib/schema/loginSchema';
+	import { superForm } from 'sveltekit-superforms';
 
 	export let data;
-	const { form, errors, constraints, message, enhance } = superForm<loginSchemaType>(data.form, {
+	const { form, errors, constraints, message, enhance } = superForm(data.form, {
 		taintedMessage: null
 	});
 </script>

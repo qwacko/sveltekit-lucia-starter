@@ -5,7 +5,8 @@ import { user } from '$lib/server/db/schema';
 import { auth } from '$lib/server/lucia.js';
 import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import { message, superValidate } from 'sveltekit-superforms/server';
+import { message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
 
 const passwordSchema = updatePasswordSchema;
 
@@ -14,14 +15,14 @@ export type passwordSchemaType = typeof passwordSchema;
 export const load = async (requestData) => {
 	authGuard(requestData);
 
-	const form = await superValidate(passwordSchema);
+	const form = await superValidate(zod(passwordSchema));
 
 	return { form };
 };
 
 export const actions = {
 	default: async ({ locals, params, request }) => {
-		const form = await superValidate(request, passwordSchema);
+		const form = await superValidate(request, zod(passwordSchema));
 		const currentUser = locals.user;
 		const targetUserId = params.id;
 

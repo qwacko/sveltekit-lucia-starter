@@ -1,6 +1,7 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
-import { setError, superValidate } from 'sveltekit-superforms/server';
+import { setError, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
 import { signupSchema } from '$lib/schema/signupSchema';
 import { logging } from '$lib/server/logging';
 
@@ -15,7 +16,7 @@ export const createUserHandler = async ({
 	admin: boolean;
 	setSession?: boolean;
 }) => {
-	const form = await superValidate(request, signupSchema);
+	const form = await superValidate(request, zod(signupSchema));
 
 	if (!form.valid) {
 		return fail(400, { form });
@@ -41,7 +42,7 @@ export const createUserHandler = async ({
 			locals.auth.setSession(session); // set session cookie}
 		} else {
 			//Returns a new form to reset the form
-			const newForm = await superValidate(signupSchema);
+			const newForm = await superValidate(zod(signupSchema));
 			return { form: newForm };
 		}
 	} catch (e) {

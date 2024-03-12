@@ -6,12 +6,11 @@
 	import LinkButton from '$lib/components/LinkButton.svelte';
 	import SpreadButtons from '$lib/components/SpreadButtons.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
-	import type { signupSchemaType } from '$lib/schema/signupSchema.js';
-	import { superForm } from 'sveltekit-superforms/client';
+	import { superForm } from 'sveltekit-superforms';
 
 	export let data;
 
-	const { form, errors, constraints, message, enhance } = superForm<signupSchemaType>(data.form, {
+	const { form, errors, constraints, message, enhance } = superForm(data.form, {
 		taintedMessage: null,
 		onResult: async ({ result }) => {
 			if (result.type === 'success') {
