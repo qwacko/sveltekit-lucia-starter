@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@lucia-auth/adapter-sqlite':
-    specifier: ^2.0.0
-    version: 2.0.0(better-sqlite3@9.4.3)(lucia@2.5.0)
+    specifier: ^2.0.1
+    version: 2.0.1(better-sqlite3@9.4.3)(lucia@2.7.7)
   '@sveltejs/adapter-node':
     specifier: ^5.0.1
     version: 5.0.1(@sveltejs/kit@2.5.3)
@@ -18,8 +18,8 @@ dependencies:
     specifier: ^0.30.1
     version: 0.30.1(@types/better-sqlite3@7.6.9)(better-sqlite3@9.4.3)
   lucia:
-    specifier: ^2.5.0
-    version: 2.5.0
+    specifier: ^2.7.7
+    version: 2.7.7
   node-schedule:
     specifier: ^2.1.1
     version: 2.1.1
@@ -2107,11 +2107,11 @@ packages:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@lucia-auth/adapter-sqlite@2.0.0(better-sqlite3@9.4.3)(lucia@2.5.0):
-    resolution: {integrity: sha512-Hiy8WND/1mi25r0M2ruSml+Ab5GJLr4XZEHApYw1lxybF+VlPUyX7oTtIVCSgvq/SWiP/tvnyPwnXAPmNr8/bg==}
+  /@lucia-auth/adapter-sqlite@2.0.1(better-sqlite3@9.4.3)(lucia@2.7.7):
+    resolution: {integrity: sha512-yc7XQ4X3sWG1gyUGHqaXipJIkmvB4MOgJypnSMWy7Vjhn3AOCM2xw51xTs+dGpLOQIn2Laomg9xpmDM2/9tgqQ==}
     peerDependencies:
       '@libsql/client': ^0.3.0
-      better-sqlite3: ^8.0.0
+      better-sqlite3: 8.x - 9.x
       lucia: ^2.0.0
     peerDependenciesMeta:
       '@libsql/client':
@@ -2120,7 +2120,7 @@ packages:
         optional: true
     dependencies:
       better-sqlite3: 9.4.3
-      lucia: 2.5.0
+      lucia: 2.7.7
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
@@ -4832,8 +4832,8 @@ packages:
       es5-ext: 0.10.64
     dev: true
 
-  /lucia@2.5.0:
-    resolution: {integrity: sha512-eUUtf4gBsT1vLF1UEkZly3Sh620N4P0TcGzeDMviFqF0qULB7XOgC9GMmobK3y9L/cEfoD8YHNxfIN/AzSXQsg==}
+  /lucia@2.7.7:
+    resolution: {integrity: sha512-Hy1nMcLquLl3yDvV9zYA9fSBGUDy/Fw2zEUw2Ia4iGdk/O+hI/TvQ1tAfED/U1WE/c5DT1hEger3m7qIx1qbUg==}
     dev: false
 
   /luxon@3.4.3:
