@@ -1,31 +1,44 @@
 // src/lib/server/lucia.ts
-import { lucia } from 'lucia';
-import { sveltekit } from 'lucia/middleware';
+import { Lucia, TimeSpan } from 'lucia';
+import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
 import { dev } from '$app/environment';
 
-import { sqliteDatabase } from './db/db.js';
-import { betterSqlite3 } from '@lucia-auth/adapter-sqlite';
+import { db } from './db/db.js';
 import { serverEnv } from './serverEnv.js';
+import { session, user } from './db/schema/userSchema.js';
 
 const luciaEnvDev = dev || serverEnv.DEV_OVERRIDE;
-const luciaCSRF = !(luciaEnvDev || !serverEnv.CSRF_CHECK_ORIGIN);
+// const luciaCSRF = !(luciaEnvDev || !serverEnv.CSRF_CHECK_ORIGIN);
 
-// expect error
-export const auth = lucia({
-	adapter: betterSqlite3(sqliteDatabase, {
-		key: 'user_key',
-		session: 'user_session',
-		user: 'user'
-	}),
-	env: luciaEnvDev ? 'DEV' : 'PROD',
-	csrfProtection: luciaCSRF,
-	middleware: sveltekit(),
+const adapter = new DrizzleSQLiteAdapter(db, session, user);
+export const auth = new Lucia(adapter, {
+	sessionExpiresIn: new TimeSpan(30, 'd'),
+	sessionCookie: {
+		attributes: {
+			secure: !luciaEnvDev
+		}
+	},
 	getUserAttributes: (data) => {
 		return {
 			username: data.username,
+			userId: data.userId,
 			admin: Boolean(data.admin)
 		};
-	}
+	},
+	getSessionAttributes: (data) => data
 });
 
-export type Auth = typeof auth;
+declare module 'lucia' {
+	interface Register {
+		Lucia: typeof auth;
+		DatabaseSessionAttributes: DatabaseSessionAttributes;
+		DatabaseUserAttributes: DatabaseUserAttributes;
+	}
+}
+
+interface DatabaseSessionAttributes {}
+interface DatabaseUserAttributes {
+	userId: string;
+	username: string;
+	admin: boolean;
+}

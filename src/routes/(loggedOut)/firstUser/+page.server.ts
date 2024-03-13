@@ -13,11 +13,11 @@ export const load = async (data) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, locals }) => {
+	default: async ({ request, locals, cookies }) => {
 		//Only allow creation of a first user as an admin if there is no existing admins.
 		const noAdmin = await dbNoAdmins();
 		if (noAdmin) {
-			return createUserHandler({ request, locals, admin: true });
+			return createUserHandler({ request, admin: true, cookies });
 		}
 	}
 };

@@ -16,7 +16,10 @@ const loggedOutConfig: RouteConfig<UserValidationOutput> = {
 };
 
 const postActionAuthOnly = (data: UserValidationOutput) => {
-	console.log('POSTCheckInner', data);
+	return data.user ? null : 'Action Not Allowed';
+};
+
+const postActionAdminOnly = (data: UserValidationOutput) => {
 	return data.admin ? null : 'Action Not Allowed';
 };
 
@@ -25,7 +28,8 @@ export const { backend: authGuard, frontend: authGuardFrontend } = skGuard({
 		'/': {
 			...openConfig,
 			POSTCheck: {
-				testFunction: postActionAuthOnly
+				testFunction: postActionAuthOnly,
+				logout: postActionAuthOnly
 			}
 		},
 

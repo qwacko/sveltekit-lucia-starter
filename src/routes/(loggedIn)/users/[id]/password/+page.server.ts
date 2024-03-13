@@ -1,12 +1,13 @@
 import { updatePasswordSchema } from '$lib/schema/signupSchema.js';
 import { authGuard } from '$lib/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db.js';
-import { user } from '$lib/server/db/schema';
+import { session, user } from '$lib/server/db/schema';
 import { auth } from '$lib/server/lucia.js';
 import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import { Argon2id } from 'oslo/password';
 
 const passwordSchema = updatePasswordSchema;
 
@@ -45,18 +46,14 @@ export const actions = {
 			return message(form, 'User Not Found');
 		}
 
-		console.log('Target User: ', targetUser);
-
 		try {
-			await auth.updateKeyPassword(
-				'username',
-				targetUser.username.toLowerCase(),
-				form.data.password
-			);
+			const hashedPassword = await new Argon2id().hash(form.data.password);
+			await db.update(user).set({ hashedPassword }).where(eq(user.id, targetUserId)).execute();
+			await db.delete(session).where(eq(session.userId, targetUserId)).execute();
 		} catch (e) {
 			return message(form, 'Error Updating Password', { status: 400 });
 		}
 
-		throw redirect(302, `/users/${targetUserId}`);
+		redirect(302, `/users/${targetUserId}`);
 	}
 };

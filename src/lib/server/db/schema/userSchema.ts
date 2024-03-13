@@ -1,28 +1,16 @@
 import { sqliteTable, text, blob, integer } from 'drizzle-orm/sqlite-core';
 
 export const user = sqliteTable('user', {
-	id: text('id').primaryKey(),
+	id: text('id').notNull().primaryKey(),
 	username: text('username').notNull().unique(),
-	admin: integer('admin', { mode: 'boolean' }).notNull().default(false)
+	admin: integer('admin', { mode: 'boolean' }).notNull().default(false),
+	hashedPassword: text('hashed_password').notNull()
 });
 
 export const session = sqliteTable('user_session', {
-	id: text('id').primaryKey(),
+	id: text('id').notNull().primaryKey(),
 	userId: text('user_id')
 		.notNull()
-		.references(() => user.id, { onDelete: 'cascade' }),
-	activeExpires: blob('active_expires', {
-		mode: 'bigint'
-	}).notNull(),
-	idleExpires: blob('idle_expires', {
-		mode: 'bigint'
-	}).notNull()
-});
-
-export const key = sqliteTable('user_key', {
-	id: text('id').primaryKey(),
-	userId: text('user_id')
-		.notNull()
-		.references(() => user.id, { onDelete: 'cascade' }),
-	hashedPassword: text('hashed_password')
+		.references(() => user.id),
+	expiresAt: integer('expires_at').notNull()
 });

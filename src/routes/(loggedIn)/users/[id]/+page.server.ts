@@ -9,11 +9,11 @@ export const load = (data) => {
 
 export const actions = {
 	setAdmin: async ({ params, locals }) => {
-		const authUser = await locals.auth.validate();
+		const authUser = locals.user;
 		if (!authUser) {
 			return;
 		}
-		if (!authUser.user.admin || authUser.user.userId === params.id) {
+		if (!authUser.admin || authUser.userId === params.id) {
 			return;
 		}
 
