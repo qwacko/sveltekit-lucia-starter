@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+
+	export let data;
 </script>
 
 <div>
 	<h1>Welcome to SvelteKit</h1>
 	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
-	<form action="?/logout" method="post" use:enhance>
-		<button type="submit">Logout</button>
-	</form>
+	{#if data.user}
+		<form action="?/logout" method="post" use:enhance>
+			<button type="submit">Logout</button>
+		</form>
+	{/if}
 
 	<form action="?/testFunction" method="post" use:enhance>
 		<button type="submit">Test Function</button>

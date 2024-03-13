@@ -1,27 +1,52 @@
 import { authGuard } from '$lib/authGuard/authGuardConfig';
 import { initateCronJobs } from '$lib/server/cron/cron';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
+import { db } from '$lib/server/db/db';
+import { user } from '$lib/server/db/schema';
 
 import { auth } from '$lib/server/lucia';
 import { redirect, type Handle } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const runningJobs = initateCronJobs();
 
-export const handle: Handle = async ({ event, resolve }) => {
-	// we can pass `event` because we used the SvelteKit middleware
+const handleAuth: Handle = async ({ event, resolve }) => {
+	const sessionId = event.cookies.get(auth.sessionCookieName);
+	if (!sessionId) {
+		event.locals.user = undefined;
+		event.locals.session = undefined;
+		return resolve(event);
+	}
 
-	event.locals.auth = auth.handleRequest(event);
+	const { session, user } = await auth.validateSession(sessionId);
+	if (session && session.fresh) {
+		const sessionCookie = auth.createSessionCookie(session.id);
+		event.cookies.set(sessionCookie.name, sessionCookie.value, {
+			path: '.',
+			...sessionCookie.attributes
+		});
+	}
+	if (!session) {
+		const sessionCookie = auth.createBlankSessionCookie();
+		event.cookies.set(sessionCookie.name, sessionCookie.value, {
+			path: '.',
+			...sessionCookie.attributes
+		});
+	}
+	event.locals.user = user || undefined;
+	event.locals.session = session || undefined;
+	return resolve(event);
+};
 
-	const [user, noAdmin] = await Promise.all([event.locals.auth.validate(), dbNoAdmins()]);
-
-	event.locals.user = user?.user;
+export const handleRoute: Handle = async ({ event, resolve }) => {
+	const noAdmin = await dbNoAdmins();
 
 	if (!event.route.id) {
-		throw redirect(302, '/login');
+		redirect(302, '/login');
 	}
 	if (event.route.id !== '/(loggedOut)/firstUser' && noAdmin) {
-		throw redirect(302, '/firstUser');
+		redirect(302, '/firstUser');
 	}
 
 	if (event.route.id) {
@@ -30,3 +55,5 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	return await resolve(event);
 };
+
+export const handle = sequence(handleAuth, handleRoute);

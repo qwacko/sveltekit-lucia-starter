@@ -6,18 +6,9 @@ import 'unplugin-icons/types/svelte';
 declare global {
 	namespace App {
 		interface Locals {
-			auth: import('lucia').AuthRequest;
 			user: import('lucia').User | undefined;
+			session: import('lucia').Session | undefined;
 		}
-	}
-
-	namespace Lucia {
-		type Auth = import('$lib/server/lucia').Auth;
-		type DatabaseUserAttributes = {
-			username: string;
-			admin: boolean;
-		};
-		type DatabaseSessionAttributes = Record<string, never>;
 	}
 }
 
