@@ -190,4 +190,6 @@ There is a preconfigured cron job to execute this function every day, the schedu
 - `check`: Run typescript check, and svelte-check of the code.
 - `db:generate`: Reads the current drizzle schema and updates the migrations.
 - `db:studio`: Runs the Drizzle Studio to allow the user to explore (and modify) the db data.
+- `db:undo`: Allows the undo of a specific migration step.
+- `db:custom`: Adds a custom blank migration.
 - `drizzle-kit`: Gives full access to the drizzle-kit functionality.

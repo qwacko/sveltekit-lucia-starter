@@ -15,6 +15,8 @@
 		"test:unit": "vitest",
 		"db:generate": "pnpm drizzle-kit generate:sqlite",
 		"db:studio": "pnpm drizzle-kit studio",
+		"db:custom": "pnpm drizzle-kit generate:sqlite --custom",
+		"db:undo": "pnpm drizzle-kit drop",
 		"generate-pwa-assets": "pwa-assets-generator"
 	},
 	"devDependencies": {
