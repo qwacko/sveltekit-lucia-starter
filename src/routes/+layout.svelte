@@ -6,10 +6,10 @@
 	import { authGuardFrontend } from '$lib/authGuard/authGuardConfig';
 	import { onNavigate } from '$app/navigation';
 
-	const enableViewTransition = false;
+	let { data, children } = $props();
 
 	onNavigate((navigation) => {
-		if (!enableViewTransition) return;
+		if (!data.viewTransitions) return;
 		//@ts-expect-error startViewTransition is not defined on Document
 		if (!document.startViewTransition) return;
 
@@ -21,8 +21,6 @@
 			});
 		});
 	});
-
-	let { data, children } = $props();
 
 	$effect(() => {
 		authGuardFrontend($page, { admin: data.user?.admin || false, user: data.user ? true : false });

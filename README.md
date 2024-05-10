@@ -107,6 +107,7 @@ The following environemnt variables are included
 |LOGGING_CLASSES| Allows the different classes of logging to be enabled. The options are `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE` (with a comma separated list allowing multiple to be enabled). Defaults to `ERROR,WARN,INFO`|
 |BACKUP_DIR| Sets the location of the automated and manual backups. Defaults to ./backup|
 |BACKUP_SCHEDULE| Cron string to set the Backup schedule. Defaults to "0 0 \* \* \*" (Midnight daily)|
+|ENABLE_TRANSITION| Enables the view transition API to have smooth page transitions.|
 
 ## Auth
 
