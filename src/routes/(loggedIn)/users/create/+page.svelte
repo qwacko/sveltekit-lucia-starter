@@ -8,7 +8,7 @@
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { superForm } from 'sveltekit-superforms';
 
-	export let data;
+	let { data } = $props();
 
 	const { form, errors, constraints, message, enhance } = superForm(data.form, {
 		taintedMessage: null,

@@ -1,15 +1,26 @@
 <script lang="ts">
-	export let style: 'primary' | 'secondary' = 'primary';
-	export let href: string = '#';
+	import type { Snippet } from 'svelte';
+	import type { HTMLAnchorAttributes } from 'svelte/elements';
+
+	let {
+		style = 'primary',
+		href = '#',
+		children,
+		...linkProps
+	}: {
+		style?: 'primary' | 'secondary';
+		href?: string;
+		children: Snippet;
+	} & HTMLAnchorAttributes = $props();
 </script>
 
 <a
 	class:primary={style === 'primary'}
 	class:secondary={style === 'secondary'}
 	{href}
-	{...$$restProps}
+	{...linkProps}
 >
-	<slot />
+	{@render children()}
 </a>
 
 <style>
@@ -20,7 +31,10 @@
 		padding-bottom: 0.5rem;
 		border-radius: 0.5rem;
 		border-width: 1px;
-		transition: background-color 0.2s, border-color 0.2s, color 0.2s ease-in-out;
+		transition:
+			background-color 0.2s,
+			border-color 0.2s,
+			color 0.2s ease-in-out;
 	}
 
 	.primary {

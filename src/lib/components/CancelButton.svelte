@@ -1,7 +1,13 @@
-<button on:click on:keydown on:keypress class="wrapper">
+<script lang="ts">
+	import type { HTMLButtonAttributes } from 'svelte/elements';
+
+	let { ...buttonProps }: HTMLButtonAttributes = $props();
+</script>
+
+<button {...buttonProps} class="wrapper">
 	<div class="arrow">
-		<div class="line line1" />
-		<div class="line line2" />
+		<div class="line line1"></div>
+		<div class="line line2"></div>
 	</div>
 </button>
 

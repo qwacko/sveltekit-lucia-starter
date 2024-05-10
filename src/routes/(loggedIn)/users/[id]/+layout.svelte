@@ -2,11 +2,11 @@
 	import CenterCard from '$lib/components/CenterCard.svelte';
 	import LinkButton from '$lib/components/LinkButton.svelte';
 
-	export let data;
+	let { data, children } = $props();
 </script>
 
 <CenterCard title="User - {data.currentUser.username}">
-	<slot />
+	{@render children()}
 </CenterCard>
 <div class="buttonSize">
 	<LinkButton href="/users">Users List</LinkButton>

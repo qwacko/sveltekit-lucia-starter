@@ -1,14 +1,19 @@
 <script lang="ts">
-	export let style: 'primary' | 'secondary' = 'primary';
+	import type { Snippet } from 'svelte';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
+
+	let {
+		children,
+		style = 'primary',
+		...restProps
+	}: {
+		children: Snippet;
+		style?: 'primary' | 'secondary';
+	} & HTMLButtonAttributes = $props();
 </script>
 
-<button
-	class:primary={style === 'primary'}
-	class:secondary={style === 'secondary'}
-	{...$$restProps}
-	on:click
->
-	<slot />
+<button class:primary={style === 'primary'} class:secondary={style === 'secondary'} {...restProps}>
+	{@render children()}
 </button>
 
 <style>
@@ -19,7 +24,10 @@
 		padding-bottom: 0.5rem;
 		border-radius: 0.5rem;
 		border-width: 1px;
-		transition: background-color 0.2s, border-color 0.2s, color 0.2s ease-in-out;
+		transition:
+			background-color 0.2s,
+			border-color 0.2s,
+			color 0.2s ease-in-out;
 	}
 
 	.primary {
