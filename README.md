@@ -29,6 +29,10 @@ Created a new library so it is easy for me to update all my applications that us
 
 Updated to use the latest dependencies for Luica (v3) and Sveltekit-Superforms (v2). All other libraries also updated, but these two had relatively signifianct changes.
 
+### 2024-05-11 - Svekte 5
+
+Updated Dependencies and to use the preview release of Svelte 5.
+
 ## Overview
 
 The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pre-configured with a comprehensive set of features to kickstart your next application. Inspired by the [T3 Stack](https://create.t3.gg/), this starter kit provides a similar feature set with added functionality.
