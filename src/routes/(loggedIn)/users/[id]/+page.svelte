@@ -5,7 +5,7 @@
 	import ErrorText from '$lib/components/ErrorText.svelte';
 	import LinkButton from '$lib/components/LinkButton.svelte';
 
-	export let data;
+	let { data } = $props();
 </script>
 
 {#if data.currentUser}
@@ -14,7 +14,7 @@
 		{#if data.currentUser.admin}
 			(Admin)
 		{/if}
-		<div class="growGap" />
+		<div class="growGap"></div>
 		{#if data.user?.admin && data.user.userId !== data.currentUser.id}
 			{#if !data.currentUser.admin}
 				<form action="?/setAdmin" method="POST" use:enhance>

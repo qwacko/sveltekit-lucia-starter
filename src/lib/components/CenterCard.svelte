@@ -1,12 +1,17 @@
 <script lang="ts">
-	export let title: string | null;
-	export let maxWidthRem: number = 50;
+	import type { Snippet } from 'svelte';
+
+	let {
+		title,
+		maxWidthRem = 50,
+		children
+	}: { children: Snippet; title?: string | null; maxWidthRem?: number } = $props();
 </script>
 
 <div class="wrapper">
 	<div class="card" style="--maxWidthVar: {maxWidthRem}rem">
 		{#if title}<h1>{title}</h1>{/if}
-		<slot />
+		{@render children()}
 	</div>
 </div>
 

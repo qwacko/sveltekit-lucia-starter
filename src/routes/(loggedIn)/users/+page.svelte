@@ -3,7 +3,7 @@
 	import CenterCard from '$lib/components/CenterCard.svelte';
 	import LinkButton from '$lib/components/LinkButton.svelte';
 
-	export let data;
+	let { data } = $props();
 </script>
 
 <CenterCard title="Users">
@@ -16,7 +16,7 @@
 		</div>
 	{/each}
 
-	<div class="gap" />
+	<div class="gap"></div>
 
 	<LinkButton href="/users/create">Create User</LinkButton>
 </CenterCard>

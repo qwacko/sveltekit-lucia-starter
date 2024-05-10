@@ -1,16 +1,25 @@
 <script lang="ts">
 	import ErrorText from './ErrorText.svelte';
+	import type { HTMLInputAttributes } from 'svelte/elements';
 
-	export let errorMessage: string | string[] | null | undefined;
-	export let title: string | null;
-	export let name: string;
+	let {
+		errorMessage,
+		title,
+		name,
+		value = $bindable(),
+		...inputProps
+	}: {
+		errorMessage: string | string[] | null | undefined;
+		title?: string;
+		name: string;
+	} & HTMLInputAttributes = $props();
 </script>
 
 <div>
 	{#if title}
 		<label for={name}>{title}</label>
 	{/if}
-	<input {...$$restProps} {name} />
+	<input {...inputProps} {name} />
 	<ErrorText message={errorMessage} />
 </div>
 

@@ -31,17 +31,12 @@ const serverEnvValidation = z.object({
 	ALLOW_SIGNUP: parseEnvStringToBoolean({ defaultBoolean: true, optional: true }),
 	DEV_OVERRIDE: parseEnvStringToBoolean({ defaultBoolean: false, optional: true }),
 	CSRF_CHECK_ORIGIN: parseEnvStringToBoolean({ defaultBoolean: true, optional: true }),
-	DATABASE_FILE: z.string().optional().default('./database.sqlite3')
+	DATABASE_FILE: z.string().optional().default('./db.db'),
+	ENABLE_TRANSITIONS: parseEnvStringToBoolean({ defaultBoolean: false, optional: true })
 });
 
 export const serverEnv = serverEnvValidation.parse({
 	DEV: dev,
-	LOGGING: env.LOGGING,
 	LOOGGING_CLASSES: env.DEBUG_CLASSES,
-	BACKUP_DIR: env.BACKUP_DIR,
-	BACKUP_SCHEDULE: env.BACKUP_SCHEDULE,
-	ALLOW_SIGNUP: env.ALLOW_SIGNUP,
-	DEV_OVERRIDE: env.DEV_OVERRIDE,
-	CSRF_CHECK_ORIGIN: env.CSRF_CHECK_ORIGIN,
-	DATABASE_FILE: env.DATABASE_FILE
+	...env
 });

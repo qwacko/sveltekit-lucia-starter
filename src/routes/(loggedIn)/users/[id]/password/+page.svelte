@@ -9,7 +9,7 @@
 	import LinkButton from '$lib/components/LinkButton.svelte';
 	import { page } from '$app/stores';
 
-	export let data;
+	let { data } = $props();
 
 	const { form, errors, constraints, message, enhance, allErrors } = superForm(data.form, {
 		taintedMessage: null

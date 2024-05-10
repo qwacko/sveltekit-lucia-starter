@@ -6,7 +6,10 @@
 	import { authGuardFrontend } from '$lib/authGuard/authGuardConfig';
 	import { onNavigate } from '$app/navigation';
 
+	let { data, children } = $props();
+
 	onNavigate((navigation) => {
+		if (!data.viewTransitions) return;
 		//@ts-expect-error startViewTransition is not defined on Document
 		if (!document.startViewTransition) return;
 
@@ -19,9 +22,9 @@
 		});
 	});
 
-	export let data;
-
-	$: authGuardFrontend($page, { admin: data.user?.admin || false, user: data.user ? true : false });
+	$effect(() => {
+		authGuardFrontend($page, { admin: data.user?.admin || false, user: data.user ? true : false });
+	});
 
 	onMount(async () => {
 		if (pwaInfo) {
@@ -43,13 +46,13 @@
 		}
 	});
 
-	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
-	$: homePage = $page.url.pathname === '/';
-	$: user = $page.url.pathname.startsWith(`/users/${data?.user?.userId}`);
-	$: backup = $page.route.id?.startsWith('/(loggedIn)/backup');
-	$: users = $page.route.id?.startsWith('/(loggedIn)/users') && !user;
-	$: login = $page.route.id?.startsWith('/(loggedOut)');
-	$: paramsPage = $page.route.id?.startsWith('/(open)/params');
+	let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
+	let homePage = $derived($page.url.pathname === '/');
+	let user = $derived($page.url.pathname.startsWith(`/users/${data?.user?.userId}`));
+	let backup = $derived($page.route.id?.startsWith('/(loggedIn)/backup'));
+	let users = $derived($page.route.id?.startsWith('/(loggedIn)/users') && !user);
+	let login = $derived($page.route.id?.startsWith('/(loggedOut)'));
+	let paramsPage = $derived($page.route.id?.startsWith('/(open)/params'));
 </script>
 
 <svelte:head>
@@ -72,7 +75,7 @@
 		{/if}
 	</div>
 
-	<slot />
+	{@render children()}
 </div>
 
 <style>

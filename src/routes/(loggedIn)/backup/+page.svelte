@@ -2,13 +2,13 @@
 	import { enhance } from '$app/forms';
 	import CenterCard from '$lib/components/CenterCard.svelte';
 
-	export let data;
+	let { data } = $props();
 
-	let pageNo = 1;
-	let perPage = 10;
+	let pageNo = $state(1);
+	let perPage = $state(10);
 
-	$: displayFiles = data.backupFiles.slice((pageNo - 1) * perPage, pageNo * perPage);
-	$: numberPages = Math.ceil(data.backupFiles.length / perPage);
+	let displayFiles = $derived(data.backupFiles.slice((pageNo - 1) * perPage, pageNo * perPage));
+	let numberPages = $derived(Math.ceil(data.backupFiles.length / perPage));
 </script>
 
 <CenterCard title="Backups">
@@ -29,7 +29,7 @@
 		<div class="row-div">
 			{#if pageNo > 1}
 				<button
-					on:click={() => {
+					onclick={() => {
 						if (pageNo > 1) pageNo--;
 					}}
 				>
@@ -39,7 +39,7 @@
 			<div>Page {pageNo} of {numberPages}</div>
 			{#if pageNo < numberPages}
 				<button
-					on:click={() => {
+					onclick={() => {
 						if (pageNo < numberPages) pageNo++;
 					}}
 				>

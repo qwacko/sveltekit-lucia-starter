@@ -10,16 +10,16 @@
 	import { page } from '$app/stores';
 	import { pageInfo, urlGenerator } from '$lib/routes.js';
 
-	export let data;
+	let { data } = $props();
 
-	$: params = pageInfo('/(open)/params', $page);
+	let params = $derived(pageInfo('/(open)/params', $page));
 
-	$: displayData = Array(params.current.searchParams?.count).fill(
-		params.current.searchParams?.animal
+	let displayData = $derived(
+		Array(params.current.searchParams?.count).fill(params.current.searchParams?.animal)
 	);
-	$: displayDataFromData = data.searchData
-		? Array(data.searchData.count).fill(data.searchData.animal)
-		: [];
+	let displayDataFromData = $derived(
+		data.searchData ? Array(data.searchData.count).fill(data.searchData.animal) : []
+	);
 </script>
 
 {#if params.current.searchParams && data.searchData}
@@ -166,7 +166,7 @@
 		</a>
 		<button
 			class="button"
-			on:click={() =>
+			onclick={() =>
 				params.current.searchParams
 					? goto(
 							urlGenerator({
@@ -176,7 +176,7 @@
 									count: 0
 								}
 							}).url
-					  )
+						)
 					: undefined}>Zero Animals</button
 		>
 		<form use:enhance method="post" action="?/testAction">

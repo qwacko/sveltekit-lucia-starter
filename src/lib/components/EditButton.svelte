@@ -1,10 +1,12 @@
 <script lang="ts">
+	import type { HTMLButtonAttributes } from 'svelte/elements';
 	import IconAccountBox from '~icons/mdi/pencil';
 
-	export let message: string | null | undefined = undefined;
+	let { message, ...buttonProps }: { message: string | null | undefined } & HTMLButtonAttributes =
+		$props();
 </script>
 
-<button on:click on:keydown on:keypress class="wrapper">
+<button {...buttonProps} class="wrapper">
 	{#if message}<div class="popover">{message}</div>{/if}
 	<div class="icon">
 		<IconAccountBox />
