@@ -157,7 +157,7 @@ There is server sent event functionality implemented in the "sse/[id]" route. Th
 
 This functionality is for demonstration purposes only and would require a number of different considerations to be used in a production environment.
 
-One thing to be aware of is that the way that the data is sent from teh client to the server is a `POST` request, which means that there are a number of db calls to authenticate the user that are done for each update.
+One thing to be aware of is that the way that the data is sent from the client to the server is a `POST` request, which means that there are a number of db calls to authenticate the user that are done for each update.
 
 ## Search Params Validation
 
