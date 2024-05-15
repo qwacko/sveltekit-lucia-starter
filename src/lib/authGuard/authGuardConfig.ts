@@ -43,6 +43,21 @@ export const { backend: authGuard, frontend: authGuardFrontend } = skGuard({
 		'/(loggedIn)/users/[id]/delete': adminOnlyConfig,
 		'/(loggedIn)/users/[id]/password': adminOnlyConfig,
 
+		// SSE Logic
+		'/(loggedIn)/sse/[id]': adminOnlyConfig,
+		'/(loggedIn)/sse/[id]/getData': {
+			...adminOnlyConfig,
+			POSTCheck: {
+				default: postActionAuthOnly
+			}
+		},
+		'/(loggedIn)/sse/[id]/setData': {
+			...adminOnlyConfig,
+			POSTCheck: {
+				default: postActionAuthOnly
+			}
+		},
+
 		'/(loggedOut)/login': {
 			...loggedOutConfig,
 			POSTCheck: {

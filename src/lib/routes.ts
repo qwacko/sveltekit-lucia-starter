@@ -13,6 +13,9 @@ export const { serverPageInfo, pageInfo, urlGenerator } = skRoutes({
 		'/(loggedIn)/users/[id]': { paramsValidation: z.object({ id: z.string() }).parse },
 		'/(loggedIn)/users/[id]/delete': { paramsValidation: z.object({ id: z.string() }).parse },
 		'/(loggedIn)/users/[id]/password': { paramsValidation: z.object({ id: z.string() }).parse },
+		'/(loggedIn)/sse/[id]': { paramsValidation: z.object({ id: z.string() }).parse },
+		'/(loggedIn)/sse/[id]/getData': { paramsValidation: z.object({ id: z.string() }).parse },
+		'/(loggedIn)/sse/[id]/setData': { paramsValidation: z.object({ id: z.string() }).parse },
 
 		'/(loggedOut)/login': {},
 		'/(loggedOut)/signup': {},

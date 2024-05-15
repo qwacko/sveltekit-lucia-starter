@@ -53,6 +53,7 @@
 	let users = $derived($page.route.id?.startsWith('/(loggedIn)/users') && !user);
 	let login = $derived($page.route.id?.startsWith('/(loggedOut)'));
 	let paramsPage = $derived($page.route.id?.startsWith('/(open)/params'));
+	let ssePage = $derived($page.route.id?.startsWith('/(loggedIn)/sse'));
 </script>
 
 <svelte:head>
@@ -64,6 +65,7 @@
 		<a href="/" class:bold={homePage}>Home</a>
 		<a href="/params" class:bold={paramsPage}>Search Params</a>
 		{#if data.user}
+			<a href="/sse/page1" class:bold={ssePage}>SSE</a>
 			<a href="/backup" class:bold={backup}>Backups</a>
 			<a href="/users/{data.user.userId}" class:bold={user}>User</a>
 			<a href="/users" class:bold={users}>Users</a>

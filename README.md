@@ -33,6 +33,10 @@ Updated to use the latest dependencies for Luica (v3) and Sveltekit-Superforms (
 
 Updated Dependencies and to use the preview release of Svelte 5.
 
+### 2024-05-15 - Server Sent Events
+
+Added server sent event functionality to unlock some realtime and collaborative functionality.
+
 ## Overview
 
 The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pre-configured with a comprehensive set of features to kickstart your next application. Inspired by the [T3 Stack](https://create.t3.gg/), this starter kit provides a similar feature set with added functionality.
@@ -44,7 +48,8 @@ Includes the following features:
 - [Lucia](https://lucia-auth.com/) for authentication (configured to have a username / password authentication).
 - Login / Logout Pages (using Lucia), including redirect to login page on attempt to access authenticated page. ALso a basic logged in user manageement (add / remove users, and update passwords, everyone is admin)
 - [skGuard](https://github.com/qwacko/skGuard) used to protect routes no matter how they are accessed.
-- [skRoutess](https://github.com/qwacko/skRoutes) Route parameter and search parameter validation.
+- [skRoutes](https://github.com/qwacko/skRoutes) Route parameter and search parameter validation.
+- [sveltekit-sse](https://github.com/tncrazvan/sveltekit-sse) Allows the server to send events to the client / browser. Useful for collaboration and real-time updates.
 - [Drizzle ORM](https://orm.drizzle.team) provides database integration. Including a SQLite schema for authentication / session management, and build in automatic migrations. Also includes package.json scripts for generating migrations, and running Drizzle Studio.
 - Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore this functionality won't work in a serverless environment.
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
@@ -145,6 +150,14 @@ The following scripts are available in relation to drizzle:
 
 - `pnpm db:generate` : Generates the necessary migrations from the current schema.
 - `pnpm db:studio` : Executes drizzle studio to allow for db exploration.
+
+## Server Send Events (SSE)
+
+There is server sent event functionality implemented in the "sse/[id]" route. The demonstration has two canvases and uses SSE to mirror the mouse position on one across to the mouse position on the other. This is done by sending the mouse position to the server, which updates a storage object (using unstorage for key-value store management), on message being processed, a callback is run to then send the mouse position back to the browser.
+
+This functionality is for demonstration purposes only and would require a number of different considerations to be used in a production environment.
+
+One thing to be aware of is that the way that the data is sent from the client to the server is a `POST` request, which means that there are a number of db calls to authenticate the user that are done for each update.
 
 ## Search Params Validation
 
