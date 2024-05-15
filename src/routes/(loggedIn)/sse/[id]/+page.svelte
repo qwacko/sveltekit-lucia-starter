@@ -58,6 +58,13 @@
 	const debouncems = 100;
 </script>
 
+<div class="centered">
+	Demonstration of using server sent events to share mouse positions between two users. This is
+	achieved by sending data about mouse position periodically (every {debouncems}ms) to the server,
+	which then sends this information back to the web browser. Each "room" (which is selected by the
+	last url segment in the path, currently "{data.id}") has its own set of cursors.
+</div>
+
 <div class="row-gap">
 	<MouseCanvas
 		{debouncems}
@@ -130,5 +137,11 @@
 		width: 100%;
 		justify-content: center;
 		padding: 20px;
+	}
+
+	.centered {
+		text-align: center;
+		max-width: 800px;
+		align-self: center;
 	}
 </style>
