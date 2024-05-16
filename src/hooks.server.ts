@@ -1,12 +1,41 @@
 import { authGuard } from '$lib/authGuard/authGuardConfig';
 import { initateCronJobs } from '$lib/server/cron/cron';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
-import { db } from '$lib/server/db/db';
-import { user } from '$lib/server/db/schema';
 
 import { auth } from '$lib/server/lucia';
+// import { initialiseSocketServer } from '$lib/server/websocket/websockets';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+
+import { useServer } from '$lib/server/websocket/websocketPlugin';
+import { Server } from 'socket.io';
+
+useServer({
+	callback: (server) => {
+		console.log('Initialising Websocker Server!');
+		const wsServer = new Server(server, { path: '/wss/' });
+		console.log('Websocket Server Initialised');
+		wsServer.on('connect', (ws) => {
+			const rooms: string[] = [];
+
+			console.log('Websocket Server Received A Connection!');
+			ws.on('mouse', (data) => {
+				for (const room of rooms) {
+					ws.to(room).emit('mouse', data);
+				}
+			});
+			ws.on('join', (data) => {
+				console.log('Joining Room : ', data);
+				ws.join(data.room);
+				rooms.push(data.room);
+			});
+		});
+		wsServer.on('close', () => {
+			console.log('Websocket Server Closed');
+		});
+	},
+	skip: (path) => /wss/.test(path)
+});
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const runningJobs = initateCronJobs();
@@ -55,5 +84,21 @@ export const handleRoute: Handle = async ({ event, resolve }) => {
 
 	return await resolve(event);
 };
+
+// export const handleWS: Handle = async (input) => {
+// 	if (!serverInstance) {
+// 		initiateSocketServer();
+// 	}
+
+// 	// console.log('GLobal Test Data : ', global.testData);
+
+// 	// console.log('Handle WS Keys', Object.keys(input));
+// 	// console.log('WS Event Keys', Object.keys(input.event));
+
+// 	// console.log('Request Keys', Object.keys(input.event.request));
+// 	// console.log('Request Informaiton : ', input.event.request);
+
+// 	return await input.resolve(input.event);
+// };
 
 export const handle = sequence(handleAuth, handleRoute);
