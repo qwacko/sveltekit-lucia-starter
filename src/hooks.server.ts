@@ -9,26 +9,60 @@ import { sequence } from '@sveltejs/kit/hooks';
 
 import { useServer } from '$lib/server/websocket/websocketPlugin';
 import { Server } from 'socket.io';
+import type { User } from 'lucia';
+
+const allowedRooms = ['room1', 'room2', 'room3'];
 
 useServer({
 	callback: (server) => {
 		console.log('Initialising Websocker Server!');
 		const wsServer = new Server(server, { path: '/wss/' });
-		console.log('Websocket Server Initialised');
-		wsServer.on('connect', (ws) => {
+		wsServer.on('connect', async (ws) => {
 			const rooms: string[] = [];
 
-			console.log('Websocket Server Received A Connection!');
-			ws.on('mouse', (data) => {
-				for (const room of rooms) {
-					ws.to(room).emit('mouse', data);
-				}
-			});
-			ws.on('join', (data) => {
-				console.log('Joining Room : ', data);
-				ws.join(data.room);
-				rooms.push(data.room);
-			});
+			let user: User | undefined | null = undefined;
+
+			if (ws.handshake.headers.cookie) {
+				await Promise.all(
+					ws.handshake.headers.cookie.split(';').map(async (cookie) => {
+						const trimmedCookie = cookie.trim();
+						if (trimmedCookie.startsWith(`${auth.sessionCookieName}=`)) {
+							const sessionId = trimmedCookie.split('=')[1];
+							if (sessionId) {
+								const foundUser = await auth.validateSession(sessionId);
+								user = foundUser.user || null;
+							}
+						}
+					})
+				);
+			}
+
+			if (user) {
+				ws.emit('userConnected', 'User Connected');
+
+				ws.on('mouse', (data) => {
+					if (user) {
+						for (const room of rooms) {
+							ws.to(room).emit('mouse', data);
+						}
+					}
+				});
+
+				ws.on('join', (data) => {
+					//Leave existing rooms even if unsuccessful in joining a new room
+					rooms.forEach((room) => {
+						ws.leave(room);
+					});
+					if (user && allowedRooms.includes(data.room)) {
+						ws.join(data.room);
+						rooms.push(data.room);
+						ws.emit('joined', data);
+					} else {
+						console.log('User Not Allowed To Join Room : ', data);
+						ws.emit('error', `User Not Allowed To Join Room : ${data.room}`);
+					}
+				});
+			}
 		});
 		wsServer.on('close', () => {
 			console.log('Websocket Server Closed');
@@ -84,21 +118,5 @@ export const handleRoute: Handle = async ({ event, resolve }) => {
 
 	return await resolve(event);
 };
-
-// export const handleWS: Handle = async (input) => {
-// 	if (!serverInstance) {
-// 		initiateSocketServer();
-// 	}
-
-// 	// console.log('GLobal Test Data : ', global.testData);
-
-// 	// console.log('Handle WS Keys', Object.keys(input));
-// 	// console.log('WS Event Keys', Object.keys(input.event));
-
-// 	// console.log('Request Keys', Object.keys(input.event.request));
-// 	// console.log('Request Informaiton : ', input.event.request);
-
-// 	return await input.resolve(input.event);
-// };
 
 export const handle = sequence(handleAuth, handleRoute);
