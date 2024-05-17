@@ -89,7 +89,10 @@ const check = () => {
 	}
 };
 
-const handle = () => {
+const handle = (data?: { global: boolean }) => {
+	if (data) {
+		useGlobal = data.global;
+	}
 	if (getHTTPServerGlobal()) return;
 	hack(http);
 	hack(https);
@@ -101,7 +104,7 @@ const devHandle = (server: ViteDevServer | PreviewServer) => {
 
 function WsPlugin({
 	hmrPort,
-	buildModification = `import {handle} from 'vite-sveltekit-node-ws';\nhandle();`,
+	buildModification,
 	global = false
 }: {
 	hmrPort?: number | false;
@@ -109,6 +112,9 @@ function WsPlugin({
 	global?: boolean;
 } = {}) {
 	useGlobal = global;
+	const rep = buildModification
+		? buildModification
+		: `import {handle} from 'vite-sveltekit-node-ws';\nhandle(${global ? '{global: true}' : ''});`;
 	return {
 		name: 'vite-sveltekit-node-ws',
 		config(cfg) {
@@ -119,7 +125,6 @@ function WsPlugin({
 		},
 		async transform(code, id) {
 			if (id.endsWith('@sveltejs/kit/src/runtime/server/index.js')) {
-				const rep = buildModification;
 				return { code: code.replace(/([\s\S]*import.*?from.*?(['"]).*?\2;\n)/, `$1${rep}`) };
 			}
 			return null;
