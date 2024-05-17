@@ -27,17 +27,14 @@
 		socket: targetSocket,
 		socketState,
 		roomName
-	} = getSocket(
-		() => pageName,
-		(newData) => {
-			const parsedData = kvMouseSchema.safeParse(newData);
-			if (parsedData.error) {
-				return;
-			}
-			updateCursors({ cursors: otherCursors1, thisId: myId1, newData: parsedData.data });
-			updateCursors({ cursors: otherCursors2, thisId: myId2, newData: parsedData.data });
+	} = getSocket((newData) => {
+		const parsedData = kvMouseSchema.safeParse(newData);
+		if (parsedData.error) {
+			return;
 		}
-	);
+		updateCursors({ cursors: otherCursors1, thisId: myId1, newData: parsedData.data });
+		updateCursors({ cursors: otherCursors2, thisId: myId2, newData: parsedData.data });
+	});
 
 	$effect(() => {
 		if (roomName.name !== data.id) {
