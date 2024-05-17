@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
 	return {
 		plugins: [
 			sveltekit(),
-			WsPlugin({ hmrPort: false }),
+			WsPlugin({ hmrPort: false, global: true }),
 			Icons({
 				compiler: 'svelte'
 			}),

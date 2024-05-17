@@ -2,24 +2,33 @@ import type { Plugin, PreviewServer, ViteDevServer } from 'vite';
 import http from 'http';
 import https from 'https';
 import http2 from 'http2';
-import { set } from 'zod';
 
 type Http = typeof http | typeof https | typeof http2;
 type CreateServer = Http['createServer'];
 type Server = ReturnType<CreateServer>;
 
-// type getServerSignature = () => Server | null | undefined;
-// type setServerSignature = (newValue: Server | null) => void;
-
-//@ts-ignore
-const getHTTPServerGlobal = () => global.httpSrv as Server | null | undefined;
-const setHTTPServerGlobal = (newValue: Server | null) => {
-	if (!newValue) return;
-	//@ts-ignore
-	global.httpSrv = newValue;
+const getHTTPServerGlobal = () => {
+	if (useGlobal) {
+		//@ts-ignore
+		return global.httpSrv as Server | null | undefined;
+	} else {
+		return localHttpSrv;
+	}
 };
 
-// let srv: Server | undefined | null;
+const setHTTPServerGlobal = (newValue: Server | null) => {
+	if (!newValue) return;
+	if (useGlobal) {
+		//@ts-ignore
+		global.httpSrv = newValue;
+	} else {
+		//@ts-ignore
+		localHttpSrv = newValue;
+	}
+};
+
+let useGlobal: boolean = false;
+let localHttpSrv: Server | undefined | null;
 let cb: ((s: Server) => void) | undefined;
 let skipPath: ((url: string) => boolean) | undefined;
 let rmPolkaHack: () => void;
@@ -92,11 +101,14 @@ const devHandle = (server: ViteDevServer | PreviewServer) => {
 
 function WsPlugin({
 	hmrPort,
-	buildModification = `import {handle} from 'vite-sveltekit-node-ws';\nhandle();`
+	buildModification = `import {handle} from 'vite-sveltekit-node-ws';\nhandle();`,
+	global = false
 }: {
 	hmrPort?: number | false;
 	buildModification?: string;
+	global?: boolean;
 } = {}) {
+	useGlobal = global;
 	return {
 		name: 'vite-sveltekit-node-ws',
 		config(cfg) {
@@ -119,11 +131,14 @@ function WsPlugin({
 
 const useServer = ({
 	callback,
-	skip
+	skip,
+	global = false
 }: {
 	callback: (server: Server) => void;
 	skip?: typeof skipPath;
+	global?: boolean;
 }) => {
+	useGlobal = global;
 	skipPath = skip;
 	cb = callback;
 	check();

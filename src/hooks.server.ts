@@ -14,6 +14,7 @@ import type { User } from 'lucia';
 const allowedRooms = ['room1', 'room2', 'room3'];
 
 useServer({
+	global: true,
 	callback: (server) => {
 		console.log('Initialising Websocker Server!');
 		const wsServer = new Server(server, { path: '/wss/' });
