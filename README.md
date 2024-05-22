@@ -168,6 +168,29 @@ One thing to be aware of is that the way that the data is sent from the client t
 
 There is a websocket server setup, and demonstration of this functionality included in the 'ws/[id]' route. Similar to server sent events, this mirrors mouse position in a canves to other memebers of the same room. With socket.io, the rooms are handled by socket.io rooms to make use of this functionality.
 
+### Removing
+
+If websockets are not required, the following changes can be made to remove the server:
+
+- Remove the `ws` folder in `src/routes`
+- Remove the `websocket` folder in `src/lib/server`
+- Remove server from `+hooks.server.ts` by removing the following code:
+  ```typescript
+  import { wsServer } from '$lib/server/websocket/wsServer';
+  wsServer();
+  ```
+- Remove websocket from dev server by removing the following code from `vite.config.ts`:
+  ```typescript
+  import WsPlugin from 'vite-sveltekit-node-ws';
+  ```
+
+//And (From the plugins section of the config)
+WsPlugin(),
+
+````
+- Remove the websocket dependencies (`pnpm remove vite-sveltekit-node-ws socket.io socket.io-client`)
+- Run a typescript checj (`pnpm check`) to ensure that there are no errors.
+
 ## Search Params Validation
 
 Custom logic using another library (skRoutes) that provides validation and easy update of search params to use them as a primary state storage location.
@@ -199,7 +222,7 @@ import { logging} from './logging';
 ...
 
 logging.info('Server Environment:', serverEnv);
-```
+````
 
 ## Backups
 

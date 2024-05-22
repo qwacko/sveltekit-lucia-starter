@@ -2,10 +2,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vitest/config';
 import Icons from 'unplugin-icons/vite';
-// import { Server } from 'socket.io';
 import WsPlugin from 'vite-sveltekit-node-ws';
-// import ServerSingleton from './src/lib/server/websocket/serverSingleton';
-// import { updateServerInstance } from './src/hooks.server';
 
 export default defineConfig(({ mode }) => {
 	return {
@@ -58,14 +55,6 @@ export default defineConfig(({ mode }) => {
 				}
 			})
 		],
-		// server: {
-		// 	proxy: {
-		// 		'/wscustom': {
-		// 			target: 'http://localhost:3005',
-		// 			ws: true
-		// 		}
-		// 	}
-		// },
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}']
 		}
