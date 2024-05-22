@@ -180,14 +180,13 @@ If websockets are not required, the following changes can be made to remove the 
   wsServer();
   ```
 - Remove websocket from dev server by removing the following code from `vite.config.ts`:
+
   ```typescript
   import WsPlugin from 'vite-sveltekit-node-ws';
+  //And (From the plugins section of the config)
+  WsPlugin(),
   ```
 
-//And (From the plugins section of the config)
-WsPlugin(),
-
-````
 - Remove the websocket dependencies (`pnpm remove vite-sveltekit-node-ws socket.io socket.io-client`)
 - Run a typescript checj (`pnpm check`) to ensure that there are no errors.
 
@@ -222,7 +221,7 @@ import { logging} from './logging';
 ...
 
 logging.info('Server Environment:', serverEnv);
-````
+```
 
 ## Backups
 
