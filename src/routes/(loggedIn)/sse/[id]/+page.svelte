@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { source } from 'sveltekit-sse';
-	import MouseCanvas from './MouseCanvas.svelte';
+	import MouseCanvas from '../../../../lib/components/MouseCanvas.svelte';
 
 	import { nanoid } from 'nanoid';
 	import { kvMouseSchema } from '$lib/kvMouseSchema';

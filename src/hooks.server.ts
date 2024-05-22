@@ -1,12 +1,13 @@
 import { authGuard } from '$lib/authGuard/authGuardConfig';
 import { initateCronJobs } from '$lib/server/cron/cron';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
-import { db } from '$lib/server/db/db';
-import { user } from '$lib/server/db/schema';
 
 import { auth } from '$lib/server/lucia';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+
+import { wsServer } from '$lib/server/websocket/wsServer';
+wsServer();
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const runningJobs = initateCronJobs();
