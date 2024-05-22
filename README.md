@@ -168,6 +168,8 @@ One thing to be aware of is that the way that the data is sent from the client t
 
 There is a websocket server setup, and demonstration of this functionality included in the 'ws/[id]' route. Similar to server sent events, this mirrors mouse position in a canves to other memebers of the same room. With socket.io, the rooms are handled by socket.io rooms to make use of this functionality.
 
+The fuctionality of the server can be modified by changing the code in `src/lib/server/websocket/wsServer.ts`. The current implementation has basic functionality to demonstrate how authentication may be handled by validating the session cooking using lucia auth.
+
 ### Removing
 
 If websockets are not required, the following changes can be made to remove the server:
@@ -188,7 +190,7 @@ If websockets are not required, the following changes can be made to remove the 
   ```
 
 - Remove the websocket dependencies (`pnpm remove vite-sveltekit-node-ws socket.io socket.io-client`)
-- Run a typescript checj (`pnpm check`) to ensure that there are no errors.
+- Run a typescript check (`pnpm check`) to ensure that there are no errors.
 
 ## Search Params Validation
 
