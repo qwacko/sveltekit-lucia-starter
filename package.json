@@ -48,6 +48,7 @@
 		"unstorage": "^1.10.2",
 		"vite": "^5.2.11",
 		"vite-plugin-pwa": "^0.20.0",
+		"vite-sveltekit-node-ws-global": "^0.0.1",
 		"vitest": "^1.6.0",
 		"workbox-window": "^7.1.0"
 	},

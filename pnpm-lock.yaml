@@ -138,6 +138,9 @@ importers:
       vite-plugin-pwa:
         specifier: ^0.20.0
         version: 0.20.0(@vite-pwa/assets-generator@0.2.4)(vite@5.2.11(@types/node@20.12.11)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
+      vite-sveltekit-node-ws-global:
+        specifier: ^0.0.1
+        version: 0.0.1
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.12.11)(terser@5.31.0)
@@ -4203,6 +4206,9 @@ packages:
     peerDependenciesMeta:
       '@vite-pwa/assets-generator':
         optional: true
+
+  vite-sveltekit-node-ws-global@0.0.1:
+    resolution: {integrity: sha512-uUfS0xa7GA9OC6Al5Ymo8vW56NE7QQJSLKklhdcFHoZlamoCI7AIwwIeUZo/rKXPnKZlJ0Mz3sehY62VlWZ6MQ==}
 
   vite-sveltekit-node-ws@0.0.7:
     resolution: {integrity: sha512-TA0PphyIwy9p5R0S06Gd6kYwxNiePOsJE6X/qmyxcYy8yPYExV1ZxLVWaL61aKLOS8sxSuO2ivEM4a7gpXxLsQ==}
@@ -8567,6 +8573,8 @@ snapshots:
       '@vite-pwa/assets-generator': 0.2.4
     transitivePeerDependencies:
       - supports-color
+
+  vite-sveltekit-node-ws-global@0.0.1: {}
 
   vite-sveltekit-node-ws@0.0.7: {}
 

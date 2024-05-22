@@ -7,7 +7,7 @@ import { auth } from '$lib/server/lucia';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-import { useServer } from '$lib/server/websocket/websocketPlugin';
+import { useServer } from 'vite-sveltekit-node-ws-global';
 import { Server } from 'socket.io';
 import type { User } from 'lucia';
 

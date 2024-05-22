@@ -3,7 +3,7 @@ import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vitest/config';
 import Icons from 'unplugin-icons/vite';
 // import { Server } from 'socket.io';
-import WsPlugin from './src/lib/server/websocket/websocketPlugin';
+import WsPlugin from 'vite-sveltekit-node-ws-global';
 // import ServerSingleton from './src/lib/server/websocket/serverSingleton';
 // import { updateServerInstance } from './src/hooks.server';
 
@@ -11,7 +11,11 @@ export default defineConfig(({ mode }) => {
 	return {
 		plugins: [
 			sveltekit(),
-			WsPlugin({ hmrPort: false, global: true }),
+			WsPlugin({
+				hmrPort: false,
+				global: true,
+				buildModification: `import {handle} from 'vite-sveltekit-node-ws-global';\nhandle({global: true});`
+			}),
 			Icons({
 				compiler: 'svelte'
 			}),
