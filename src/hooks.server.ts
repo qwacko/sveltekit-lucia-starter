@@ -7,15 +7,14 @@ import { auth } from '$lib/server/lucia';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-import { useServer } from 'vite-sveltekit-node-ws-global';
+import { useServer } from 'vite-sveltekit-node-ws';
 import { Server } from 'socket.io';
 import type { User } from 'lucia';
 
 const allowedRooms = ['room1', 'room2', 'room3'];
 
-useServer({
-	global: true,
-	callback: (server) => {
+useServer(
+	(server) => {
 		console.log('Initialising Websocker Server!');
 		const wsServer = new Server(server, { path: '/wss/' });
 		wsServer.on('connect', async (ws) => {
@@ -69,8 +68,8 @@ useServer({
 			console.log('Websocket Server Closed');
 		});
 	},
-	skip: (path) => /wss/.test(path)
-});
+	(path) => /wss/.test(path)
+);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const runningJobs = initateCronJobs();

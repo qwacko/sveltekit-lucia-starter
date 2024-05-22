@@ -48,7 +48,6 @@
 		"unstorage": "^1.10.2",
 		"vite": "^5.2.11",
 		"vite-plugin-pwa": "^0.20.0",
-		"vite-sveltekit-node-ws-global": "^0.0.1",
 		"vitest": "^1.6.0",
 		"workbox-window": "^7.1.0"
 	},
@@ -67,7 +66,7 @@
 		"skroutes": "^0.1.1",
 		"socket.io": "^4.7.5",
 		"socket.io-client": "^4.7.5",
-		"vite-sveltekit-node-ws": "^0.0.7",
+		"vite-sveltekit-node-ws": "^0.0.8",
 		"zod": "^3.23.8"
 	}
 }
