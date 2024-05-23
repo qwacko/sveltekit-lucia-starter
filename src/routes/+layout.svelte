@@ -61,18 +61,18 @@
 	{@html webManifestLink}
 </svelte:head>
 
-<div class="col">
+<div class="flex flex-col">
 	<div class="nav">
-		<a href="/" class:bold={homePage}>Home</a>
-		<a href="/params" class:bold={paramsPage}>Search Params</a>
+		<a href="/" class:font-bold={homePage}>Home</a>
+		<a href="/params" class:font-bold={paramsPage}>Search Params</a>
 		{#if data.user}
-			<a href="/sse/page1" class:bold={ssePage}>SSE</a>
-			<a href="/ws/room1" class:bold={wsPage}>WS</a>
-			<a href="/backup" class:bold={backup}>Backups</a>
-			<a href="/users/{data.user.userId}" class:bold={user}>User</a>
-			<a href="/users" class:bold={users}>Users</a>
+			<a href="/sse/page1" class:font-bold={ssePage}>SSE</a>
+			<a href="/ws/room1" class:font-bold={wsPage}>WS</a>
+			<a href="/backup" class:font-bold={backup}>Backups</a>
+			<a href="/users/{data.user.userId}" class:font-bold={user}>User</a>
+			<a href="/users" class:font-bold={users}>Users</a>
 			<form action="/?/logout" method="post">
-				<button type="submit" class:bold={login}>Logout</button>
+				<button type="submit" class:font-bold={login}>Logout</button>
 			</form>
 		{:else}
 			<a href="/login" class:bold={login}>Login</a>
@@ -83,10 +83,6 @@
 </div>
 
 <style>
-	.bold {
-		font-weight: bold;
-	}
-
 	.nav {
 		background-color: rgb(212, 230, 250);
 		display: flex;
