@@ -9,6 +9,8 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { pageInfo, urlGenerator } from '$lib/routes.js';
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import { BluetoothConnectedIcon } from 'lucide-svelte';
 
 	let { data } = $props();
 
@@ -23,8 +25,8 @@
 </script>
 
 {#if params.current.searchParams && data.searchData}
-	<div class="button-row">
-		<div class="icon-row">
+	<div class="flex flex-col gap-4 items-stretch self-center p-4 w-96">
+		<div class="flex flex-row gap-2 flex-wrap">
 			Data From URL : {params.current.searchParams?.owner.name} ({#if params.current.searchParams?.owner.gender === 'male'}
 				<IconMale />
 			{:else}
@@ -45,7 +47,7 @@
 				{/if}
 			{/each}
 		</div>
-		<div class="icon-row">
+		<div class="flex flex-row gap-2 flex-wrap">
 			Data From Data: {data.searchData.owner.name} ({#if data.searchData.owner.gender === 'male'}
 				<IconMale />
 			{:else}
@@ -64,8 +66,7 @@
 				{/if}
 			{/each}
 		</div>
-		<a
-			class="button"
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -73,10 +74,9 @@
 					count: 1,
 					owner: { gender: 'male', name: 'Cat Owner' }
 				}
-			}).url}>1 Cat</a
+			}).url}>1 Cat</Button
 		>
-		<a
-			class="button"
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -84,10 +84,9 @@
 					count: 3,
 					owner: { gender: 'female', name: 'Dog Owner' }
 				}
-			}).url}>3 Dog</a
+			}).url}>3 Dog</Button
 		>
-		<a
-			class="button"
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -97,9 +96,8 @@
 			}).url}
 		>
 			Animal = Fish
-		</a>
-		<a
-			class="button"
+		</Button>
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -109,9 +107,8 @@
 			}).url}
 		>
 			Animal = Bird
-		</a>
-		<a
-			class="button"
+		</Button>
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -124,9 +121,8 @@
 			}).url}
 		>
 			Owner = Male
-		</a>
-		<a
-			class="button"
+		</Button>
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -138,10 +134,9 @@
 				}
 			}).url}
 		>
-			> Owner = Female
-		</a>
-		<a
-			class="button"
+			Owner = Female
+		</Button>
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -151,9 +146,8 @@
 			}).url}
 		>
 			+1 Animal
-		</a>
-		<a
-			class="button"
+		</Button>
+		<Button
 			href={urlGenerator({
 				address: '/(open)/params',
 				searchParamsValue: {
@@ -163,9 +157,8 @@
 			}).url}
 		>
 			-1 Animal
-		</a>
-		<button
-			class="button"
+		</Button>
+		<Button
 			onclick={() =>
 				params.current.searchParams
 					? goto(
@@ -177,49 +170,10 @@
 								}
 							}).url
 						)
-					: undefined}>Zero Animals</button
+					: undefined}>Zero Animals</Button
 		>
 		<form use:enhance method="post" action="?/testAction">
-			<button class="submitButton" type="submit">Test Action</button>
+			<Button type="submit">Test Action</Button>
 		</form>
 	</div>
 {/if}
-
-<style>
-	.submitButton {
-		margin: 2rem 0.5rem;
-		width: 20rem;
-		text-align: center;
-		border-width: 1px;
-		border-color: black;
-		border-radius: 0.5rem;
-		background: rgb(115, 94, 234);
-	}
-
-	.button-row {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: center;
-		width: 100%;
-		gap: 1rem;
-	}
-
-	.icon-row {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-	}
-
-	.button {
-		margin: 0 0.5rem;
-		width: 20rem;
-		text-align: center;
-		border-width: 1px;
-		border-color: black;
-		border-radius: 0.5rem;
-		background: rgb(94 234 212);
-	}
-</style>

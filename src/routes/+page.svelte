@@ -1,46 +1,22 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
 
 	let { data } = $props();
 </script>
 
-<div>
-	<h1>Welcome to SvelteKit</h1>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div class="flex flex-row gap-4 self-center p-10">
+	<div class="flex">
+		{#if data.user}
+			<form action="?/logout" method="post" use:enhance>
+				<Button type="submit">Logout</Button>
+			</form>
+		{/if}
+	</div>
 
-	{#if data.user}
-		<form action="?/logout" method="post" use:enhance>
-			<button type="submit">Logout</button>
+	<div class="flex">
+		<form action="?/testFunction" method="post" use:enhance>
+			<Button type="submit">Test Function</Button>
 		</form>
-	{/if}
-
-	<form action="?/testFunction" method="post" use:enhance>
-		<button type="submit">Test Function</button>
-	</form>
+	</div>
 </div>
-
-<style>
-	div {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: star;
-		height: 100vh;
-		padding: 1rem;
-	}
-
-	button {
-		display: block;
-		margin: 0 auto;
-		background: blue;
-		margin: 0.75rem;
-		border-radius: 4px;
-		border: none;
-		color: #fff;
-		cursor: pointer;
-		font-size: 1rem;
-		font-weight: 600;
-		padding: 0.75rem 1.5rem;
-		transition: background 0.1s ease;
-	}
-</style>

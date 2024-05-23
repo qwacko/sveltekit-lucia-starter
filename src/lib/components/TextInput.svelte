@@ -1,6 +1,8 @@
 <script lang="ts">
 	import ErrorText from './ErrorText.svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
+	import { Input } from '$lib/components/shadcn/ui/input/index.js';
+	import { Label } from '$lib/components/shadcn/ui/label/index.js';
 
 	let {
 		errorMessage,
@@ -15,32 +17,10 @@
 	} & HTMLInputAttributes = $props();
 </script>
 
-<div>
+<div class="grid gap-2">
 	{#if title}
-		<label for={name}>{title}</label>
+		<Label for={name}>{title}</Label>
 	{/if}
-	<input {...inputProps} {name} />
+	<Input {...inputProps} {name} bind:value={value} />
 	<ErrorText message={errorMessage} />
 </div>
-
-<style>
-	div {
-		margin-bottom: 0.75rem;
-	}
-
-	label {
-		display: block;
-		font-size: 1rem;
-		font-weight: 600;
-		margin-bottom: 0.2rem;
-		color: rgb(51, 51, 51);
-	}
-
-	input {
-		border-width: 1px;
-		border-color: #d1d5db;
-		padding: 0.5rem;
-		width: 100%;
-		border-radius: 0.5rem;
-	}
-</style>

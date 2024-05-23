@@ -60,8 +60,11 @@
 		"@lucia-auth/adapter-sqlite": "^3.0.1",
 		"@sveltejs/adapter-node": "^5.0.1",
 		"better-sqlite3": "^9.6.0",
+		"bits-ui": "^0.21.9",
+		"clsx": "^2.1.1",
 		"drizzle-orm": "^0.30.10",
 		"lucia": "^3.2.0",
+		"lucide-svelte": "^0.379.0",
 		"nanoid": "^5.0.7",
 		"node-schedule": "^2.1.1",
 		"oslo": "^1.2.0",
@@ -69,6 +72,8 @@
 		"skroutes": "^0.1.1",
 		"socket.io": "^4.7.5",
 		"socket.io-client": "^4.7.5",
+		"tailwind-merge": "^2.3.0",
+		"tailwind-variants": "^0.2.1",
 		"vite-sveltekit-node-ws": "^0.0.8",
 		"zod": "^3.23.8"
 	}
