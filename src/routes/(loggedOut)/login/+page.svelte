@@ -43,7 +43,7 @@
 		</Card.Content>
 
 		<Card.Footer class="flex-col gap-2">
-			<Button class="w-full">Sign in</Button>
+			<Button class="w-full" type="submit">Sign in</Button>
 			<Button
 				class="w-full"
 				variant="ghost"

@@ -51,7 +51,7 @@
 			<ErrorText message={$message} />
 		</Card.Content>
 		<Card.Footer class="flex-col gap-2">
-			<Button class="w-full">Create Account</Button>
+			<Button class="w-full" type="submit">Create Account</Button>
 		</Card.Footer>
 	</form>
 </Card.Root>
