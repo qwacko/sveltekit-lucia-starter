@@ -41,6 +41,10 @@ Added server sent event functionality to unlock some realtime and collaborative 
 
 Added websockets (using socket.io) with an example page.
 
+### 2024-05-25 - Tailwind / Shadcn
+
+Previously tailwind was specifically excluded, however I have decided to include it as I like to use it, and I can make the provided elements a bit tidier, and ShadCN as it has some nice elements.
+
 ## Overview
 
 The SvelteKit-Lucia-Starter is an all-inclusive SvelteKit template that comes pre-configured with a comprehensive set of features to kickstart your next application. Inspired by the [T3 Stack](https://create.t3.gg/), this starter kit provides a similar feature set with added functionality.
@@ -59,6 +63,8 @@ Includes the following features:
 - Cron-like functionality using [node-schedule](https://github.com/node-schedule/node-schedule) which allows for configuration of automated scripts. Note that this required long-running process and therefore this functionality won't work in a serverless environment.
 - [SvelteKit-Superforms](https://github.com/ciscoheat/sveltekit-superforms) for validation of actions, and all the other features provided by this library.
 - [Zod](https://github.com/colinhacks/zod), which is used for form, environment variable and route params validation.
+- [TailwindCSS](https://tailwindcss.com/) for ease of applying styles.
+- [shadcn-svelte](https://www.shadcn-svelte.com/) to provide easy of access to components and component core.
 - A working staged DockerFile and docker-compose file are provided.
 - Automatic scheduled Backups of the database.
 - unplugin-icons (https://github.com/antfu/unplugin-icons) is included, allowing access to over 10,000 icons.
@@ -138,13 +144,9 @@ The PWA is configured to function correctly, however to work for the specific ap
 - Edit the app details (manifest) in `vite.config.ts` to reflect the name of the app.
 - Replace `static/logo.svg` with the app icon, and runn `pnpm generate-pwa-assets` to generate all the necessary icons from this file
 
-## Tailwind
+## shadcn-svelte
 
-To keep the template as clean and widely useable as possible, Tailwind (or any other styling library) is not included.
-
-In order to add tailwind, simple run the following command after cloning this repository:
-
-`npx svelte-add@latest tailwindcss`
+The shadcn-svelte library is included to provide easy access to components and component core. Configuration through the `components.json`file. By default, imported components will be included into `$lib/components/shadcn` (which can be adjusted by modifying the `components.json` file).
 
 ## Drizzle ORM
 
