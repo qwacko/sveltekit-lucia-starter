@@ -1,23 +1,13 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
 	import { enhance } from '$app/forms';
-	import SpreadButtons from '$lib/components/SpreadButtons.svelte';
 	import { page } from '$app/stores';
-	import LinkButton from '$lib/components/LinkButton.svelte';
 </script>
 
-<h1>Delete User?</h1>
+<h1 class="font-semibold">Delete User?</h1>
 <form method="POST" use:enhance>
-	<div>
-		<SpreadButtons>
-			<Button type="submit">Delete User</Button>
-			<LinkButton href="/users/{$page.params.id}" style="secondary">Cancel</LinkButton>
-		</SpreadButtons>
+	<div class="flex flex-row justify-between">
+		<Button variant="destructive" type="submit">Delete User</Button>
+		<Button variant="outline" href="/users/{$page.params.id}" style="secondary">Cancel</Button>
 	</div>
 </form>
-
-<style>
-	div {
-		padding: 10px;
-	}
-</style>

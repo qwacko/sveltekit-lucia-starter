@@ -1,9 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/shadcn/ui/button/button.svelte';
-	import LinkButton from '$lib/components/LinkButton.svelte';
-	import CenterCard from '$lib/components/CenterCard.svelte';
 	import ErrorText from '$lib/components/ErrorText.svelte';
-	import SpreadButtons from '$lib/components/SpreadButtons.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import * as Card from '$lib/components/shadcn/ui/card/';

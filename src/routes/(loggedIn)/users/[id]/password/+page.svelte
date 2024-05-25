@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
-	import type { passwordSchemaType } from './+page.server.js';
-	import CenterCard from '$lib/components/CenterCard.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import ErrorText from '$lib/components/ErrorText.svelte';
-	import SpreadButtons from '$lib/components/SpreadButtons.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import LinkButton from '$lib/components/LinkButton.svelte';
+
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+
 	import { page } from '$app/stores';
 
 	let { data } = $props();
@@ -16,7 +14,7 @@
 	});
 </script>
 
-<h1>Change Password</h1>
+<h1 class="font-semibold">Change Password</h1>
 <form method="POST" use:enhance>
 	<TextInput
 		title="Password"
@@ -40,15 +38,8 @@
 	/>
 
 	<ErrorText message={$message} />
-	<SpreadButtons>
-		<Button type="submit" style="primary">Update</Button>
-		<LinkButton href="/users/{$page.params.id}" style="secondary">Cancel</LinkButton>
-	</SpreadButtons>
+	<div class="flex flex-row gap-2">
+		<Button type="submit" class="flex flex-grow">Update</Button>
+		<Button variant="link" href="/users/{$page.params.id}" class="flex flex-grow">Cancel</Button>
+	</div>
 </form>
-
-<style>
-	h1 {
-		text-align: center;
-		font-size: xx-large;
-	}
-</style>
