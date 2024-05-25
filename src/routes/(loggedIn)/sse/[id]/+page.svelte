@@ -58,90 +58,75 @@
 	const debouncems = 100;
 </script>
 
-<div class="centered">
-	Demonstration of using server sent events to share mouse positions between two users. This is
-	achieved by sending data about mouse position periodically (every {debouncems}ms) to the server,
-	which then sends this information back to the web browser. Each "room" (which is selected by the
-	last url segment in the path, currently "{data.id}") has its own set of cursors.
+<div class="flex flex-col gap-2 items-center">
+	<div class="flex text-center max-w-[1000px]">
+		Demonstration of using server sent events to share mouse positions between two users. This is
+		achieved by sending data about mouse position periodically (every {debouncems}ms) to the server,
+		which then sends this information back to the web browser. Each "room" (which is selected by the
+		last url segment in the path, currently "{data.id}") has its own set of cursors.
+	</div>
+
+	<div class="flex flex-row gap-10">
+		<MouseCanvas
+			{debouncems}
+			otherCursors={otherCursors1}
+			onnewposition={(x, y) => {
+				fetch(`/sse/${data.id}/setData`, {
+					method: 'post',
+					body: JSON.stringify({
+						x,
+						y,
+						name: 'Person 1',
+						id: myId1,
+						time: Date.now(),
+						onScreen: true
+					})
+				});
+			}}
+			onmouseleave={() => {
+				fetch(`/sse/${data.id}/setData`, {
+					method: 'post',
+					body: JSON.stringify({
+						x: 0,
+						y: 0,
+						name: 'Person 1',
+						id: myId1,
+						time: Date.now(),
+						onScreen: false
+					})
+				});
+			}}
+		/>
+
+		<MouseCanvas
+			{debouncems}
+			otherCursors={otherCursors2}
+			onnewposition={(x, y) => {
+				fetch(`/sse/${data.id}/setData`, {
+					method: 'post',
+					body: JSON.stringify({
+						x,
+						y,
+						name: 'Person 2',
+						id: myId2,
+						time: Date.now(),
+						onScreen: true
+					})
+				});
+			}}
+			onmouseleave={() => {
+				fetch(`/sse/${data.id}/setData`, {
+					method: 'post',
+					body: JSON.stringify({
+						x: 0,
+						y: 0,
+						name: 'Person 2',
+						id: myId2,
+						time: Date.now(),
+						onScreen: false
+					})
+				});
+			}}
+		/>
+	</div>
 </div>
-
-<div class="row-gap">
-	<MouseCanvas
-		{debouncems}
-		otherCursors={otherCursors1}
-		onnewposition={(x, y) => {
-			fetch(`/sse/${data.id}/setData`, {
-				method: 'post',
-				body: JSON.stringify({
-					x,
-					y,
-					name: 'Person 1',
-					id: myId1,
-					time: Date.now(),
-					onScreen: true
-				})
-			});
-		}}
-		onmouseleave={() => {
-			fetch(`/sse/${data.id}/setData`, {
-				method: 'post',
-				body: JSON.stringify({
-					x: 0,
-					y: 0,
-					name: 'Person 1',
-					id: myId1,
-					time: Date.now(),
-					onScreen: false
-				})
-			});
-		}}
-	/>
-
-	<MouseCanvas
-		{debouncems}
-		otherCursors={otherCursors2}
-		onnewposition={(x, y) => {
-			fetch(`/sse/${data.id}/setData`, {
-				method: 'post',
-				body: JSON.stringify({
-					x,
-					y,
-					name: 'Person 2',
-					id: myId2,
-					time: Date.now(),
-					onScreen: true
-				})
-			});
-		}}
-		onmouseleave={() => {
-			fetch(`/sse/${data.id}/setData`, {
-				method: 'post',
-				body: JSON.stringify({
-					x: 0,
-					y: 0,
-					name: 'Person 2',
-					id: myId2,
-					time: Date.now(),
-					onScreen: false
-				})
-			});
-		}}
-	/>
-</div>
-
-<style>
-	.row-gap {
-		display: flex;
-		gap: 200px;
-		flex-direction: row;
-		width: 100%;
-		justify-content: center;
-		padding: 20px;
-	}
-
-	.centered {
-		text-align: center;
-		max-width: 800px;
-		align-self: center;
-	}
-</style>

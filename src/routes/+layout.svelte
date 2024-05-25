@@ -5,6 +5,9 @@
 	import { onMount } from 'svelte';
 	import { authGuardFrontend } from '$lib/authGuard/authGuardConfig';
 	import { onNavigate } from '$app/navigation';
+	import * as Menubar from '$lib/components/shadcn/ui/menubar';
+	import { urlGenerator } from '$lib/routes';
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
 
 	let { data, children } = $props();
 
@@ -48,7 +51,7 @@
 
 	let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
 	let homePage = $derived($page.url.pathname === '/');
-	let user = $derived($page.url.pathname.startsWith(`/users/${data?.user?.userId}`));
+	let user = $derived($page.url.pathname.startsWith(`/users/${data.user?.id}`));
 	let backup = $derived($page.route.id?.startsWith('/(loggedIn)/backup'));
 	let users = $derived($page.route.id?.startsWith('/(loggedIn)/users') && !user);
 	let login = $derived($page.route.id?.startsWith('/(loggedOut)'));
@@ -61,59 +64,92 @@
 	{@html webManifestLink}
 </svelte:head>
 
-<div class="col">
-	<div class="nav">
-		<a href="/" class:bold={homePage}>Home</a>
-		<a href="/params" class:bold={paramsPage}>Search Params</a>
+<div class="flex flex-col">
+	<Menubar.Root>
+		<Menubar.Menu>
+			<Menubar.Item href="/" class={homePage ? 'bg-accent' : ''}>Home</Menubar.Item>
+		</Menubar.Menu>
+
+		<Menubar.Menu>
+			<Menubar.Item href="/params" class={paramsPage ? 'bg-accent' : ''}>Search Params</Menubar.Item
+			>
+		</Menubar.Menu>
+
 		{#if data.user}
-			<a href="/sse/page1" class:bold={ssePage}>SSE</a>
-			<a href="/ws/room1" class:bold={wsPage}>WS</a>
-			<a href="/backup" class:bold={backup}>Backups</a>
-			<a href="/users/{data.user.userId}" class:bold={user}>User</a>
-			<a href="/users" class:bold={users}>Users</a>
-			<form action="/?/logout" method="post">
-				<button type="submit" class:bold={login}>Logout</button>
-			</form>
+			<Menubar.Menu>
+				<Menubar.Trigger class={ssePage ? 'bg-accent' : ''}>Server Sent Events</Menubar.Trigger>
+				<Menubar.Content>
+					<Menubar.Item
+						href={urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room1' } })
+							.url}
+					>
+						Room 1
+					</Menubar.Item>
+
+					<Menubar.Item
+						href={urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room2' } })
+							.url}
+					>
+						Room 2
+					</Menubar.Item>
+				</Menubar.Content>
+			</Menubar.Menu>
+			<Menubar.Menu>
+				<Menubar.Trigger class={wsPage ? 'bg-accent' : ''}>Websockets</Menubar.Trigger>
+				<Menubar.Content>
+					<Menubar.Item
+						href={urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room1' } })
+							.url}
+					>
+						Room 1
+					</Menubar.Item>
+					<Menubar.Item
+						href={urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room2' } })
+							.url}
+					>
+						Room 2
+					</Menubar.Item>
+					<Menubar.Item
+						href={urlGenerator({
+							address: '/(loggedIn)/ws/[id]',
+							paramsValue: { id: 'disallowedRoom' }
+						}).url}
+					>
+						Disallowed Room
+					</Menubar.Item>
+				</Menubar.Content>
+			</Menubar.Menu>
+			<Menubar.Menu>
+				<Menubar.Item href="/backup" class={backup ? 'bg-accent' : ''}>Backups</Menubar.Item>
+			</Menubar.Menu>
+			<Menubar.Menu>
+				<Menubar.Item
+					href={urlGenerator({
+						address: '/(loggedIn)/users/[id]',
+						paramsValue: { id: data.user.id }
+					}).url}
+					class={user ? 'bg-accent' : ''}
+				>
+					User
+				</Menubar.Item>
+			</Menubar.Menu>
+			<Menubar.Menu>
+				<Menubar.Item href="/users" class={users ? 'bg-accent' : ''}>Users</Menubar.Item>
+			</Menubar.Menu>
+			<Menubar.Menu>
+				<Menubar.Trigger class={wsPage ? 'bg-accent' : ''}>Logout</Menubar.Trigger>
+				<Menubar.Content
+					><form action="/?/logout" method="post">
+						<Button type="submit" class="w-full">Logout</Button>
+					</form>
+				</Menubar.Content>
+			</Menubar.Menu>
 		{:else}
-			<a href="/login" class:bold={login}>Login</a>
+			<Menubar.Menu>
+				<Menubar.Item href="/login" class={login ? 'bg-accent' : ''}>Login</Menubar.Item>
+			</Menubar.Menu>
 		{/if}
-	</div>
+	</Menubar.Root>
 
 	{@render children()}
 </div>
-
-<style>
-	.bold {
-		font-weight: bold;
-	}
-
-	.nav {
-		background-color: rgb(212, 230, 250);
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 3.5rem;
-		padding: 0 1rem;
-	}
-
-	.nav a,
-	button {
-		color: blue;
-		font-size: 1rem;
-		text-decoration: none;
-		padding: 0.75rem;
-		border-radius: 0.375rem;
-
-		transition: background-color 0.3s ease-in-out;
-	}
-
-	.nav a:hover,
-	button:hover {
-		background-color: #9dc0fd;
-	}
-
-	.col {
-		display: flex;
-		flex-direction: column;
-	}
-</style>

@@ -1,11 +1,4 @@
-import { authGuard } from '$lib/authGuard/authGuardConfig';
-import { initateCronJobs } from '$lib/server/cron/cron';
-import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
-
 import { auth } from '$lib/server/lucia';
-// import { initialiseSocketServer } from '$lib/server/websocket/websockets';
-import { redirect, type Handle } from '@sveltejs/kit';
-import { sequence } from '@sveltejs/kit/hooks';
 
 import { useServer } from 'vite-sveltekit-node-ws';
 import { Server } from 'socket.io';
@@ -16,7 +9,7 @@ const allowedRooms = ['room1', 'room2', 'room3'];
 export const wsServer = () =>
 	useServer(
 		(server) => {
-			console.log('Initialising Websocker Server!');
+			console.log('Initialising Websocket Server!');
 			const wsServer = new Server(server, { path: '/wss/' });
 			wsServer.on('connect', async (ws) => {
 				const rooms: string[] = [];

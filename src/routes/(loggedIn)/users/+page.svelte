@@ -1,37 +1,31 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import CenterCard from '$lib/components/CenterCard.svelte';
-	import LinkButton from '$lib/components/LinkButton.svelte';
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import { urlGenerator } from '$lib/routes.js';
 
 	let { data } = $props();
 </script>
 
-<CenterCard title="Users">
+<div class="flex flex-col gap-2 items-center p-10">
 	{#each data.users as currentUser}
-		<div class="userRow">
-			<a href="/users/{currentUser.id}">{currentUser.username}</a>
+		<div class="flex flex-row gap-2 items-center justify-between">
+			<Button
+				variant="outline"
+				href={urlGenerator({
+					address: '/(loggedIn)/users/[id]',
+					paramsValue: { id: currentUser.id }
+				}).url}
+			>
+				{currentUser.username}
+			</Button>
 			{#if currentUser.admin}
 				(Admin)
 			{/if}
 		</div>
 	{/each}
 
-	<div class="gap"></div>
+	<div class="flex flex-grow"></div>
 
-	<LinkButton href="/users/create">Create User</LinkButton>
-</CenterCard>
-
-<style>
-	.gap {
-		height: 20px;
-	}
-
-	.userRow {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding: 10px;
-		border-bottom: 1px solid #ccc;
-	}
-</style>
+	<Button variant="link" href={urlGenerator({ address: '/(loggedIn)/users/create' }).url}
+		>Create User</Button
+	>
+</div>

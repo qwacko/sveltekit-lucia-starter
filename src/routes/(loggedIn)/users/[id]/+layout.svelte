@@ -1,21 +1,21 @@
 <script lang="ts">
-	import CenterCard from '$lib/components/CenterCard.svelte';
-	import LinkButton from '$lib/components/LinkButton.svelte';
+	import * as Card from '$lib/components/shadcn/ui/card/';
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import { urlGenerator } from '$lib/routes';
 
 	let { data, children } = $props();
 </script>
 
-<CenterCard title="User - {data.currentUser.username}">
-	{@render children()}
-</CenterCard>
-<div class="buttonSize">
-	<LinkButton href="/users">Users List</LinkButton>
-</div>
-
-<style>
-	.buttonSize {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-	}
-</style>
+<Card.Root class="w-full max-w-lg m-4 self-center">
+	<Card.Header>
+		<Card.Title class="text-2xl">Update User - {data.user?.username}</Card.Title>
+	</Card.Header>
+	<Card.Content class="grid gap-4">
+		{@render children()}
+	</Card.Content>
+	<Card.Footer class="flex-col gap-2">
+		<Button variant="link" href={urlGenerator({ address: '/(loggedIn)/users' }).url}
+			>Users List</Button
+		>
+	</Card.Footer>
+</Card.Root>

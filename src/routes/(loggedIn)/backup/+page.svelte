@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import CenterCard from '$lib/components/CenterCard.svelte';
+	import * as Card from '$lib/components/shadcn/ui/card/';
+	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import Input from '$lib/components/shadcn/ui/input/input.svelte';
 
 	let { data } = $props();
 
@@ -11,22 +13,22 @@
 	let numberPages = $derived(Math.ceil(data.backupFiles.length / perPage));
 </script>
 
-<CenterCard title="Backups">
-	<div class="column-div">
+<Card.Root class="min-w-96 m-4 p-4 self-center">
+	<div class="flex flex-col gap-2 items-start">
 		{#each displayFiles as backup}
-			<div class="row-div">
+			<div class="flex flex-row items-center gap-2">
 				<form action="?/restore" method="post" use:enhance>
 					<input type="hidden" name="backupName" value={backup} />
-					<button type="submit">Restore</button>
+					<Button type="submit">Restore</Button>
 				</form>
 				<form action="?/delete" method="post" use:enhance>
 					<input type="hidden" name="backupName" value={backup} />
-					<button class="delete-button" type="submit">Delete</button>
+					<Button class="delete-button" type="submit">Delete</Button>
 				</form>
-				<div class="flex-div">{backup}</div>
+				<div class="flex text-sm">{backup}</div>
 			</div>
 		{/each}
-		<div class="row-div">
+		<div class="flex flex-row items-center self-center">
 			{#if pageNo > 1}
 				<button
 					onclick={() => {
@@ -38,74 +40,20 @@
 			{/if}
 			<div>Page {pageNo} of {numberPages}</div>
 			{#if pageNo < numberPages}
-				<button
+				<Button
 					onclick={() => {
 						if (pageNo < numberPages) pageNo++;
 					}}
 				>
 					Next
-				</button>
+				</Button>
 			{/if}
-			<div class="input-wrap">
-				<form action="?/backup" method="post" use:enhance>
-					<input type="text" name="backupName" placeholder="Backup Name" />
-					<button type="submit">Create New Backup</button>
-				</form>
-			</div>
 		</div>
-	</div></CenterCard
->
-
-<style>
-	.row-div {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.2rem;
-		align-items: start;
-		height: 100%;
-	}
-	.column-div {
-		display: flex;
-		flex-direction: column;
-		justify-content: start;
-		align-items: start;
-		height: 100%;
-		width: 100%;
-	}
-
-	.flex-div {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-		width: 100%;
-	}
-
-	.delete-button {
-		background-color: #ff0000;
-		padding: 0.5rem;
-		border-radius: 0.375rem;
-	}
-
-	button {
-		background-color: #9dc0fd;
-		padding: 0.5rem;
-		border-radius: 0.375rem;
-	}
-
-	input {
-		padding: 0.5rem;
-		border-radius: 0.375rem;
-		border: 1px solid #9dc0fd;
-		margin-right: 0.5rem;
-	}
-
-	.input-wrap {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding-top: 0.8rem;
-	}
-</style>
+		<form action="?/backup" method="post" use:enhance class="flex w-full">
+			<div class="flex flex-row gap-2 items-center w-full">
+				<Input type="text" name="backupName" placeholder="Backup Name" class="flex flex-grow" />
+				<Button type="submit" class="flex">Create New Backup</Button>
+			</div>
+		</form>
+	</div>
+</Card.Root>

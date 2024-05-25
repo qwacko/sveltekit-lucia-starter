@@ -64,5 +64,12 @@ export const deleteBackup = async (backupName: string) => {
 export const getBackupList = async () => {
 	const targetDir = serverEnv.BACKUP_DIR;
 
+	//CHeck if director exists before reading data from it
+	try {
+		await fs.access(targetDir);
+	} catch {
+		await fs.mkdir(targetDir);
+	}
+
 	return (await fs.readdir(targetDir, { recursive: true })).sort((a, b) => b.localeCompare(a));
 };
