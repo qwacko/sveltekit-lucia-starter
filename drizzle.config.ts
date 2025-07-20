@@ -5,7 +5,7 @@ dotenv.config();
 
 export default {
 	schema: './src/lib/server/db/schema/index.ts',
-	driver: 'better-sqlite',
+	dialect: 'sqlite',
 	out: './src/lib/server/db/migrations',
 	dbCredentials: {
 		url: process.env.DATABASE_FILE || ''

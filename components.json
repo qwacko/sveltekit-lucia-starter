@@ -8,7 +8,11 @@
 	},
 	"aliases": {
 		"components": "$lib/components/shadcn",
-		"utils": "$lib/components/shadcn/utils"
+		"utils": "$lib/components/shadcn/utils",
+		"ui": "$lib/components/shadcn/ui",
+		"hooks": "$lib/hooks",
+		"lib": "$lib"
 	},
-	"typescript": true
+	"typescript": true,
+	"registry": "https://shadcn-svelte.com/registry"
 }
