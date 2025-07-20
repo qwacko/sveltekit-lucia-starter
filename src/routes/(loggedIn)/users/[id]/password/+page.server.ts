@@ -6,7 +6,7 @@ import { auth } from '$lib/server/lucia.js';
 import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { Argon2id } from 'oslo/password';
 
 const passwordSchema = updatePasswordSchema;
@@ -16,14 +16,14 @@ export type passwordSchemaType = typeof passwordSchema;
 export const load = async (requestData) => {
 	authGuard(requestData);
 
-	const form = await superValidate(zod(passwordSchema));
+	const form = await superValidate(zod4(passwordSchema));
 
 	return { form };
 };
 
 export const actions = {
 	default: async ({ locals, params, request }) => {
-		const form = await superValidate(request, zod(passwordSchema));
+		const form = await superValidate(request, zod4(passwordSchema));
 		const currentUser = locals.user;
 		const targetUserId = params.id;
 

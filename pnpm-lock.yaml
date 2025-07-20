@@ -75,9 +75,12 @@ importers:
       '@iconify/json':
         specifier: ^2.2.360
         version: 2.2.360
+      '@internationalized/date':
+        specifier: ^3.8.2
+        version: 3.8.2
       '@lucide/svelte':
-        specifier: ^0.525.0
-        version: 0.525.0(svelte@5.36.10)
+        specifier: ^0.515.0
+        version: 0.515.0(svelte@5.36.10)
       '@playwright/test':
         specifier: ^1.54.1
         version: 1.54.1
@@ -113,7 +116,7 @@ importers:
         version: 10.4.21(postcss@8.5.6)
       bits-ui:
         specifier: ^2.8.11
-        version: 2.8.11(@internationalized/date@3.5.5)(svelte@5.36.10)
+        version: 2.8.11(@internationalized/date@3.8.2)(svelte@5.36.10)
       dotenv:
         specifier: ^17.2.0
         version: 17.2.0
@@ -1214,8 +1217,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@internationalized/date@3.5.5':
-    resolution: {integrity: sha512-H+CfYvOZ0LTJeeLOqm19E3uj/4YjrmOFtBufDHPfvtI80hFAMqtrp7oCACpe4Cil5l8S0Qu/9dYfZc/5lY8WQQ==}
+  '@internationalized/date@3.8.2':
+    resolution: {integrity: sha512-/wENk7CbvLbkUvX1tu0mwq49CVkkWpkXubGel6birjRPyo6uQ4nQpnq5xZu823zRCwwn82zgHrvgF1vZyvmVgA==}
 
   '@jridgewell/gen-mapping@0.3.12':
     resolution: {integrity: sha512-OuLGC46TjB5BbN1dH8JULVVZY4WTdkF7tV9Ys6wLL1rubZnCMstOhNHueU5bLCrnRuDhKPDM4g6sw4Bel5Gzqg==}
@@ -1314,8 +1317,8 @@ packages:
       better-sqlite3:
         optional: true
 
-  '@lucide/svelte@0.525.0':
-    resolution: {integrity: sha512-dyUxkXzepagLUzL8jHQNdeH286nC66ClLACsg+Neu/bjkRJWPWMzkT+H0DKlE70QdkicGCfs1ZGmXCc351hmZA==}
+  '@lucide/svelte@0.515.0':
+    resolution: {integrity: sha512-CEAyqcZmNBfYzVgaRmK2RFJP5tnbXxekRyDk0XX/eZQRfsJmkDvmQwXNX8C869BgNeryzmrRyjHhUL6g9ZOHNA==}
     peerDependencies:
       svelte: ^5
 
@@ -5424,7 +5427,7 @@ snapshots:
   '@img/sharp-win32-x64@0.33.5':
     optional: true
 
-  '@internationalized/date@3.5.5':
+  '@internationalized/date@3.8.2':
     dependencies:
       '@swc/helpers': 0.5.17
 
@@ -5521,7 +5524,7 @@ snapshots:
       '@libsql/client': 0.15.10
       better-sqlite3: 12.2.0
 
-  '@lucide/svelte@0.525.0(svelte@5.36.10)':
+  '@lucide/svelte@0.515.0(svelte@5.36.10)':
     dependencies:
       svelte: 5.36.10
 
@@ -6301,11 +6304,11 @@ snapshots:
     dependencies:
       file-uri-to-path: 1.0.0
 
-  bits-ui@2.8.11(@internationalized/date@3.5.5)(svelte@5.36.10):
+  bits-ui@2.8.11(@internationalized/date@3.8.2)(svelte@5.36.10):
     dependencies:
       '@floating-ui/core': 1.7.2
       '@floating-ui/dom': 1.7.2
-      '@internationalized/date': 3.5.5
+      '@internationalized/date': 3.8.2
       esm-env: 1.2.2
       runed: 0.29.2(svelte@5.36.10)
       svelte: 5.36.10

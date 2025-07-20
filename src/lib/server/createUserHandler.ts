@@ -1,7 +1,7 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import { setError, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { signupSchema } from '$lib/schema/signupSchema';
 import { logging } from '$lib/server/logging';
 import { Argon2id } from 'oslo/password';
@@ -21,7 +21,7 @@ export const createUserHandler = async ({
 	setSession?: boolean;
 	cookies: Cookies;
 }) => {
-	const form = await superValidate(request, zod(signupSchema));
+	const form = await superValidate(request, zod4(signupSchema));
 
 	if (!form.valid) {
 		return fail(400, { form });

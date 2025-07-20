@@ -1,25 +1,22 @@
 <script lang="ts">
 	import { cn } from "$lib/components/shadcn/utils.js";
-	import { type WithElementRef } from "bits-ui";
-	import type { HTMLAttributes } from "svelte/elements";
+	import { Menubar as MenubarPrimitive } from "bits-ui";
+	import type { ComponentProps } from "svelte";
 
 	let {
 		ref = $bindable(null),
 		inset,
-		children,
 		class: className,
 		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLElement>> & {
+	}: ComponentProps<typeof MenubarPrimitive.GroupHeading> & {
 		inset?: boolean;
 	} = $props();
 </script>
 
-<div
-	bind:this={ref}
-	data-slot="menubar-label"
+<MenubarPrimitive.GroupHeading
+	bind:ref
+	data-slot="menubar-group-heading"
 	data-inset={inset}
 	class={cn("px-2 py-1.5 text-sm font-medium data-[inset]:pl-8", className)}
 	{...restProps}
->
-	{@render children?.()}
-</div>
+/>

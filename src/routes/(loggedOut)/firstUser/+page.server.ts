@@ -1,6 +1,6 @@
 import type { Actions } from './$types';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { signupSchema } from '$lib/schema/signupSchema';
 import { createUserHandler } from '../../../lib/server/createUserHandler';
 import { dbNoAdmins } from '$lib/server/db/actions/firstUser';
@@ -8,7 +8,7 @@ import { authGuard } from '$lib/authGuard/authGuardConfig';
 
 export const load = async (data) => {
 	authGuard(data);
-	const form = await superValidate(zod(signupSchema));
+	const form = await superValidate(zod4(signupSchema));
 	return { form };
 };
 

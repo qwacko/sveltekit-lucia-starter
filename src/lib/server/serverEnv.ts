@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { dev } from '$app/environment';
 
 const parseEnvStringToBoolean = ({
@@ -9,13 +9,12 @@ const parseEnvStringToBoolean = ({
 	const validation = z.string().transform((data) => {
 		return Boolean(JSON.parse(data));
 	});
-	const defaultString = defaultBoolean ? 'true' : 'false';
 
 	if (optional) {
-		return validation.optional().default(defaultString);
+		return validation.optional().default(defaultBoolean);
 	}
 
-	return validation.default(defaultString);
+	return validation.default(defaultBoolean);
 };
 
 const serverEnvValidation = z.object({

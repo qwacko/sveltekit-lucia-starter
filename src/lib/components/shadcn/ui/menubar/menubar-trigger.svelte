@@ -2,22 +2,19 @@
 	import { Menubar as MenubarPrimitive } from "bits-ui";
 	import { cn } from "$lib/components/shadcn/utils.js";
 
-	type $$Props = MenubarPrimitive.TriggerProps;
-	type $$Events = MenubarPrimitive.TriggerEvents;
-
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+	let {
+		ref = $bindable(null),
+		class: className,
+		...restProps
+	}: MenubarPrimitive.TriggerProps = $props();
 </script>
 
 <MenubarPrimitive.Trigger
+	bind:ref
+	data-slot="menubar-trigger"
 	class={cn(
-		"flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none data-[highlighted]:bg-accent data-[state=open]:bg-accent data-[highlighted]:text-accent-foreground data-[state=open]:text-accent-foreground",
+		"focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground outline-hidden flex select-none items-center rounded-sm px-2 py-1 text-sm font-medium",
 		className
 	)}
-	on:click
-	on:keydown
-	on:pointerenter
-	{...$$restProps}
->
-	<slot />
-</MenubarPrimitive.Trigger>
+	{...restProps}
+/>

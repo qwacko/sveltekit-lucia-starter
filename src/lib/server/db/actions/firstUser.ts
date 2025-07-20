@@ -3,7 +3,7 @@ import { db } from '../db';
 import { user } from '../schema';
 
 export const dbUserCount = async () => {
-	const resultCount = db
+	const resultCount = await db
 		.select({ count: sql<number>`count(*)` })
 		.from(user)
 		.all();
@@ -12,7 +12,7 @@ export const dbUserCount = async () => {
 };
 
 export const dbAdminCount = async () => {
-	const resultCount = db
+	const resultCount = await db
 		.select({ count: sql<number>`count(*)` })
 		.from(user)
 		.where(eq(user.admin, true))

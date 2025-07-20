@@ -21,7 +21,8 @@
 	},
 	"devDependencies": {
 		"@iconify/json": "^2.2.360",
-		"@lucide/svelte": "^0.525.0",
+		"@internationalized/date": "^3.8.2",
+		"@lucide/svelte": "^0.515.0",
 		"@playwright/test": "^1.54.1",
 		"@sveltejs/adapter-auto": "^6.0.1",
 		"@sveltejs/kit": "^2.25.1",

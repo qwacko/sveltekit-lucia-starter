@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 import type { Actions } from './$types';
 import { setMessage, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { loginSchema } from '$lib/schema/loginSchema';
 import { serverEnv } from '$lib/server/serverEnv';
 import { authGuard } from '$lib/authGuard/authGuardConfig';
@@ -15,14 +15,14 @@ import { logging } from '$lib/server/logging';
 
 export const load = async (data) => {
 	authGuard(data);
-	const form = await superValidate(zod(loginSchema));
+	const form = await superValidate(zod4(loginSchema));
 
 	return { form, enableSignup: serverEnv.ALLOW_SIGNUP };
 };
 
 export const actions: Actions = {
 	default: async ({ request, locals, cookies }) => {
-		const form = await superValidate(request, zod(loginSchema));
+		const form = await superValidate(request, zod4(loginSchema));
 
 		// Convenient validation check:
 		if (!form.valid) {

@@ -8,16 +8,15 @@
 	import * as Menubar from '$lib/components/shadcn/ui/menubar';
 	import { urlGenerator } from '$lib/routes';
 	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import { goto } from '$app/navigation';
 
 	let { data, children } = $props();
 
 	onNavigate((navigation) => {
 		if (!data.viewTransitions) return;
-		//@ts-expect-error startViewTransition is not defined on Document
 		if (!document.startViewTransition) return;
 
 		return new Promise((resolve) => {
-			//@ts-expect-error startViewTransition is not defined on Document
 			document.startViewTransition(async () => {
 				resolve();
 				await navigation.complete;
@@ -67,11 +66,13 @@
 <div class="flex flex-col">
 	<Menubar.Root>
 		<Menubar.Menu>
-			<Menubar.Item href="/" class={homePage ? 'bg-accent' : ''}>Home</Menubar.Item>
+			<Menubar.Item onclick={() => goto('/')} class={homePage ? 'bg-accent' : ''}>Home</Menubar.Item
+			>
 		</Menubar.Menu>
 
 		<Menubar.Menu>
-			<Menubar.Item href="/params" class={paramsPage ? 'bg-accent' : ''}>Search Params</Menubar.Item
+			<Menubar.Item onclick={() => goto('/params')} class={paramsPage ? 'bg-accent' : ''}
+				>Search Params</Menubar.Item
 			>
 		</Menubar.Menu>
 
@@ -80,15 +81,19 @@
 				<Menubar.Trigger class={ssePage ? 'bg-accent' : ''}>Server Sent Events</Menubar.Trigger>
 				<Menubar.Content>
 					<Menubar.Item
-						href={urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room1' } })
-							.url}
+						onclick={() =>
+							goto(
+								urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room1' } }).url
+							)}
 					>
 						Room 1
 					</Menubar.Item>
 
 					<Menubar.Item
-						href={urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room2' } })
-							.url}
+						onclick={() =>
+							goto(
+								urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room2' } }).url
+							)}
 					>
 						Room 2
 					</Menubar.Item>
@@ -98,55 +103,66 @@
 				<Menubar.Trigger class={wsPage ? 'bg-accent' : ''}>Websockets</Menubar.Trigger>
 				<Menubar.Content>
 					<Menubar.Item
-						href={urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room1' } })
-							.url}
+						onclick={() =>
+							goto(
+								urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room1' } }).url
+							)}
 					>
 						Room 1
 					</Menubar.Item>
 					<Menubar.Item
-						href={urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room2' } })
-							.url}
+						onclick={() =>
+							goto(
+								urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room2' } }).url
+							)}
 					>
 						Room 2
 					</Menubar.Item>
 					<Menubar.Item
-						href={urlGenerator({
-							address: '/(loggedIn)/ws/[id]',
-							paramsValue: { id: 'disallowedRoom' }
-						}).url}
+						onclick={() =>
+							goto(
+								urlGenerator({
+									address: '/(loggedIn)/ws/[id]',
+									paramsValue: { id: 'disallowedRoom' }
+								}).url
+							)}
 					>
 						Disallowed Room
 					</Menubar.Item>
 				</Menubar.Content>
 			</Menubar.Menu>
 			<Menubar.Menu>
-				<Menubar.Item href="/backup" class={backup ? 'bg-accent' : ''}>Backups</Menubar.Item>
-			</Menubar.Menu>
-			<Menubar.Menu>
 				<Menubar.Item
-					href={urlGenerator({
-						address: '/(loggedIn)/users/[id]',
-						paramsValue: { id: data.user.id }
-					}).url}
+					onclick={() =>
+						goto(
+							urlGenerator({
+								address: '/(loggedIn)/users/[id]',
+								paramsValue: { id: data?.user?.id || 'noid' }
+							}).url
+						)}
 					class={user ? 'bg-accent' : ''}
 				>
 					User
 				</Menubar.Item>
 			</Menubar.Menu>
 			<Menubar.Menu>
-				<Menubar.Item href="/users" class={users ? 'bg-accent' : ''}>Users</Menubar.Item>
+				<Menubar.Item onclick={() => goto('/users')} class={users ? 'bg-accent' : ''}
+					>Users</Menubar.Item
+				>
 			</Menubar.Menu>
 			<Menubar.Menu>
 				<Menubar.Trigger class={wsPage ? 'bg-accent' : ''}>Logout</Menubar.Trigger>
-				<Menubar.Content
-					><form action="/?/logout" method="post">
+				<Menubar.Content>
+					<form action="/?/logout" method="post">
 						<Button type="submit" class="w-full">Logout</Button>
 					</form>
 				</Menubar.Content>
 			</Menubar.Menu>
 		{:else}
 			<Menubar.Menu>
-				<Menubar.Item href="/login" class={login ? 'bg-accent' : ''}>Login</Menubar.Item>
+				<Menubar.Item onclick={() => goto('/login')} class={login ? 'bg-accent' : ''}
+					>Login</Menubar.Item
+				>
 			</Menubar.Menu>
 		{/if}
 	</Menubar.Root>

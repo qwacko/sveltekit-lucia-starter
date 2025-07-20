@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const signupSchemaRaw = z.object({
 	username: z.string().min(3),

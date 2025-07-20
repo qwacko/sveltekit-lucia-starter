@@ -21,6 +21,7 @@
 	{#if title}
 		<Label for={name}>{title}</Label>
 	{/if}
-	<Input {...inputProps} {name} bind:value={value} />
+	{/* @ts-ignore */ null}
+	<Input {...inputProps} {name} bind:value />
 	<ErrorText message={errorMessage} />
 </div>

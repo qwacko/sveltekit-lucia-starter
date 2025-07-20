@@ -5,7 +5,7 @@ import { user } from '$lib/server/db/schema';
 export const load = async (data) => {
 	authGuard(data);
 	// Fetch users from database
-	const users = db.select().from(user).all();
+	const users = await db.select().from(user).all();
 
 	return { users };
 };
