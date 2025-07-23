@@ -13,3 +13,5 @@ db.db*
 /dev
 /db
 *.sqlite3*
+core
+core.*
