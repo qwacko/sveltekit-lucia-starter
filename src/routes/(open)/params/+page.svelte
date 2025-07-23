@@ -10,7 +10,7 @@
 	import { page } from '$app/stores';
 	import { pageInfo, urlGenerator } from '$lib/routes.js';
 	import Button from '$lib/components/shadcn/ui/button/button.svelte';
-	import { BluetoothConnectedIcon } from 'lucide-svelte';
+	import { BluetoothConnectedIcon } from '@lucide/svelte';
 
 	let { data } = $props();
 

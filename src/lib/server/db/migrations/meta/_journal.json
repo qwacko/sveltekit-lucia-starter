@@ -1,12 +1,12 @@
 {
-  "version": "5",
+  "version": "7",
   "dialect": "sqlite",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1710279142289,
-      "tag": "0000_last_captain_cross",
+      "version": "6",
+      "when": 1753235201745,
+      "tag": "0000_keen_inertia",
       "breakpoints": true
     }
   ]

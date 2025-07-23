@@ -1,6 +1,6 @@
 import { eq, sql } from 'drizzle-orm';
 import { db } from '../db';
-import { user } from '../schema';
+import { user, userAccountTable } from '../schema';
 
 export const dbUserCount = async () => {
 	const resultCount = await db
@@ -14,8 +14,8 @@ export const dbUserCount = async () => {
 export const dbAdminCount = async () => {
 	const resultCount = await db
 		.select({ count: sql<number>`count(*)` })
-		.from(user)
-		.where(eq(user.admin, true))
+		.from(userAccountTable)
+		.where(eq(userAccountTable.admin, true))
 		.all();
 
 	return resultCount[0].count;

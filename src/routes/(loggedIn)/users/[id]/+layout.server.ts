@@ -10,6 +10,14 @@ export const load = async ({ params }) => {
 	if (!currentUser) {
 		throw redirect(302, '/users');
 	}
+	const currentUserAccount = await db.query.userAccountTable.findFirst({
+		where: (table, { eq }) => eq(table.userId, currentUser.id)
+	});
 
-	return { currentUser };
+	const combinedCurrentUser = {
+		...currentUser,
+		admin: currentUserAccount?.admin || false
+	};
+
+	return { currentUser: combinedCurrentUser };
 };

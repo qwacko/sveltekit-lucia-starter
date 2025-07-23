@@ -1,8 +1,7 @@
-import { auth } from '$lib/server/lucia';
+import { auth } from '$lib/server/auth/auth';
 
 import { useServer } from 'vite-sveltekit-node-ws';
 import { Server } from 'socket.io';
-import type { User } from 'lucia';
 
 const allowedRooms = ['room1', 'room2', 'room3'];
 
@@ -14,22 +13,26 @@ export const wsServer = () =>
 			wsServer.on('connect', async (ws) => {
 				const rooms: string[] = [];
 
-				let user: User | undefined | null = undefined;
+				const session = await auth.api.getSession({
+					headers: ws.handshake.headers
+				});
 
-				if (ws.handshake.headers.cookie) {
-					await Promise.all(
-						ws.handshake.headers.cookie.split(';').map(async (cookie) => {
-							const trimmedCookie = cookie.trim();
-							if (trimmedCookie.startsWith(`${auth.sessionCookieName}=`)) {
-								const sessionId = trimmedCookie.split('=')[1];
-								if (sessionId) {
-									const foundUser = await auth.validateSession(sessionId);
-									user = foundUser.user || null;
-								}
-							}
-						})
-					);
-				}
+				const user = session?.user?.id;
+
+				// if (ws.handshake.headers.cookie) {
+				// 	await Promise.all(
+				// 		ws.handshake.headers.cookie.split(';').map(async (cookie) => {
+				// 			const trimmedCookie = cookie.trim();
+				// 			if (trimmedCookie.startsWith(`${auth.sessionCookieName}=`)) {
+				// 				const sessionId = trimmedCookie.split('=')[1];
+				// 				if (sessionId) {
+				// 					const foundUser = await auth.validateSession(sessionId);
+				// 					user = foundUser.user || null;
+				// 				}
+				// 			}
+				// 		})
+				// 	);
+				// }
 
 				if (user) {
 					ws.emit('userConnected', 'User Connected');

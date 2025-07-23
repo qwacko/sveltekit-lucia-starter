@@ -1,6 +1,6 @@
 import { authGuard } from '$lib/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db';
-import { user } from '$lib/server/db/schema';
+import { user, userAccountTable } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const load = (data) => {
@@ -13,11 +13,14 @@ export const actions = {
 		if (!authUser) {
 			return;
 		}
-		if (!authUser.admin || authUser.userId === params.id) {
+		if (!authUser.admin || authUser.id === params.id) {
 			return;
 		}
 
-		db.update(user).set({ admin: true }).where(eq(user.id, params.id)).run();
+		db.update(userAccountTable)
+			.set({ admin: true })
+			.where(eq(userAccountTable.userId, params.id))
+			.run();
 
 		return;
 	},
@@ -26,11 +29,14 @@ export const actions = {
 		if (!authUser) {
 			return;
 		}
-		if (!authUser.admin || authUser.userId === params.id) {
+		if (!authUser.admin || authUser.id === params.id) {
 			return;
 		}
 
-		db.update(user).set({ admin: false }).where(eq(user.id, params.id)).run();
+		db.update(userAccountTable)
+			.set({ admin: false })
+			.where(eq(userAccountTable.userId, params.id))
+			.run();
 
 		return;
 	}

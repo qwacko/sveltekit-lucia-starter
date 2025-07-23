@@ -8,7 +8,7 @@
 
 {#if data.currentUser && data.user}
 	<div class="flex flex-row gap-2 justify-between p-2 items-center">
-		{data.currentUser.username}
+		{data.currentUser.name}
 		{#if data.currentUser.admin}
 			(Admin)
 		{/if}

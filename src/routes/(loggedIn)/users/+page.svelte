@@ -15,7 +15,7 @@
 					paramsValue: { id: currentUser.id }
 				}).url}
 			>
-				{currentUser.username}
+				{currentUser.name}
 			</Button>
 			{#if currentUser.admin}
 				(Admin)

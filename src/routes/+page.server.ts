@@ -1,4 +1,4 @@
-import { auth } from '$lib/server/lucia';
+import { auth } from '$lib/server/auth/auth';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { authGuard } from '$lib/authGuard/authGuardConfig';
@@ -9,15 +9,14 @@ export const load = (data) => {
 
 export const actions: Actions = {
 	logout: async (data) => {
-		const session = data.locals.session;
-		if (!session) return fail(401);
-
-		await auth.invalidateSession(session.id); // invalidate session
-		const sessionCookie = auth.createBlankSessionCookie();
-		data.cookies.set(sessionCookie.name, sessionCookie.value, {
-			path: '.',
-			...sessionCookie.attributes
+		const loggedout = await auth.api.signOut({
+			headers: data.request.headers
 		});
+
+		if (!loggedout) {
+			return fail(500, { message: 'Failed to log out' });
+		}
+
 		redirect(302, '/login'); // redirect to login page
 	},
 	testFunction: async (requestData) => {

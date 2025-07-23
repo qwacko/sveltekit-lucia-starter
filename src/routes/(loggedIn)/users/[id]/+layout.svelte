@@ -8,7 +8,7 @@
 
 <Card.Root class="w-full max-w-lg m-4 self-center">
 	<Card.Header>
-		<Card.Title class="text-2xl">Update User - {data.user?.username}</Card.Title>
+		<Card.Title class="text-2xl">Update User - {data.currentUser?.name}</Card.Title>
 	</Card.Header>
 	<Card.Content class="grid gap-4">
 		{@render children()}

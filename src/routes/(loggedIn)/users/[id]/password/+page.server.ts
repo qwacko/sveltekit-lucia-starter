@@ -1,13 +1,12 @@
 import { updatePasswordSchema } from '$lib/schema/signupSchema.js';
 import { authGuard } from '$lib/authGuard/authGuardConfig.js';
 import { db } from '$lib/server/db/db.js';
-import { session, user } from '$lib/server/db/schema';
-import { auth } from '$lib/server/lucia.js';
+import { user } from '$lib/server/db/schema';
 import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import { Argon2id } from 'oslo/password';
+import { auth } from '$lib/server/auth/auth.js';
 
 const passwordSchema = updatePasswordSchema;
 
@@ -36,7 +35,7 @@ export const actions = {
 			return message(form, "You're not logged in");
 		}
 
-		if (!(currentUser.userId === targetUserId) && !currentUser.admin) {
+		if (!(currentUser.id === targetUserId) && !currentUser.admin) {
 			return message(form, "You're not allowed to do this");
 		}
 
@@ -47,9 +46,9 @@ export const actions = {
 		}
 
 		try {
-			const hashedPassword = await new Argon2id().hash(form.data.password);
-			await db.update(user).set({ hashedPassword }).where(eq(user.id, targetUserId)).execute();
-			await db.delete(session).where(eq(session.userId, targetUserId)).execute();
+			const ctx = await auth.$context;
+			const hash = await ctx.password.hash('your-new-password');
+			await ctx.internalAdapter.updatePassword(targetUserId, hash);
 		} catch (e) {
 			return message(form, 'Error Updating Password', { status: 400 });
 		}

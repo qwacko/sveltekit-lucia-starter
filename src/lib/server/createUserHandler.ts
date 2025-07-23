@@ -1,14 +1,12 @@
-import { auth } from '$lib/server/lucia';
+import { auth } from '$lib/server/auth/auth';
 import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { signupSchema } from '$lib/schema/signupSchema';
 import { logging } from '$lib/server/logging';
-import { Argon2id } from 'oslo/password';
-import { nanoid } from 'nanoid';
 import { db } from './db/db';
-import { user } from './db/schema';
-import { eq } from 'drizzle-orm';
+import { userAccountTable } from './db/schema';
+import { nanoid } from 'nanoid';
 
 export const createUserHandler = async ({
 	request,
@@ -27,49 +25,41 @@ export const createUserHandler = async ({
 		return fail(400, { form });
 	}
 
-	const userInfo = await db
-		.select()
-		.from(user)
-		.where(eq(user.username, form.data.username.toLowerCase()))
-		.execute();
-
-	if (userInfo.length > 0) {
-		return setError(form, 'username', 'Error creating user. Username possibly already exists.');
+	if (form.data.password !== form.data.confirmPassword) {
+		return setError(form, 'confirmPassword', 'Passwords do not match');
 	}
 
 	try {
-		const userId = nanoid();
-		const hashedPassword = await new Argon2id().hash(form.data.password);
+		const createdUser = await auth.api.signUpEmail({
+			body: {
+				email: form.data.username.toLowerCase(),
+				password: form.data.password,
+				name: form.data.username,
+				rememberMe: true
+			}
+		});
 
-		await db
-			.insert(user)
-			.values({
-				id: userId,
-				username: form.data.username.toLowerCase(),
-				hashedPassword: hashedPassword,
-				admin: admin
-			})
-			.execute();
-
-		const createdUser = await db.select().from(user).where(eq(user.id, userId)).execute();
-
-		if (createdUser.length === 0) {
-			throw new Error('Error creating user');
-		}
+		await db.insert(userAccountTable).values({
+			id: nanoid(),
+			userId: createdUser.user.id,
+			admin
+		});
 
 		if (setSession) {
-			const session = await auth.createSession(userId, {});
-			const sessionCookie = auth.createSessionCookie(session.id);
-
-			cookies.set(sessionCookie.name, sessionCookie.value, {
-				path: '.',
-				...sessionCookie.attributes
+			const data = await auth.api.signInEmail({
+				body: {
+					email: form.data.username.toLowerCase(),
+					password: form.data.password,
+					rememberMe: true
+				},
+				// This endpoint requires session cookies.
+				headers: request.headers
 			});
 		}
+
+		return;
 	} catch (e) {
-		logging.info('Error creating user', e);
+		logging.info('Error signing up email', e);
 		return setError(form, 'username', 'Error creating user. Username possibly already exists.');
 	}
-
-	redirect(302, '/user');
 };

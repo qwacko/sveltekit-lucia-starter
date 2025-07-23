@@ -2,6 +2,12 @@
 
 ## Updates
 
+### 2025-07-21 - Better Auth
+
+Updated to use better auth since lucia auth is no longer maintained.
+Various version bumps including shadcn-svelte to use Svelte 5
+Switched to using libsql rather than better-sqlite3 for the database as this has improved migration support.
+
 ### 2023-08-26 - Update
 
 I have made a few changes to this starter. The key changes I have made from the previous version:
@@ -121,8 +127,6 @@ The following environemnt variables are included
 |CSRF_CHECK_ORIGIN|Allows CSFR to be disabled if necessary. Only disable if you know what you are doing and why you are disabling.|
 |LOGGING|Allows logging to be turned on in production. Logging is always turned on in dev|
 |LOGGING_CLASSES| Allows the different classes of logging to be enabled. The options are `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE` (with a comma separated list allowing multiple to be enabled). Defaults to `ERROR,WARN,INFO`|
-|BACKUP_DIR| Sets the location of the automated and manual backups. Defaults to ./backup|
-|BACKUP_SCHEDULE| Cron string to set the Backup schedule. Defaults to "0 0 \* \* \*" (Midnight daily)|
 |ENABLE_TRANSITION| Enables the view transition API to have smooth page transitions.|
 
 ## Auth
@@ -226,11 +230,6 @@ import { logging} from './logging';
 
 logging.info('Server Environment:', serverEnv);
 ```
-
-## Backups
-
-There is a single function (`backupDB`) for backing up the database included in the file `src/lib/server/db/db.ts`, this will generate a db dump of the current state into a folder defined in environment variable `BACKUP_DIR`.
-There is a preconfigured cron job to execute this function every day, the schedule is configured by the Environment variable `BACKUP_SCHEDULE` which should be a cron schedule (this isn't validated, the text is used directly).
 
 ## Scripts
 

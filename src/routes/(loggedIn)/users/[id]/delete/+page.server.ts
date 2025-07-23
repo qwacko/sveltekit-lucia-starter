@@ -1,6 +1,6 @@
 import { authGuard } from '$lib/authGuard/authGuardConfig';
 import { db } from '$lib/server/db/db.js';
-import { session, user } from '$lib/server/db/schema';
+import { account, session, user, userAccountTable } from '$lib/server/db/schema';
 import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 
@@ -14,12 +14,16 @@ export const actions = {
 		if (!authUser) {
 			return;
 		}
-		if (!authUser.admin || authUser.userId === params.id) {
+		if (!authUser.admin || authUser.id === params.id) {
 			return;
 		}
 
-		await db.delete(user).where(eq(user.id, params.id)).execute();
-		await db.delete(session).where(eq(session.userId, params.id)).execute();
+		await db.transaction(async (tx) => {
+			await tx.delete(user).where(eq(user.id, params.id)).execute();
+			await tx.delete(session).where(eq(session.userId, params.id)).execute();
+			await tx.delete(userAccountTable).where(eq(userAccountTable.userId, params.id)).execute();
+			await tx.delete(account).where(eq(account.userId, params.id)).execute();
+		});
 
 		throw redirect(302, '/users');
 	}
