@@ -16,7 +16,10 @@
 
 	<div class="flex">
 		<form action="?/testFunction" method="post" use:enhance>
-			<Button type="submit">Test Function</Button>
+			<Button type="submit">Test Functions</Button>
 		</form>
 	</div>
 </div>
+
+
+<pre>{JSON.stringify(data, null, 2)}</pre>

@@ -6,6 +6,9 @@ import WsPlugin from 'vite-sveltekit-node-ws';
 
 export default defineConfig(({ mode }) => {
 	return {
+		server: {
+			allowedHosts: true
+		},
 		plugins: [
 			sveltekit(),
 			WsPlugin(),
@@ -57,6 +60,6 @@ export default defineConfig(({ mode }) => {
 		],
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}']
-		}
+		},
 	};
 });
