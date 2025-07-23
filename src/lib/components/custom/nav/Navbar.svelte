@@ -17,19 +17,6 @@
 		loginPage = false
 	} = $props();
 
-	// Handle logout
-	function handleLogout() {
-		const form = document.createElement('form');
-		form.method = 'post';
-		form.action = '/?/logout';
-		
-		const submitButton = document.createElement('button');
-		submitButton.type = 'submit';
-		form.appendChild(submitButton);
-		
-		document.body.appendChild(form);
-		form.submit();
-	}
 </script>
 
 <nav class="bg-background border-b border-border shadow-sm">
@@ -103,16 +90,24 @@
 					</NavItem>
 
 					<NavItem href="/users" active={usersPage}>Users</NavItem>
-
-					<div class="flex items-center">
-						<form action="/?/logout" method="post">
-							<Button type="submit" variant="ghost" class="px-3 py-2 text-sm">Logout</Button>
-						</form>
-					</div>
-				{:else}
-					<NavItem href="/login" active={loginPage}>Login</NavItem>
 				{/if}
 			</div>
+			
+			{#if user}
+				<div class="flex items-center space-x-4">
+					<div class="text-sm text-gray-700 dark:text-gray-300">
+						Welcome, <span class="font-medium">{user.name || user.email || 'User'}</span>
+						{#if user.admin}
+							<span class="ml-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-0.5 rounded-full">Admin</span>
+						{/if}
+					</div>
+					<form action="/?/logout" method="post">
+						<Button type="submit" variant="ghost" class="px-3 py-2 text-sm">Logout</Button>
+					</form>
+				</div>
+			{:else}
+				<NavItem href="/login" active={loginPage}>Login</NavItem>
+			{/if}
 		</div>
 	</div>
 </nav>

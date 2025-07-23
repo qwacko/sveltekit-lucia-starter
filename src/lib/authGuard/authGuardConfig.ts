@@ -8,6 +8,7 @@ type UserValidationOutput = {
 
 const adminOnlyConfig: RouteConfig<UserValidationOutput> = {
 	check: (data) => {
+		console.log('Admin Check', data);
 		return data.admin ? null : data.user ? '/' : '/login';
 	}
 };
@@ -42,7 +43,7 @@ export const { backend: authGuard, frontend: authGuardFrontend } = skGuard({
 		'/(loggedIn)/backup': adminOnlyConfig,
 
 		'/(loggedIn)/users': adminOnlyConfig,
-		'/(loggedIn)/users/create': adminOnlyConfig,
+		'/(loggedIn)/users/create': { ...adminOnlyConfig, POSTCheck: { default: postActionAdminOnly } },
 		'/(loggedIn)/users/[id]': adminOnlyConfig,
 		'/(loggedIn)/users/[id]/delete': adminOnlyConfig,
 		'/(loggedIn)/users/[id]/password': adminOnlyConfig,
