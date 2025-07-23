@@ -40,7 +40,7 @@
 				<NavItem href="/params" active={paramsPage}>Search Params</NavItem>
 
 				{#if user}
-					<NavMenu active={ssePage} trigger={() => 'Server Sent Events'}>
+					<NavMenu active={ssePage} trigger="Server Sent Events">
 						<NavItem
 							onClick={() =>
 								goto(
@@ -59,7 +59,7 @@
 						</NavItem>
 					</NavMenu>
 
-					<NavMenu active={wsPage} trigger={() => 'Websockets'}>
+					<NavMenu active={wsPage} trigger="Websockets">
 						<NavItem
 							onClick={() =>
 								goto(
@@ -104,13 +104,11 @@
 
 					<NavItem href="/users" active={usersPage}>Users</NavItem>
 
-					<NavMenu active={false} trigger={() => 'Logout'}>
-						<div class="px-2 py-1">
-							<form action="/?/logout" method="post">
-								<Button type="submit" class="w-full">Logout</Button>
-							</form>
-						</div>
-					</NavMenu>
+					<div class="flex items-center">
+						<form action="/?/logout" method="post">
+							<Button type="submit" variant="ghost" class="px-3 py-2 text-sm">Logout</Button>
+						</form>
+					</div>
 				{:else}
 					<NavItem href="/login" active={loginPage}>Login</NavItem>
 				{/if}

@@ -63,7 +63,7 @@
 
 <div class="flex flex-col">
 	<Navbar
-		{user}
+		user={data.user}
 		{homePage}
 		{paramsPage}
 		{ssePage}
