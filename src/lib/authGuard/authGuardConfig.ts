@@ -8,7 +8,6 @@ type UserValidationOutput = {
 
 const adminOnlyConfig: RouteConfig<UserValidationOutput> = {
 	check: (data) => {
-		console.log('Admin Check', data);
 		return data.admin ? null : data.user ? '/' : '/login';
 	}
 };
