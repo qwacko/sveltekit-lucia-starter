@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
+	import type { HTMLAttributes } from 'svelte/elements';
 
 	let {
 		class: className = '',
@@ -11,9 +11,6 @@
 	const classes = `${baseClasses} ${className}`;
 </script>
 
-<p
-	class={classes}
-	{...restProps}
->
+<p class={classes} {...restProps}>
 	{@render children?.()}
 </p>

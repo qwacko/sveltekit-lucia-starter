@@ -69,6 +69,7 @@
 		"drizzle-orm": "^0.44.3",
 		"nanoid": "^5.1.5",
 		"node-schedule": "^2.1.1",
+		"puppeteer": "^24.15.0",
 		"skguard": "^0.1.1",
 		"skroutes": "^0.1.1",
 		"socket.io": "^4.8.1",

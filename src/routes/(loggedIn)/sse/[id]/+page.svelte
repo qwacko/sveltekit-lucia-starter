@@ -62,13 +62,21 @@
 	<div class="max-w-6xl mx-auto">
 		<!-- Header Section -->
 		<div class="text-center mb-8">
-			<h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+			<h1
+				class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4"
+			>
 				Server-Sent Events Demo
 			</h1>
-			<div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg">
+			<div
+				class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg"
+			>
 				<p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-					Real-time mouse cursor sharing between multiple users using Server-Sent Events. Mouse positions are sent to the server every 
-					<code class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-2 py-1 rounded font-mono text-sm">{debouncems}ms</code>
+					Real-time mouse cursor sharing between multiple users using Server-Sent Events. Mouse
+					positions are sent to the server every
+					<code
+						class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-2 py-1 rounded font-mono text-sm"
+						>{debouncems}ms</code
+					>
 					and broadcasted to all connected clients.
 				</p>
 				<div class="mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">
@@ -79,7 +87,9 @@
 
 		<!-- Canvas Section -->
 		<div class="grid lg:grid-cols-2 gap-8">
-			<div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-all duration-200">
+			<div
+				class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-all duration-200"
+			>
 				<div class="flex items-center gap-3 mb-4">
 					<div class="w-4 h-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
 					<h3 class="font-semibold text-gray-900 dark:text-gray-100">Person 1 Canvas</h3>
@@ -121,7 +131,9 @@
 				</p>
 			</div>
 
-			<div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-all duration-200">
+			<div
+				class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-all duration-200"
+			>
 				<div class="flex items-center gap-3 mb-4">
 					<div class="w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
 					<h3 class="font-semibold text-gray-900 dark:text-gray-100">Person 2 Canvas</h3>
@@ -165,7 +177,9 @@
 		</div>
 
 		<!-- Info Section -->
-		<div class="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-xl border border-blue-200 dark:border-blue-800 p-6">
+		<div
+			class="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-xl border border-blue-200 dark:border-blue-800 p-6"
+		>
 			<h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-3">How it works:</h3>
 			<ul class="space-y-2 text-sm text-blue-800 dark:text-blue-200">
 				<li class="flex items-start gap-2">

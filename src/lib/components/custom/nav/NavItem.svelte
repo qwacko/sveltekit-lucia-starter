@@ -2,12 +2,7 @@
 	import { goto } from '$app/navigation';
 
 	// Props
-	let {
-		href = '',
-		active = false,
-		onClick = undefined,
-		children
-	} = $props();
+	let { href = '', active = false, onClick = undefined, children } = $props();
 
 	// Handle click event
 	function handleClick() {

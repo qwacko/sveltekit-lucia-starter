@@ -59,8 +59,16 @@
 		aria-expanded={isOpen}
 	>
 		{typeof trigger === 'function' ? trigger() : trigger}
-		<svg class="inline w-4 h-4 ml-1 transform transition-transform {isOpen ? 'rotate-180' : ''}" fill="currentColor" viewBox="0 0 20 20">
-			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+		<svg
+			class="inline w-4 h-4 ml-1 transform transition-transform {isOpen ? 'rotate-180' : ''}"
+			fill="currentColor"
+			viewBox="0 0 20 20"
+		>
+			<path
+				fill-rule="evenodd"
+				d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+				clip-rule="evenodd"
+			/>
 		</svg>
 	</div>
 
@@ -77,7 +85,10 @@
 				isOpen = false;
 			}}
 		>
-			<div class="py-2 [&_a]:text-gray-700 [&_a]:dark:text-gray-200 [&_a]:hover:bg-gray-100 [&_a]:dark:hover:bg-gray-700 [&_a]:hover:text-gray-900 [&_a]:dark:hover:text-white" role="none">
+			<div
+				class="py-2 [&_a]:text-gray-700 [&_a]:dark:text-gray-200 [&_a]:hover:bg-gray-100 [&_a]:dark:hover:bg-gray-700 [&_a]:hover:text-gray-900 [&_a]:dark:hover:text-white"
+				role="none"
+			>
 				{@render children()}
 			</div>
 		</div>

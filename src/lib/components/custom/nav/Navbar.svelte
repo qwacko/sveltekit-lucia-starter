@@ -64,10 +64,11 @@
 	function closeMobileMenu() {
 		mobileMenuOpen = false;
 	}
-
 </script>
 
-<nav class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800 shadow-lg border-b border-blue-700 dark:border-blue-900">
+<nav
+	class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800 shadow-lg border-b border-blue-700 dark:border-blue-900"
+>
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex justify-between h-16">
 			<!-- Logo/Brand -->
@@ -78,7 +79,7 @@
 			</div>
 
 			<!-- Desktop Navigation -->
-			<div class="hidden md:flex md:items-center md:space-x-1">
+			<div class="hidden lg:flex lg:items-center lg:space-x-1">
 				<NavItem href="/" active={homePage}>Home</NavItem>
 				<NavItem href="/params" active={paramsPage}>Search Params</NavItem>
 
@@ -87,7 +88,8 @@
 						<NavItem
 							onClick={() =>
 								goto(
-									urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room1' } }).url
+									urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room1' } })
+										.url
 								)}
 						>
 							Room 1
@@ -95,7 +97,8 @@
 						<NavItem
 							onClick={() =>
 								goto(
-									urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room2' } }).url
+									urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room2' } })
+										.url
 								)}
 						>
 							Room 2
@@ -150,7 +153,7 @@
 			</div>
 
 			<!-- Desktop Right Side -->
-			<div class="hidden md:flex md:items-center md:space-x-4">
+			<div class="hidden lg:flex lg:items-center lg:space-x-4">
 				<!-- Dark Mode Toggle -->
 				<button
 					onclick={toggleDarkMode}
@@ -159,7 +162,11 @@
 				>
 					{#if isDarkMode}
 						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-							<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+							<path
+								fill-rule="evenodd"
+								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+								clip-rule="evenodd"
+							/>
 						</svg>
 					{:else}
 						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -172,11 +179,19 @@
 					<div class="text-sm text-white/90">
 						Welcome, <span class="font-medium text-white">{user.name || user.email || 'User'}</span>
 						{#if user.admin}
-							<span class="ml-1 text-xs bg-amber-500 text-amber-900 px-2 py-0.5 rounded-full font-medium">Admin</span>
+							<span
+								class="ml-1 text-xs bg-amber-500 text-amber-900 px-2 py-0.5 rounded-full font-medium"
+								>Admin</span
+							>
 						{/if}
 					</div>
 					<form action="/?/logout" method="post">
-						<Button type="submit" variant="outline" class="text-white border-white/30 hover:bg-white/10 hover:border-white/50">Logout</Button>
+						<Button
+							type="submit"
+							variant="outline"
+							class="text-white border-white/30 hover:bg-white/10 hover:border-white/50"
+							>Logout</Button
+						>
 					</form>
 				{:else}
 					<NavItem href="/login" active={loginPage}>Login</NavItem>
@@ -184,7 +199,7 @@
 			</div>
 
 			<!-- Mobile menu button -->
-			<div class="md:hidden flex items-center space-x-2">
+			<div class="lg:hidden flex items-center space-x-2">
 				<!-- Mobile Dark Mode Toggle -->
 				<button
 					onclick={toggleDarkMode}
@@ -193,7 +208,11 @@
 				>
 					{#if isDarkMode}
 						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-							<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+							<path
+								fill-rule="evenodd"
+								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+								clip-rule="evenodd"
+							/>
 						</svg>
 					{:else}
 						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -211,9 +230,19 @@
 				>
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						{#if mobileMenuOpen}
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M6 18L18 6M6 6l12 12"
+							/>
 						{:else}
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M4 6h16M4 12h16M4 18h16"
+							/>
 						{/if}
 					</svg>
 				</button>
@@ -222,7 +251,9 @@
 
 		<!-- Mobile menu -->
 		{#if mobileMenuOpen}
-			<div class="md:hidden bg-gradient-to-r from-blue-700 to-purple-700 dark:from-blue-900 dark:to-purple-900 border-t border-blue-600 dark:border-blue-800">
+			<div
+				class="lg:hidden bg-gradient-to-r from-blue-700 to-purple-700 dark:from-blue-900 dark:to-purple-900 border-t border-blue-600 dark:border-blue-800"
+			>
 				<div class="px-2 pt-2 pb-3 space-y-1">
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -238,14 +269,19 @@
 					{#if user}
 						<!-- Mobile SSE Menu -->
 						<div class="pt-2">
-							<div class="text-white/70 text-xs font-medium uppercase tracking-wider px-3 py-2">Server Sent Events</div>
+							<div class="text-white/70 text-xs font-medium uppercase tracking-wider px-3 py-2">
+								Server Sent Events
+							</div>
 							<!-- svelte-ignore a11y_click_events_have_key_events -->
 							<!-- svelte-ignore a11y_no_static_element_interactions -->
 							<div onclick={closeMobileMenu}>
 								<NavItem
 									onClick={() =>
 										goto(
-											urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room1' } }).url
+											urlGenerator({
+												address: '/(loggedIn)/sse/[id]',
+												paramsValue: { id: 'room1' }
+											}).url
 										)}
 								>
 									SSE Room 1
@@ -257,7 +293,10 @@
 								<NavItem
 									onClick={() =>
 										goto(
-											urlGenerator({ address: '/(loggedIn)/sse/[id]', paramsValue: { id: 'room2' } }).url
+											urlGenerator({
+												address: '/(loggedIn)/sse/[id]',
+												paramsValue: { id: 'room2' }
+											}).url
 										)}
 								>
 									SSE Room 2
@@ -267,14 +306,17 @@
 
 						<!-- Mobile WS Menu -->
 						<div class="pt-2">
-							<div class="text-white/70 text-xs font-medium uppercase tracking-wider px-3 py-2">Websockets</div>
+							<div class="text-white/70 text-xs font-medium uppercase tracking-wider px-3 py-2">
+								Websockets
+							</div>
 							<!-- svelte-ignore a11y_click_events_have_key_events -->
 							<!-- svelte-ignore a11y_no_static_element_interactions -->
 							<div onclick={closeMobileMenu}>
 								<NavItem
 									onClick={() =>
 										goto(
-											urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room1' } }).url
+											urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room1' } })
+												.url
 										)}
 								>
 									WS Room 1
@@ -286,7 +328,8 @@
 								<NavItem
 									onClick={() =>
 										goto(
-											urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room2' } }).url
+											urlGenerator({ address: '/(loggedIn)/ws/[id]', paramsValue: { id: 'room2' } })
+												.url
 										)}
 								>
 									WS Room 2
@@ -335,14 +378,24 @@
 						<!-- Mobile User Info & Logout -->
 						<div class="pt-4 mt-4 border-t border-white/20">
 							<div class="px-3 py-2 text-sm text-white/90">
-								Welcome, <span class="font-medium text-white">{user.name || user.email || 'User'}</span>
+								Welcome, <span class="font-medium text-white"
+									>{user.name || user.email || 'User'}</span
+								>
 								{#if user.admin}
-									<span class="ml-1 text-xs bg-amber-500 text-amber-900 px-2 py-0.5 rounded-full font-medium">Admin</span>
+									<span
+										class="ml-1 text-xs bg-amber-500 text-amber-900 px-2 py-0.5 rounded-full font-medium"
+										>Admin</span
+									>
 								{/if}
 							</div>
 							<div class="px-3 py-2">
 								<form action="/?/logout" method="post">
-									<Button type="submit" variant="outline" class="w-full text-white border-white/30 hover:bg-white/10 hover:border-white/50">Logout</Button>
+									<Button
+										type="submit"
+										variant="outline"
+										class="w-full text-white border-white/30 hover:bg-white/10 hover:border-white/50"
+										>Logout</Button
+									>
 								</form>
 							</div>
 						</div>

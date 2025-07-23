@@ -26,13 +26,19 @@
 
 {#if params.current.searchParams && data.searchData}
 	<div class="flex-1 flex items-center justify-center min-h-screen p-8">
-		<div class="w-full max-w-md bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg">
-			<h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">Search Params Demo</h1>
+		<div
+			class="w-full max-w-md bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg"
+		>
+			<h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+				Search Params Demo
+			</h1>
 			<div class="flex flex-col gap-4">
 				<div class="bg-blue-50 dark:bg-blue-950/50 rounded-lg p-4 mb-4">
-					<div class="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">Data From URL:</div>
+					<div class="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
+						Data From URL:
+					</div>
 					<div class="flex flex-row gap-2 flex-wrap items-center text-gray-700 dark:text-gray-300">
-						{params.current.searchParams?.owner.name} 
+						{params.current.searchParams?.owner.name}
 						{#if params.current.searchParams?.owner.gender === 'male'}
 							<IconMale class="w-4 h-4 text-blue-500" />
 						{:else}
@@ -53,11 +59,13 @@
 						{/each}
 					</div>
 				</div>
-				
+
 				<div class="bg-purple-50 dark:bg-purple-950/50 rounded-lg p-4 mb-6">
-					<div class="text-sm font-medium text-purple-900 dark:text-purple-100 mb-2">Data From Server:</div>
+					<div class="text-sm font-medium text-purple-900 dark:text-purple-100 mb-2">
+						Data From Server:
+					</div>
 					<div class="flex flex-row gap-2 flex-wrap items-center text-gray-700 dark:text-gray-300">
-						{data.searchData.owner.name} 
+						{data.searchData.owner.name}
 						{#if data.searchData.owner.gender === 'male'}
 							<IconMale class="w-4 h-4 text-blue-500" />
 						{:else}
@@ -186,7 +194,7 @@
 						-1 Animal
 					</Button>
 				</div>
-				
+
 				<div class="flex gap-2 mt-4">
 					<Button
 						size="sm"

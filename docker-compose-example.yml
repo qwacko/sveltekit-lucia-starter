@@ -1,10 +1,10 @@
-version: "3.8"
-name: "sveltekite-lucia-starter"
+version: '3.8'
+name: 'sveltekite-lucia-starter'
 
 services:
   sveltekit-lucia-starter:
     image: sveltekit-lucia-starter
-    build: 
+    build:
       context: ./
     environment:
       - DATABASE_FILE=/app/db/db.db
@@ -16,5 +16,3 @@ services:
     ports:
       - 3000:3000
     restart: unless-stopped
-  
-  

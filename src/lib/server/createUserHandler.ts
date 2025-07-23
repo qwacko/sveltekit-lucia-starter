@@ -49,10 +49,11 @@ export const createUserHandler = async ({
 			});
 		} else {
 			// For admin creating user - preserve admin session
-			const sessionToken = cookies.get('better-auth.session_token') || 
-			                    cookies.get('session_token') || 
-			                    cookies.get('session');
-			
+			const sessionToken =
+				cookies.get('better-auth.session_token') ||
+				cookies.get('session_token') ||
+				cookies.get('session');
+
 			// Create the new user without headers to avoid session interference
 			const createdUser = await auth.api.signUpEmail({
 				body: {
@@ -71,9 +72,12 @@ export const createUserHandler = async ({
 
 			// Restore the original admin session if it existed
 			if (sessionToken) {
-				const cookieName = cookies.get('better-auth.session_token') ? 'better-auth.session_token' :
-				                  cookies.get('session_token') ? 'session_token' : 'session';
-				                  
+				const cookieName = cookies.get('better-auth.session_token')
+					? 'better-auth.session_token'
+					: cookies.get('session_token')
+						? 'session_token'
+						: 'session';
+
 				cookies.set(cookieName, sessionToken, {
 					path: '/',
 					httpOnly: true,
