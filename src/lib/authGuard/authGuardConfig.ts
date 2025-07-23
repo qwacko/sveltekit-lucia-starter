@@ -8,7 +8,6 @@ type UserValidationOutput = {
 
 const adminOnlyConfig: RouteConfig<UserValidationOutput> = {
 	check: (data) => {
-		console.log('Admin Check', data);
 		return data.admin ? null : data.user ? '/' : '/login';
 	}
 };
@@ -16,7 +15,6 @@ const adminOnlyConfig: RouteConfig<UserValidationOutput> = {
 const openConfig: RouteConfig<UserValidationOutput> = { check: () => null };
 const loggedOutConfig: RouteConfig<UserValidationOutput> = {
 	check: (data) => {
-		console.log('Logged Out Check', data);
 		return data.user ? '/' : null;
 	}
 };
