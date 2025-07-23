@@ -17,7 +17,7 @@ export const actions: Actions = {
 		//Only allow creation of a first user as an admin if there is no existing admins.
 		const noAdmin = await dbNoAdmins();
 		if (noAdmin) {
-			return createUserHandler({ request, admin: true, cookies });
+			return createUserHandler({ request, admin: true, setSession: true, cookies });
 		}
 	}
 };
