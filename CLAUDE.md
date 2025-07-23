@@ -52,7 +52,7 @@ This is a full-stack SvelteKit application with authentication, real-time featur
 
 ### Key Libraries & Features
 - **SvelteKit** with Node.js adapter for production
-- **Tailwind CSS** + **shadcn-svelte** for UI components
+- **Tailwind CSS** for styling with custom components
 - **Zod** for schema validation (forms, env vars, route params)  
 - **sveltekit-superforms** for form handling
 - **skGuard** and **skRoutes** for route protection and parameter validation
@@ -62,7 +62,7 @@ This is a full-stack SvelteKit application with authentication, real-time featur
 
 ### Component Organization
 - Custom components in `src/lib/components/custom/`
-- shadcn-svelte components auto-imported to `src/lib/components/shadcn/`
+- Base UI components (Button, Input, Label, Card components) in `src/lib/components/`
 - Reusable form components (TextInput, ErrorText) in `src/lib/components/`
 
 ### Environment Variables
@@ -78,6 +78,14 @@ Required environment variables are validated using Zod in `src/lib/server/server
 2. Run `pnpm dev` (automatically creates and migrates database)
 3. First user creation dialog appears if no admin users exist
 4. Update PWA manifest in `vite.config.ts` and replace `static/logo.svg`, then run `pnpm generate-pwa-assets`
+
+### Custom Components
+The project uses custom UI components instead of component libraries:
+- **Button** - Supports variants (default, destructive, outline, secondary, ghost, link) and sizes
+- **Input** - Basic input component with file upload support
+- **Label** - Form label component
+- **Card components** - Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter
+- **TextInput** - Composite component combining Input + Label + ErrorText
 
 ### Testing
 - Unit tests using Vitest

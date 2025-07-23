@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import { urlGenerator } from '$lib/routes.js';
 
 	let { data } = $props();

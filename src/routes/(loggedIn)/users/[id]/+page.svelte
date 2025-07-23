@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import ErrorText from '$lib/components/ErrorText.svelte';
-	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	let { data } = $props();
 </script>

@@ -3,7 +3,7 @@
 	import NavMenu from './NavMenu.svelte';
 	import { goto } from '$app/navigation';
 	import { urlGenerator } from '$lib/routes';
-	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	// Props
 	let {

@@ -3,8 +3,12 @@
 	import ErrorText from '$lib/components/ErrorText.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { superForm } from 'sveltekit-superforms';
-	import * as Card from '$lib/components/shadcn/ui/card/';
-	import Button from '$lib/components/shadcn/ui/button/button.svelte';
+	import Card from '$lib/components/Card.svelte';
+	import CardHeader from '$lib/components/CardHeader.svelte';
+	import CardTitle from '$lib/components/CardTitle.svelte';
+	import CardContent from '$lib/components/CardContent.svelte';
+	import CardFooter from '$lib/components/CardFooter.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	let { data } = $props();
 
@@ -18,12 +22,12 @@
 	});
 </script>
 
-<Card.Root class="w-full max-w-sm m-4 self-center">
+<Card class="w-full max-w-sm m-4 self-center">
 	<form method="POST" autocomplete="off" use:enhance>
-		<Card.Header>
-			<Card.Title class="text-2xl">Create User</Card.Title>
-		</Card.Header>
-		<Card.Content class="grid gap-4">
+		<CardHeader>
+			<CardTitle class="text-2xl">Create User</CardTitle>
+		</CardHeader>
+		<CardContent class="grid gap-4">
 			<TextInput
 				title="Username"
 				errorMessage={$errors.username}
@@ -55,11 +59,11 @@
 				{...$constraints.confirmPassword}
 			/>
 			<ErrorText message={$message} />
-		</Card.Content>
+		</CardContent>
 
-		<Card.Footer class="flex-col gap-2">
+		<CardFooter class="flex-col gap-2">
 			<Button type="submit" class="w-full">Create</Button>
 			<Button variant="link" href="/users" class="w-full">Cancel</Button>
-		</Card.Footer>
+		</CardFooter>
 	</form>
-</Card.Root>
+</Card>
