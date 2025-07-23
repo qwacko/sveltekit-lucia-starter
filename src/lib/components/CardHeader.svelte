@@ -7,7 +7,7 @@
 		...restProps
 	}: HTMLAttributes<HTMLDivElement> = $props();
 
-	const baseClasses = 'flex flex-col space-y-1.5 p-6';
+	const baseClasses = 'flex flex-col space-y-2 p-6 pb-4';
 	const classes = `${baseClasses} ${className}`;
 </script>
 

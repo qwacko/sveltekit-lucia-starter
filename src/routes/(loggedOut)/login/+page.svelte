@@ -17,7 +17,8 @@
 	});
 </script>
 
-<Card class="w-full max-w-sm m-4 self-center">
+<div class="flex-1 flex items-center justify-center min-h-screen p-4">
+<Card class="w-full max-w-sm">
 	<form method="POST" use:enhance>
 		<CardHeader>
 			<CardTitle class="text-2xl">Login</CardTitle>
@@ -57,3 +58,4 @@
 		</CardFooter>
 	</form>
 </Card>
+</div>

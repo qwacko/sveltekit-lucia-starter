@@ -7,7 +7,7 @@
 		...restProps
 	}: HTMLAttributes<HTMLHeadingElement> = $props();
 
-	const baseClasses = 'text-2xl font-semibold leading-none tracking-tight';
+	const baseClasses = 'text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-gray-100';
 	const classes = `${baseClasses} ${className}`;
 </script>
 

@@ -6,6 +6,7 @@
 	import Card from '$lib/components/Card.svelte';
 	import CardHeader from '$lib/components/CardHeader.svelte';
 	import CardTitle from '$lib/components/CardTitle.svelte';
+	import CardDescription from '$lib/components/CardDescription.svelte';
 	import CardContent from '$lib/components/CardContent.svelte';
 	import CardFooter from '$lib/components/CardFooter.svelte';
 	import { urlGenerator } from '$lib/routes.js';
@@ -16,10 +17,12 @@
 	});
 </script>
 
-<Card class="w-full max-w-sm m-4 self-center">
+<div class="flex-1 flex items-center justify-center min-h-screen p-4">
+<Card class="w-full max-w-sm">
 	<form method="POST" autocomplete="off" use:enhance>
 		<CardHeader>
-			<CardTitle class="text-2xl">Signup</CardTitle>
+			<CardTitle class="text-2xl">Create Account</CardTitle>
+			<CardDescription>Enter your details below to create your account.</CardDescription>
 		</CardHeader>
 		<CardContent class="grid gap-4">
 			<TextInput
@@ -65,3 +68,4 @@
 		</CardFooter>
 	</form>
 </Card>
+</div>
