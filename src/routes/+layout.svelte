@@ -5,7 +5,6 @@
 	import { onMount } from 'svelte';
 	import { authGuardFrontend } from '$lib/authGuard/authGuardConfig';
 	import { onNavigate } from '$app/navigation';
-	import { urlGenerator } from '$lib/routes';
 	import Navbar from '$lib/components/custom/nav/Navbar.svelte';
 
 	let { data, children } = $props();
@@ -63,7 +62,16 @@
 </svelte:head>
 
 <div class="flex flex-col">
-	<Navbar {user} {homePage} {paramsPage} {ssePage} {wsPage} {userPage} usersPage={users} loginPage={login} />
+	<Navbar
+		{user}
+		{homePage}
+		{paramsPage}
+		{ssePage}
+		{wsPage}
+		{userPage}
+		usersPage={users}
+		loginPage={login}
+	/>
 
 	{@render children()}
 </div>

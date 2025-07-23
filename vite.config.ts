@@ -3,6 +3,7 @@ import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vitest/config';
 import Icons from 'unplugin-icons/vite';
 import WsPlugin from 'vite-sveltekit-node-ws';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig(({ mode }) => {
 	return {
@@ -10,6 +11,7 @@ export default defineConfig(({ mode }) => {
 			allowedHosts: true
 		},
 		plugins: [
+			tailwindcss(),
 			sveltekit(),
 			WsPlugin(),
 			Icons({
@@ -60,6 +62,6 @@ export default defineConfig(({ mode }) => {
 		],
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}']
-		},
+		}
 	};
 });

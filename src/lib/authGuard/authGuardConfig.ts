@@ -7,12 +7,18 @@ type UserValidationOutput = {
 };
 
 const adminOnlyConfig: RouteConfig<UserValidationOutput> = {
-	check: (data) => (data.admin ? null : data.user ? '/' : '/login')
+	check: (data) => {
+		console.log('Admin Check', data);
+		return data.admin ? null : data.user ? '/' : '/login';
+	}
 };
 // const userOnlyConfig: RouteConfig = { nonUserRedirect: '/login' };
 const openConfig: RouteConfig<UserValidationOutput> = { check: () => null };
 const loggedOutConfig: RouteConfig<UserValidationOutput> = {
-	check: (data) => (data.user ? '/' : null)
+	check: (data) => {
+		console.log('Logged Out Check', data);
+		return data.user ? '/' : null;
+	}
 };
 
 const postActionAuthOnly = (data: UserValidationOutput) => {

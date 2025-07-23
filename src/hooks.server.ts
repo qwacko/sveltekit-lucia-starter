@@ -11,6 +11,7 @@ import { svelteKitHandler } from 'better-auth/svelte-kit';
 import { building } from '$app/environment';
 
 import { wsServer } from '$lib/server/websocket/wsServer';
+import { getUser } from '$lib/server/db/actions/getUser';
 wsServer();
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,6 +49,18 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 // 	return resolve(event);
 // };
 
+const handleAuthToLocals: Handle = async ({ event, resolve }) => {
+	const session = await auth.api.getSession({
+		headers: event.request.headers
+	});
+	if (session) {
+		event.locals.user = await getUser(event.request.headers);
+	} else {
+		event.locals.user = undefined;
+	}
+	return resolve(event);
+};
+
 export const handleRoute: Handle = async ({ event, resolve }) => {
 	const noAdmin = await dbNoAdmins();
 
@@ -65,4 +78,4 @@ export const handleRoute: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-export const handle = sequence(handleAuth, handleRoute);
+export const handle = sequence(handleAuth, handleAuthToLocals, handleRoute);
