@@ -113,3 +113,4 @@ The project uses custom UI components instead of component libraries:
 ### Testing Tools
 
 - The environment has Puppeteer and Chromium installed, use those for any visual / functional checks
+- Puppeteer / Chromium should be used in headless mode only
